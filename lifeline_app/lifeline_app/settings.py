@@ -64,7 +64,7 @@ ROOT_URLCONF = 'lifeline_app.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS':[os.path.join(BASE_DIR, 'frontend/dist')], #setting dirs to frontend dist
+        'DIRS': [os.path.join(BASE_DIR, 'frontend/public')], #setting dirs to frontend dist
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
