@@ -1,3 +1,64 @@
 from django.db import models
+import datetime
+from django.utils import timezone
 
 # Create your models here.
+class Account(models.Model):
+    account_id = models.BigIntegerField(primary_key=True)
+    username = models.CharField(max_length=50)
+    password = models.CharField(max_length=50)
+    email = models.EmailField(null=False) # 邮箱是否能为空？
+    gender = models.CharField(max_length=2) # 键值只有三种取值：M,F,N
+    nickname = models.CharField(max_length=50) # 用户自己修改的昵称
+    privilege = models.IntegerField() # 账户等级，初步打算老师和学生账户 
+    photo = models.ImageField(default="",upload_to="") # 默认无照片的路径，以及上传图片的路径
+
+class Course(models.Model):
+    course_id = models.BigIntegerField(primary_key=True)
+    description = models.TextField(null=True) # 课程简介
+
+class Board(models.Model):
+    board_id = models.BigIntegerField(primary_key=True)
+    course = models.ForeignKey(Course,on_delete=models.CASCADE)
+    message = models.TextField(null=True)
+    time = models.DateTimeField() # 公告发布时间，不允许为空
+
+class Homework(models.Model):
+    homework_id = models.BigIntegerField(primary_key=True)
+    title = models.TextField(null=False)  # 
+    message = models.TextField(null=True) # 作业细节
+    release_time = models.DateTimeField() # 作业发布时间
+    deadline_time = models.DateTimeField() # 作业截止时间
+
+class Timezone(models.Model): #时间段
+    timezone_id = models.BigIntegerField(primary_key=True)
+    begin_time = models.TimeField()
+    end_time = models.TimeField()
+
+class Scheduler(models.Model):
+    scheduler_id = models.BigIntegerField(primary_key=True)
+    account = models.ForeignKey(Account,on_delete=models.CASCADE)
+    title = models.CharField(max_length=50)
+    message = models.TextField(null=True)
+    time = models.ForeignKey(Timezone,on_delete=models.CASCADE)
+
+class Todolist(models.Model):
+    todolist_id = models.BigIntegerField(primary_key=True)
+    account_id = models.ForeignKey(Account,on_delete=models.CASCADE)
+    message = models.TextField(null=True)
+    deadline_time = models.DateTimeField()
+    homework = models.ForeignKey(Homework,on_delete=models.CASCADE,null=True)
+    scheduler = models.ForeignKey(Scheduler,on_delete=models.CASCADE)
+
+class Register(models.Model):
+    register_id = models.BigIntegerField(primary_key=True)
+    username = models.CharField(max_length=50)
+    password = models.CharField(max_length=50)
+    email = models.EmailField() #验证邮箱
+    checksum = models.TextField() #验证码
+    time = models.DateTimeField() #用于设置验证时间
+
+class Takeclass(models.Model):
+    account = models.ForeignKey(Account,on_delete=models.CASCADE)
+    course = models.ForeignKey(Course,on_delete=models.CASCADE)
+    privilege = models.IntegerField() #用于表示授课还是听课关系
