@@ -30,7 +30,7 @@ ALLOWED_HOSTS = []
 
 # Add for vuejs
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "frontend/dist/static"), #all static files should be linked under this dirs
+    os.path.join(BASE_DIR, "appfront/dist/static"), #all static files should be linked under this dirs
 ]
 
 
@@ -64,7 +64,7 @@ ROOT_URLCONF = 'lifeline_app.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'frontend/public')], #setting dirs to frontend dist
+        'DIRS': [os.path.join(BASE_DIR, 'appfront/dist')], #setting dirs to frontend dist
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
