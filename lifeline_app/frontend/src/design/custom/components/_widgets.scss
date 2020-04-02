@@ -1,0 +1,138 @@
+// 
+// widgets.scss
+//
+
+// widget-box-2
+.widget-box-2 {
+    .widget-detail-2 {
+      .badge {
+        padding: 5px 10px;
+      }
+    }
+}
+
+
+// Inbox-widget(Used Profile)
+.inbox-widget {
+    .inbox-item {
+        border-bottom: 1px solid $light;
+        overflow: hidden;
+        padding: 0.75rem 0;
+        position: relative;
+        &:last-child {
+            border: none;
+        }
+        .inbox-item-img {
+            display: block;
+            float: left;
+            margin-right: 15px;
+            width: 40px;
+            img {
+                width: 40px;
+            }
+        }
+        .inbox-item-author {
+            color: $dark;
+            display: block;
+            margin-bottom: 3px;
+        }
+        .inbox-item-text {
+            color: $gray-600;
+            display: block;
+            font-size: 0.8125rem;
+            margin: 0;
+            overflow: hidden;
+        }
+        .inbox-item-date {
+            color: $gray-600;
+            font-size: 0.6875rem;
+            position: absolute;
+            right: 5px;
+            top: 10px;
+        }
+    }
+}
+
+/* Chat widget */
+
+.conversation-list {
+    list-style: none;
+    height: 332px;
+    padding: 0 20px;
+    li {
+        margin-bottom: 24px;
+    }
+    .chat-avatar {
+        float: left;
+        text-align: center;
+        width: 42px;
+        img {
+            border-radius: 100%;
+            width: 100%;
+        }
+        i {
+            font-size: 12px;
+            font-style: normal;
+        }
+    }
+    .ctext-wrap {
+        -moz-border-radius: 3px;
+        -webkit-border-radius: 3px;
+        background: $gray-200;
+        border-radius: 3px;
+        display: inline-block;
+        padding: 12px;
+        position: relative;
+        i {
+            display: block;
+            font-size: 12px;
+            font-style: normal;
+            font-weight: bold;
+            position: relative;
+        }
+        p {
+            margin: 0;
+            padding-top: 3px;
+        }
+        &:after {
+            right: 99%;
+            top: 0;
+            border: solid transparent;
+            content: " ";
+            height: 0;
+            width: 0;
+            position: absolute;
+            pointer-events: none;
+            border-top-color: $gray-200;
+            border-width: 8px;
+            margin-left: -1px;
+            border-right-color: $gray-200;
+        }
+    }
+    .conversation-text {
+        float: left;
+        font-size: 12px;
+        margin-left: 12px;
+        width: 70%;
+    }
+    .odd {
+        .chat-avatar {
+            float: right !important;
+        }
+        .conversation-text {
+            float: right !important;
+            margin-right: 12px;
+            text-align: right;
+            width: 70% !important;
+        }
+        .ctext-wrap {
+            background-color: #fef5e4;
+            &:after {
+                border-color: transparent;
+                border-left-color: #fef5e4;
+                border-top-color: #fef5e4;
+                left: 99% !important;
+            }
+        }
+    }
+}
