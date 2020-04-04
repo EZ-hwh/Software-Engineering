@@ -102,4 +102,46 @@ Register: function () {
 
 ---
 
+###课程主页
+
+- 添加了 views/lessons.vue 以及 components/Lessonbook.vue
+
+  - 在 lessons.vue中有两个接口：
+
+    1. 加载页面时后端传入json参数 `{curriculums: string 类型; index: integer 类型}`
+
+       ```javascript
+     lessons:function() {
+                       var params = {
+                           name: this.$parent.name,
+                           type: 'lesson'
+                       };
+                       this.$ajax.get('/', params).then(res => {
+                           var obj = JSON.parse(JSON.stringify());
+                           console.log(JSON.stringify(jsonObj));
+                           this.data.number = obj.length;
+                           for (var i = 0; i < obj.length; i++) {
+                               this.data.items.append({curriculum: jsonobj[i], index: i + 1}); //前端接收json加入list
+                           }
+                       }).catch(error => {
+                           console.log(error.response.data.code)
+                       });
+       ```
+    
+    2. 点击课程名称，可以跳转至相关的课程主页。这个url的参数现在传的是课程的名称和用户名，但后续可以改成id。更方便一些。
+    
+       ```javascript
+       go_to_lesson:function(name){
+                       var params ={
+                           curriculum: name, //未来最好改成传课程id
+                           name:this.$parent.name,
+                           type:'jplesson'
+                       };
+                       this.$router.go(''); //重定向到课程子页面
+                   },
+       ```
+    
+       
+
+- 之前配置了routers，但听说routers不用了，我就没有改其他文件，目前没有把它和其他页面串连在一起
 
