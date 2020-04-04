@@ -1,0 +1,133 @@
+<script>
+import { authComputed } from '@state/helpers'
+
+import MetisMenu from 'metismenujs/dist/metismenujs'
+
+export default {
+  components: {},
+  props: {
+    user: {
+      type: Object,
+      required: false,
+      default: () => ({}),
+    },
+  },
+  computed: {
+    ...authComputed,
+  },
+  mounted: function() {
+    // eslint-disable-next-line no-unused-vars
+    var menuRef = new MetisMenu('#side-menu')
+  },
+  methods: {},
+}
+</script>
+
+<template>
+
+  <div>
+    <div class="user-box text-center">
+      <img
+        src="@assets/images/users/user-1.jpg"
+        alt="user-img"
+        class="rounded-circle img-thumbnail avatar-lg"
+      >
+      <div class="">
+        <a
+          href="#"
+          class="text-dark dropdown-toggle h5 mt-2 mb-1 d-block"
+        >{{user ? user.name : ''}}</a>
+      </div>
+      <p class="text-muted">Admin Head</p>
+      <ul class="list-inline">
+        <li class="list-inline-item">
+          <a
+            href="#"
+            class="text-muted"
+          >
+            <i class="mdi mdi-settings"></i>
+          </a>
+        </li>
+
+        <li class="list-inline-item">
+          <a
+            href="#"
+            class="text-custom"
+          >
+            <i class="mdi mdi-power"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <!--- Sidemenu -->
+    <div id="sidebar-menu">
+      <ul
+        id="side-menu"
+        class="metismenu"
+      >
+        <li class="menu-title">Navigation</li>
+
+
+        <li class="active">
+          <router-link
+            tag="a"
+            to="/mainpage"
+            class="active"
+          >
+            <i class="mdi mdi-view-dashboard"></i>
+            <span> 主页 </span>
+
+          </router-link>
+        </li>
+
+        <li class="active">
+          <router-link
+            tag="a"
+            to="/homework"
+            class="active"
+          >
+            <i class="mdi mdi-view-dashboard"></i>
+            <span> 作业 </span>
+
+          </router-link>
+        </li>
+
+        <li class="active">
+          <router-link
+            tag="a"
+            to="/document"
+            class="active"
+          >
+            <i class="mdi mdi-view-dashboard"></i>
+            <span> 文件 </span>
+
+          </router-link>
+        </li>
+
+        <li class="active">
+          <router-link
+            tag="a"
+            to="/notice"
+            class="active"
+          >
+            <i class="mdi mdi-view-dashboard"></i>
+            <span> 通知 </span>
+
+          </router-link>
+        </li>
+
+
+
+
+      </ul>
+      <div class="clearfix"></div>
+    </div>
+    <!-- End Sidebar -->
+  </div>
+
+</template>
+
+<style lang="scss">
+@import '~metismenujs/scss/metismenujs';
+</style>
