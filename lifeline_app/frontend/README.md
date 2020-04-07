@@ -8,7 +8,7 @@
 npm install
 ```
 
-​		`package.json`是新的，应该用`npm  install`就可以安装好新的包。如果不能运行且出现之前没有install会出现的错误提示的话，试一下单独安装以下几个包（正常来说应该用不到）
+​`package.json`是新的，应该用`npm  install`就可以安装好新的包。如果不能运行且出现之前没有install会出现的错误提示的话，试一下单独安装以下几个包（正常来说应该用不到）
 
 ```
 npm install vue bootstrap-vue bootstrap
