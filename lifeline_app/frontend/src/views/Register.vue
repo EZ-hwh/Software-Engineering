@@ -62,7 +62,7 @@
             Register: function () {
                 //    TODO: 注册传参数
                 this.$ajax({
-                    method: 'get',
+                    method: 'post',
                     url: '/',
                     params:{
                         name: this.$parent.name,

@@ -1,20 +1,23 @@
 from django.db import models
 import datetime
 from django.utils import timezone
+from django.contrib.auth.models import User
 
 # Create your models here.
 class Account(models.Model):
-    account_id = models.BigIntegerField(primary_key=True)
-    username = models.CharField(max_length=50)
-    password = models.CharField(max_length=50)
-    email = models.EmailField(null=False) # 邮箱是否能为空？
-    gender = models.CharField(max_length=2) # 键值只有三种取值：M,F,N
+    """
+    用户信息表
+    """
+    user = models.OneToOneField(User, on_delete=models.CASCADE,blank=True)
+    email = models.EmailField(null=True) # 邮箱是否能为空？
+    gender = models.CharField(max_length=2,null=True) # 键值只有三种取值：M,F,N
     nickname = models.CharField(max_length=50) # 用户自己修改的昵称
-    privilege = models.IntegerField() # 账户等级，初步打算老师和学生账户 
-    photo = models.ImageField(default="",upload_to="") # 默认无照片的路径，以及上传图片的路径
+    privilege = models.IntegerField(default=1) # 账户等级，初步打算老师和学生账户,老师是0，学生是1
+    photo = models.ImageField(default="",upload_to="",null=True) # 默认无照片的路径，以及上传图片的路径
 
 class Course(models.Model):
     course_id = models.BigIntegerField(primary_key=True)
+    course_name = models.CharField(max_length=50,default='abc') #课程名称
     description = models.TextField(null=True) # 课程简介
 
 class Board(models.Model):

@@ -60,8 +60,8 @@
             Login: function () {
                 //TODO:  登录传参
                 this.$ajax({
-                    method: 'get',
-                    url: '/',
+                    method: 'post',
+                    url: '/login/',
                     params:{
                         name: this.$parent.name,
                         pass: this.$parent.password,
