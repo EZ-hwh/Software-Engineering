@@ -8,8 +8,6 @@
 </template>
 
 <script>
-// import { authComputed } from '@state/helpers'
-//TODO：跟state相关
 import { Timetables } from '../assets/js/pages/Timetables.min.js'
 
 var courseList = [
@@ -199,9 +197,6 @@ export default {
       },
     })
   },
-  // computed: {
-  //   ...authComputed,
-  // },
   methods: {
     onChange: function() {
       this.Timetable.setOption({

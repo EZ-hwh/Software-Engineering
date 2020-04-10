@@ -1,37 +1,40 @@
 <template>
-    <div id="login_window">
-        <header>
-            <h1>LifeLine</h1>
-        </header>
-        <div v-show="check">
-            <p class="sec">
-                {{ name_message }}<input v-model="name" placeholder="Your name?" @change="input">
-                <CustomButton source="grinningface" size="large" message="来对暗号=3="
-                              @click.native="next_page"></CustomButton>
-            </p>
+    <div id="login">
+        <div id="login_window">
+            <header>
+                <h1>LifeLine</h1>
+            </header>
+            <div v-show="check">
+                <p class="sec">
+                    {{ name_message }}<input v-model="name" placeholder="Your name?" @change="input">
+                    <CustomButton source="grinningface" size="large" message="来对暗号=3="
+                                  @click.native="next_page"></CustomButton>
+                </p>
 
-            <p>
-                <CustomButton source="grinningface" size="large" message="我走错了:("
-                              @click.native="back_to_main"></CustomButton>
-            </p>
-        </div>
-        <div v-show="!check">
-            <p class="sec">
-                {{password_message}}<input v-model="password" placeholder="嘘~  " @change="input">
-                <CustomButton source="grinningface" size="large" message="!冲呀!"
-                              @click.native="Login"></CustomButton>
-            </p>
+                <p>
+                    <CustomButton source="grinningface" size="large" message="我走错了:("
+                                  @click.native="back_to_main"></CustomButton>
+                </p>
+            </div>
+            <div v-show="!check">
+                <p class="sec">
+                    {{password_message}}<input v-model="password" placeholder="嘘~  " @change="input">
+                    <CustomButton source="grinningface" size="large" message="!冲呀!"
+                                  @click.native="Login"></CustomButton>
+                </p>
 
-            <p>
-                <CustomButton source="grinningface" size="large" message="名字写错了" @click.native="back_to_name"></CustomButton>
-            </p>
+                <p>
+                    <CustomButton source="grinningface" size="large" message="名字写错了"
+                                  @click.native="back_to_name"></CustomButton>
+                </p>
 
+            </div>
         </div>
     </div>
 </template>
 
 <script>
-    import CustomButton from "../components/CustomButton";
+    import CustomButton from "../../components/CustomButton";
 
     export default {
         name: "Login",
@@ -49,7 +52,8 @@
         },
         methods: {
             back_to_main: function () {
-                this.$router.go(-1);
+                // TODO：获取index.html
+                // this.$router.go(-1);
             },
             next_page: function () {
                 this.check = false;
@@ -58,25 +62,22 @@
                 this.check = true;
             },
             Login: function () {
-                //TODO:  登录传参
+                // TODO: 登录传参数+获取home.html
                 this.$ajax({
-                    method: 'get',
-                    url: '/',
-                    params:{
+                    method: 'post',
+                    url: '/login/',
+                    params: {
                         name: this.$parent.name,
                         pass: this.$parent.password,
                         type: 'log'
                     }
-                }).then(response => (this.$router.push({path: '/UserHome/' + this.$parent.name})))
-                .catch(function (error) {
-                    console.log(error);
-                })
+                }).then(response => (console.log(response)))
+                    .catch(function (error) {
+                        console.log(error);
+                    })
             },
             input: function () {
-                if (this.check === true) {
-                    this.$parent.name = this.name;
-                } else this.$parent.password = this.password;
-                //TODO: 更新输入框长度
+                //TODO: 更新输入框长度+store数据存储
             }
         },
         watch: {
@@ -96,7 +97,7 @@
 <style scoped>
     @font-face {
         font-family: 'Montserrat-ExtraBold';
-        src: url('../assets/fonts/Montserrat-ExtraBold.ttf') format('truetype');
+        src: url('../../assets/fonts/Montserrat-ExtraBold.ttf') format('truetype');
         font-weight: normal;
         font-style: normal;
     }
@@ -104,13 +105,13 @@
     #login_window {
         background-color: mistyrose;
         background-size: cover;
-        padding:0 1% 4.7%;
+        padding: 0 1% 4.7%;
         font-family: Montserrat-ExtraBold, sans-serif;
         align-items: center;
     }
 
     header {
-        font-family: Montserrat-ExtraBold,monospace;
+        font-family: Montserrat-ExtraBold, monospace;
         text-align: left;
         padding: 20px;
     }
@@ -146,4 +147,12 @@
         font-size: 60px;
     }
 
+</style>
+
+<style lang="scss">
+    // Allow element/type selectors, because this is global CSS.
+    // stylelint-disable selector-max-type, selector-class-pattern
+
+    // Design variables and utilities from src/design.
+    @import '../../design';
 </style>

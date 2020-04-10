@@ -10,8 +10,6 @@ export default {
   data() {
     return {
       isMenuOpened: false,
-      // user: this.$store ? this.$store.state.auth.currentUser : {} || {},
-      //TODO:估计是一个储存登录信息的
     }
   },
   created: () => {
