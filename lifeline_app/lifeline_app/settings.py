@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'backend', #add backend
+    'django_extensions', # 用于导出ER图
 ]
 
 MIDDLEWARE = [
