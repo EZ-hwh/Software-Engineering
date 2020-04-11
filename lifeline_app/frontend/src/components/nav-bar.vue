@@ -17,8 +17,10 @@ export default {
     },
   },
   data() {
+    console.log(data);
     return {
       courses:data.Curriculum
+
     }
   },
   // computed: {

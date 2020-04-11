@@ -38,8 +38,6 @@
 </template>
 
 <script>
-// import { authComputed } from '@state/helpers'
-// TODO：state相关
 import data from '../datasample.json'
 
 export default {
@@ -49,9 +47,6 @@ export default {
       WeekList:data.WeekList,
     }
   },
-  // computed: {
-  //   ...authComputed,
-  // },
   methods: {},
 }
 </script>

@@ -1,9 +1,9 @@
 <script>
-import TopBar from '../components/top-bar'
-import NavBar from '../components/nav-bar'
-import RightBar from '../components/right-bar'
-import Footer from '../components/footer'
-import Calendar from '../components/calendar'
+import TopBar from '../../../components/top-bar'
+import NavBar from '../../../components/nav-bar'
+import RightBar from '../../../components/right-bar'
+import Footer from '../../../components/footer'
+import Calendar from '../../../components/calendar'
 
 export default {
   components: { TopBar, NavBar, RightBar, Footer, Calendar},
@@ -33,12 +33,12 @@ export default {
 <!-- 这里有一个 :user="user" 先注释掉了-->
       <NavBar :is-menu-opened="isMenuOpened" />
     </header>
-    
+
 
     <div class="wrapper" style="padding-bottom: 60px">
-      <div class="container-fluid">
+<!--      <div class="container-fluid">-->
         <slot />
-      </div>
+<!--      </div>-->
     </div>
     <Footer />
     <RightBar />

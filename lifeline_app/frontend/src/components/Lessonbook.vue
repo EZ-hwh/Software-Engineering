@@ -23,37 +23,9 @@
             index:{type:Number, default:0}
         },
         methods: {
-            // getStyle:function{
-            //     console.log(this.number);
-            //     console.log(this.index);
-            //     if(this.number % 2 === 0) {
-            //         var xx = 400 - 30 * this.number + 60 * this.index;
-            //         if (this.index <= this.number / 2) {
-            //             var yy= Number(150 + 15 * this.number - 30 * this.index;
-            //         }
-            //         else{
-            //             var yy =  120 - 15 * this.number + 30 * this.index;
-            //         }
-            //     }
-            //     else {
-            //         var xx =  370 - 30 * this.number  + 60 * this.index
-            //         if (this.index <= (this.number + 1) / 2) {
-            //             var yy = 165 + 15 * this.number - 30 * this.index;
-            //         }
-            //         else{
-            //             var yy = 165 - 15 * this.number + 30 * this.index;
-            //         }
-            //     }
-            //     var color = '#68e4aa'
-            //     return {
-            //         x: xx,
-            //         y: xx,
-            //         fill: color,
-            //     }
-            // }
             getX: function(){
-                console.log(this.number);
-                console.log(this.index);
+                // console.log(this.number);
+                // console.log(this.index);
                 if(this.number % 2 === 0) {
                     return Number(360 - 40 * this.number + 80 * this.index);
                 }
@@ -63,8 +35,8 @@
             },
 
             getTextX:function(){
-                console.log(this.number);
-                console.log(this.index);
+                // console.log(this.number);
+                // console.log(this.index);
                 if(this.number % 2 === 0) {
                     return Number(360 - 40 * this.number + 80 * this.index + 25)
                 }
@@ -75,39 +47,39 @@
 
 
             getTextY:function(){
-                console.log(this.number);
-                console.log(this.index);
+                // console.log(this.number);
+                // console.log(this.index);
                 if(this.number % 2 === 0) {
                     if (this.index <= this.number / 2) {
-                        return Number(90 + 15 * this.number - 30 * this.index)
+                        return Number(190 + 15 * this.number - 30 * this.index)
                     } else {
-                        return Number(60 - 15 * this.number + 30 * this.index)
+                        return Number(160 - 15 * this.number + 30 * this.index)
                     }
                 }
                 else {
                     if (this.index <= (this.number + 1) / 2) {
-                        return Number(105 + 15 * this.number - 30 * this.index)
+                        return Number(205 + 15 * this.number - 30 * this.index)
                     } else {
-                        return Number(75 - 15 * this.number + 30 * this.index)
+                        return Number(175 - 15 * this.number + 30 * this.index)
                     }
                 }
             },
 
             getY:function(){
-                console.log(this.number);
-                console.log(this.index);
+                // console.log(this.number);
+                // console.log(this.index);
                 if(this.number % 2 === 0) {
                     if (this.index <= this.number / 2) {
-                        return Number(30 + 15 * this.number - 30 * this.index)
+                        return Number(130 + 15 * this.number - 30 * this.index)
                     } else {
-                        return Number(0 - 15 * this.number + 30 * this.index)
+                        return Number(100 - 15 * this.number + 30 * this.index)
                     }
                 }
                 else {
                     if (this.index <= (this.number + 1) / 2) {
-                        return Number(45 + 15 * this.number - 30 * this.index)
+                        return Number(145 + 15 * this.number - 30 * this.index)
                     } else {
-                        return Number(15 - 15 * this.number + 30 * this.index)
+                        return Number(115 - 15 * this.number + 30 * this.index)
                     }
                 }
             },
@@ -144,11 +116,11 @@
             },
 
             getHeight:function(){
-                console.log(this.number);
-                console.log(this.index);
+                // console.log(this.number);
+                // console.log(this.index);
                  if(this.number % 2 === 0) {
                     if(this.index <= this.number/2) {
-                        return Number(470 - 15 * this.number + 30 * this.index )
+                        return Number(460 - 15 * this.number + 30 * this.index )
                     }
                     else{
                         return Number(500  + 15 * this.number - 30 * this.index)
@@ -182,7 +154,7 @@
 
     @font-face {
         font-family: 'Montserrat-ExtraBold';
-        src: url('../assets/fonts/Montserrat-ExtraBold.ttf') format('truetype');
+        src: url('../../../frontend/src/assets/fonts/Montserrat-ExtraBold.ttf') format('truetype');
         font-weight: normal;
         font-style: normal;
     }

@@ -1,35 +1,38 @@
 <template>
     <div id = 'lesson_window'>
-        <header>
-            <h1>LifeLine  Lesson</h1>
-        </header>
-        <div class='books'>
+        <Layout>
+            <header>
+                <h1>LifeLine  Lesson</h1>
+            </header>
+<!--            <div class='books'>-->
+            <div class="bg">
+                <div class="'button">
+                    <CustomButton source="grinningface" size="large" message="back" @click.native="back_to_main"></CustomButton>
+                </div>
+            </div>
             <div class ='lessons' v-for="item in items">
-                    <Lessonbook :index="item.index" :number="items.length" :name = "item.curriculum" v-on:click= 'go_to_lesson("item.curriculum")'></Lessonbook>
+                <Lessonbook :index="item.index" :number="items.length" :name = "item.curriculum" v-on:click= 'go_to_lesson("item.curriculum")'></Lessonbook>
             </div>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox= "0 0 800 600" width="100%" height="100%">
-                <rect id="desk" x = -400 y = 500 width= 1600 height= 300 fill="#a09890"></rect>
+                <rect id="desk" x = -400 y = 540 width= 1600 height= 100 fill="#a09890"></rect>
             </svg>
-        </div>
-        <div class="bg">
-            <div class="'button">
-                <CustomButton source="grinningface" size="large" message="back" @click.native="back_to_main"></CustomButton>
-            </div>
-
-        </div>
+<!--            </div>-->
+        </Layout>
     </div>
     
 </template>
 
 <script>
-    import Lessonbook from "../components/Lessonbook"
-    import CustomButton from "../components/CustomButton";
+    import Layout from "../../views/lessons/layouts/main"
+    import Lessonbook from "../../components/Lessonbook"
+    import CustomButton from "../../../../frontend/src/components/CustomButton";
 
     export default {
         name: "Lessons",
         components: {
             Lessonbook,
-            CustomButton
+            CustomButton,
+            Layout
         },
         data() {
             return {
@@ -61,7 +64,7 @@
             lessons:function() {
                 var params = {
                     name: this.$parent.name,
-                    type: 'lesson'
+                    type: 'lessons'
                 };
                 this.$ajax.get('/', params).then(res => {
                     var obj = JSON.parse(JSON.stringify());
@@ -78,7 +81,7 @@
 
         created: function(){
             // this.lessons()
-            console.log(this.items)
+            // console.log(this.items)
         },
 
     }
@@ -89,7 +92,7 @@
 
     @font-face {
         font-family: 'Montserrat-ExtraBold';
-        src: url('../assets/font/Montserrat-ExtraBold.ttf') format('truetype');
+        src: url('../../../../frontend/src/assets/fonts/Montserrat-ExtraBold.ttf') format('truetype');
         font-weight: normal;
         font-style: normal;
     }
@@ -150,19 +153,26 @@
 
     .lessons{
         background-size: 100% 100%;
-        height:75vh;
+        top: 20vh;
+        padding: 10% 0% 0% 0%;
+        height:50vh;
         width:100vw;
         padding:0 0;
-        top: 0;
         position: absolute;
         background-color:transparent;
+    }
+
+    svg{
+        height: 60vh;
+        width: 100vw;
+
     }
 
     .books{
         background-size: 100% 100%;
         height: 75vh;
         width: 100vw;
-        position: absolute;
+        /*position: absolute;*/
         top: 25vh;
         padding: 0 0;
         background-color: #c8e17b;
@@ -174,5 +184,12 @@
 
     }
 
+</style>
 
+<style lang="scss">
+    // Allow element/type selectors, because this is global CSS.
+    // stylelint-disable selector-max-type, selector-class-pattern
+
+    // Design variables and utilities from src/design.
+    @import '../../design';
 </style>
