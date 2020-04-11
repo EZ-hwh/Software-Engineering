@@ -12,7 +12,11 @@ module.exports = {
     pwa: {},
     pages: {
         index: {
+<<<<<<< Updated upstream
             entry: 'src/views/first/main.js',
+=======
+            entry: 'src/views/SingleCourse/main.js',
+>>>>>>> Stashed changes
             template: 'public/index.html',
             filename: 'index.html',
             chunks: ['chunk-vendors', 'chunk-common', 'index']
@@ -35,6 +39,15 @@ module.exports = {
             filename: 'home.html',
             chunks: ['chunk-vendors', 'chunk-common', 'home']
         },
+<<<<<<< Updated upstream
+=======
+        SingleCourse:{
+            entry: 'src/views/SingleCourse/main.js',
+            template: 'public/SingleCourse.html',
+            filename: 'SingleCourse.html',
+            chunks: ['chunk-vendors', 'chunk-common', 'SingleCourse']
+        }
+>>>>>>> Stashed changes
     },
     // devServer: {
     //     index: '/', // 运行时，默认打开application1页面
