@@ -1,10 +1,6 @@
 <script>
     import appConfig from '../../app.config'
-<<<<<<< Updated upstream
     import Layout from '../../layouts/main'
-=======
-    import Layout from './layouts/main'
->>>>>>> Stashed changes
     import Calendar from '../../components/calendar.vue'
     import ToDoList from '../../components/toDoList.vue'
     import ToDoListWeek from '../../components/toDoListWeek.vue'
