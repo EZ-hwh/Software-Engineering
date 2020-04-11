@@ -7,4 +7,5 @@ app_name='backend'
 urlpatterns = [
     url('register',views.register_account,),
     url('login',views.login_account,),
+    url('',views.first,),
 ]

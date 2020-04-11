@@ -12,8 +12,29 @@ DEBUG = True #进行调试，用于输出调试
 ACCOUNT_ID_RANGE = 100000000
 
 @csrf_exempt
+def first(request):
+    if request.method == "GET":
+        return render(request, 'index.html')
+    print("ok")
+    back_dir = {"msg":"ok"}
+    return HttpResponse(json.dumps(back_dir))
+    if request.method == "POST":
+        mode = request.GET.get('mode')
+        if mode == 'login':
+            HttpResponse("ok")
+            render(request,'login.html')
+        elif mode == 'register':
+            HttpResponse("ok")
+            render(request,'register.html')
+        HttpResponse("ok")
+    print("ok")
+    HttpResponse("ok")
+
+@csrf_exempt
 def register_account(request):
     print("Register begin work")
+    if request.method == "GET":
+        return render(request, "register.html")
     if request.method == "POST":
         print(request)
         name = request.GET.get('name')
@@ -22,9 +43,15 @@ def register_account(request):
         ret = {"flag":False,"error_msg":None}
         #if (pwd != pwd_check):
         #    ret['error_msg']="两次输入的密码不同"
-        user = User.objects.create_user(username=name,password=pwd)
-        account = Account.objects.create(user=user,nickname="None")
-        return HttpResponse(json.dumps(ret))
+        same_name_user = User.objects.filter(username=name)
+        if same_name_user:
+            ret["error_msg"] = "same user has been registered"
+        else:
+            ret["flag"] = True
+            user = User.objects.create_user(username=name,password=pwd)
+            account = Account.objects.create(user=user,nickname="None")
+        print(ret)
+        return HttpResponse(json.dumps(ret),content_type="application/json")
     '''
         try:
             account = Account.objects.filter(username=name)
@@ -50,6 +77,9 @@ def register_account(request):
 @csrf_exempt
 def login_account(request):
     print("Login begin work")
+    if request.method == "GET":
+        print("asdf")
+        return render(request,"login.html")
     if request.method == "POST":
         print(request)
         name = request.GET.get('name')
