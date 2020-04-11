@@ -4,6 +4,9 @@ import router from '@router'
 import store from '@state/store'
 import '@components/_globals'
 
+import ViewUI from 'view-design';
+import 'view-design/dist/styles/iview.css';
+
 import BootstrapVue from 'bootstrap-vue'
 
 // Don't warn about using the dev version of Vue in development.
@@ -16,6 +19,7 @@ if (process.env.VUE_APP_TEST === 'e2e') {
 }
 
 Vue.use(BootstrapVue)
+Vue.use(ViewUI);
 
 const app = new Vue({
   router,

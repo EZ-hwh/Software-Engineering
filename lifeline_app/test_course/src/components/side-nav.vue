@@ -105,17 +105,6 @@ export default {
           </router-link>
         </li>
 
-        <li class="active">
-          <router-link
-            tag="a"
-            to="/notice"
-            class="active"
-          >
-            <i class="mdi mdi-view-dashboard"></i>
-            <span> 通知 </span>
-
-          </router-link>
-        </li>
 
 
 

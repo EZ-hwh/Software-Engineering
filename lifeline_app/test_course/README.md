@@ -1,12 +1,8 @@
-# Life Line 课程界面
+# Adminto - Vue based admin template
 
-使用vue搭建的前端：
+### This project is crafted using [vue-enterprise-boilerplate](https://github.com/chrisvfritz/vue-enterprise-boilerplate.git). It's an SPA project using Vue CLI 3.
 
-## 环境配置
-
-- 和ncr之前的一样 通过yarn
-
-## 运行
+## Getting started
 
 ```bash
 
@@ -19,28 +15,4 @@ yarn install
 yarn dev
 ```
 
-## 结构
-
-```
--public
-	index.html
--src
-	assets
-	components
-	design
-	router
-	state
-	utils
--tests
-```
-
-src/components
-
-- mainpage/homework/notice/document 放的是左边导航切换的时候右边显示的内容
-
-- side-nav 是右边导航的内容
-
-src/router/
-
-- routes.js 放的是页面的导航
-
+For reviewing prohect structure and other details, please visit their official [documentation](https://github.com/chrisvfritz/vue-enterprise-boilerplate).

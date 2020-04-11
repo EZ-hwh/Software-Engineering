@@ -8,6 +8,7 @@ export default [
   {
     path: '/',
     name: 'home',
+    redirect:'/mainpage',
     component: () => lazyLoadView(import('@views/home')),
     meta: {
       authRequired: true,
