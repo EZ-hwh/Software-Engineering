@@ -4,6 +4,8 @@ import axios from 'axios';
 import BootstrapVue from 'bootstrap-vue';
 
 
+=======
+>>>>>>> Stashed changes
 Vue.use(BootstrapVue)
 Vue.config.productionTip = false
 Vue.prototype.$ajax=axios;
