@@ -74,7 +74,7 @@
                         pass: this.password,
                         pass_again: this.password_again,
                         type: 'reg',
-                       contentType:'application/json',
+                        contentType:'application/json',
                         dataType:'json',
                         }
                 }).then(response => 

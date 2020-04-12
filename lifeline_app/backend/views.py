@@ -1,5 +1,6 @@
 from django.shortcuts import render,redirect,get_object_or_404
 from django.http import Http404,HttpResponse
+from django.http.response import JsonResponse
 from .models import *
 from django.views.decorators.csrf import csrf_exempt
 import json
@@ -15,26 +16,14 @@ ACCOUNT_ID_RANGE = 100000000
 def first(request):
     if request.method == "GET":
         return render(request, 'index.html')
-    print("ok")
-    back_dir = {"msg":"ok"}
-    return HttpResponse(json.dumps(back_dir))
-    if request.method == "POST":
-        mode = request.GET.get('mode')
-        if mode == 'login':
-            HttpResponse("ok")
-            render(request,'login.html')
-        elif mode == 'register':
-            HttpResponse("ok")
-            render(request,'register.html')
-        HttpResponse("ok")
-    print("ok")
-    HttpResponse("ok")
 
 @csrf_exempt
 def register_account(request):
     print("Register begin work")
     if request.method == "GET":
         return render(request, "register.html")
+    if request.session.get('login', None):
+        return HttpResponse("请退出登陆")
     if request.method == "POST":
         print(request)
         name = request.GET.get('name')
@@ -49,8 +38,10 @@ def register_account(request):
         else:
             ret["flag"] = True
             user = User.objects.create_user(username=name,password=pwd)
+            request.session['login'] = True # 注册后自动登陆
+            request.session['email'] = user.email
+            request.session['name'] = user.username
             account = Account.objects.create(user=user,nickname="None")
-        print(ret)
         return HttpResponse(json.dumps(ret),content_type="application/json")
     '''
         try:
@@ -77,8 +68,10 @@ def register_account(request):
 @csrf_exempt
 def login_account(request):
     print("Login begin work")
+    if request.session.get('login', None): #会话
+        return redirect('/home')
+        return HttpResponse("请勿重复登陆") #最好有个提示
     if request.method == "GET":
-        print("asdf")
         return render(request,"login.html")
     if request.method == "POST":
         print(request)
@@ -90,6 +83,9 @@ def login_account(request):
             #如果验证成功就让登录
             login(request,user)
             ret["flag"] = True
+            request.session['login'] = True
+            request.session['email'] = user.email
+            request.session['name'] = user.username
             print("登陆成功")
         else:
             ret["error_msg"] = "用户名和密码错误"
@@ -97,3 +93,43 @@ def login_account(request):
         #else:
         #    ret["error_msg"] = "验证码错误"
         return HttpResponse(json.dumps(ret))
+
+@csrf_exempt
+def home(request):
+    if not request.session.get('login', None):
+        return redirect('/home')
+    if request.method == 'GET':
+        ret = {}
+        user = Account.objects.get(user__username = request.session['name'])
+        print(user.user.username,user.user.password)
+        return render(request,'home.html')
+    
+    
+def get_schedule(request):
+    if not request.session.get('login', None):
+        return redirect('/login_page/')
+    if request.method == 'GET':
+        ret = {}
+
+        user = Account.objects.get(email = request.session['email'])
+        courses = [x.course for x in user.takeclass_set.all()]
+        course_list = []
+        for course in courses:
+            info = {}
+            info['name'] = course.course_name
+            info['description'] = course.description
+            info['time'] = [x.course_time for x in course.time_set.all()]
+            course_list.append(info)
+        
+        schedulers = user.scheduler_set.all()
+        scheduler_list = []
+        for scheduler in scheduler_list:
+            info = {}
+            info['title'] = scheduler.title
+            info['message'] = scheduler.message
+            info['time'] = [x.course_time for x in scheduler.time_set.all()]
+            scheduler_list.append(info)
+        
+        ret['course'] = course_list
+        ret['schedule'] = scheduler_list
+        return JsonResponse(ret)
