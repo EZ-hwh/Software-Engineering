@@ -3,12 +3,6 @@ import home from "./home";
 import axios from 'axios';
 import BootstrapVue from 'bootstrap-vue';
 
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
 Vue.use(BootstrapVue)
 Vue.config.productionTip = false
 Vue.prototype.$ajax=axios;

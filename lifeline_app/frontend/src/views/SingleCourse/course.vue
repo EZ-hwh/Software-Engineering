@@ -25,5 +25,5 @@
     // stylelint-disable selector-max-type, selector-class-pattern
 
     // Design variables and utilities from src/design.
-    @import '../../design';
+    @import 'design';
 </style>

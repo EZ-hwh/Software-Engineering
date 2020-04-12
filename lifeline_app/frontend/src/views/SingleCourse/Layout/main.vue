@@ -1,11 +1,11 @@
 <script>
-    import NavBar from "../../../components/nav-bar-c";
+    import NavBarC from "../../../components/nav-bar-c";
     import SideBar from "../../../components/side-bar";
     import RightBar from "../../../components/right-bar";
     import Footer from "../../../components/footer";
 
     export default {
-        components: {NavBar, SideBar, RightBar, Footer},
+        components: {NavBarC, SideBar, RightBar, Footer},
         data() {
             return {
                 isMenuCondensed: false,
@@ -36,7 +36,7 @@
 
 <template>
     <div id="wrapper">
-        <NavBar :title="title"/>
+        <NavBarC :title="title"/>
         <SideBar :is-condensed="isMenuCondensed"/>
         <!-- ============================================================== -->
         <!-- Start Page Content here -->

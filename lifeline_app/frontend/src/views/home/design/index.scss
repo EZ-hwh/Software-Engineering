@@ -12,13 +12,13 @@ File: Main Css File
 @import "custom/fonts/fonts";
 
 //Core files
-@import "~bootstrap/scss/functions";
-@import "~bootstrap/scss/variables";
+@import "../../../../node_modules/bootstrap/scss/functions";
+@import "../../../../node_modules/bootstrap/scss/variables";
 @import "variables";
-@import "~bootstrap/scss/mixins";
-@import '~bootstrap/scss/bootstrap';
+@import "../../../../node_modules/bootstrap/scss/mixins";
+@import '../../../../node_modules/bootstrap/scss/bootstrap';
 @import 'bootstrap';
-@import '~bootstrap-vue/src/index.scss';
+@import '../../../../node_modules/bootstrap-vue/src/index';
 // Structure
 @import "custom/structure/general";
 @import "custom/structure/horizontal-nav";
