@@ -53,6 +53,7 @@
         methods: {
             back_to_main: function () {
                 // TODO：获取index.html
+                window.location.href = "/";
                 // this.$router.go(-1);
             },
             next_page: function () {
@@ -74,7 +75,7 @@
                 }).then(response => 
                         {
                             if (response.data.flag == true){
-                                window.location.href = "home";
+                                window.location.href = "/home";
                             }
                             else{
                                 console.log(response.data.error_msg);
@@ -162,5 +163,5 @@
     // stylelint-disable selector-max-type, selector-class-pattern
 
     // Design variables and utilities from src/design.
-    @import '../../design';
+    @import '../home/design';
 </style>

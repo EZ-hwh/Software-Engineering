@@ -68,6 +68,7 @@ def register_account(request):
 @csrf_exempt
 def login_account(request):
     print("Login begin work")
+    print(request.session.get('login',None))
     if request.session.get('login', None): #会话
         return redirect('/home')
         return HttpResponse("请勿重复登陆") #最好有个提示
@@ -96,15 +97,35 @@ def login_account(request):
 
 @csrf_exempt
 def home(request):
+    print("home begin work")
     if not request.session.get('login', None):
-        return redirect('/home')
-    if request.method == 'GET':
+        return redirect('/login')
+    if request.method == 'GET': #这里用于向前端传输数据用于渲染主页
         ret = {}
         user = Account.objects.get(user__username = request.session['name'])
         print(user.user.username,user.user.password)
         return render(request,'home.html')
     
-    
+@csrf_exempt
+def lesson(request):
+    print("lesson begin work")
+    if not request.session.get('login', None):
+        return redirect('/login')
+    if request.method == 'GET':
+        return render(request,'lessons.html')
+
+@csrf_exempt
+def course(request):
+    print("course begin work")
+    print(request)
+    print(request.method)
+    if not request.session.get('login', None):
+        return redirect('/login')
+    if request.method == 'GET':
+        print("it work")
+        #return render(request,'lessons.html')
+        return render(request,'SingleCourse.html')
+        
 def get_schedule(request):
     if not request.session.get('login', None):
         return redirect('/login_page/')
@@ -133,3 +154,8 @@ def get_schedule(request):
         ret['course'] = course_list
         ret['schedule'] = scheduler_list
         return JsonResponse(ret)
+
+@csrf_exempt
+def logout(request): #登出,此方案过于简单，需改进
+    request.session['login'] = False
+    return render(request,'index.html')

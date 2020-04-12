@@ -9,5 +9,8 @@ urlpatterns = [
     url('home',views.home),
     url('register',views.register_account,),
     url('login',views.login_account,),
+    url('lesson',views.lesson),
+    url('course',views.course),
+    url('logout',views.logout),
     url('',views.first,),
 ]

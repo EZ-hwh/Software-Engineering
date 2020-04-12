@@ -35,6 +35,18 @@ module.exports = {
             filename: 'home.html',
             chunks: ['chunk-vendors', 'chunk-common', 'home']
         },
+        SingleCourse:{
+            entry: 'src/views/SingleCourse/main.js',
+            template: 'public/SingleCourse.html',
+            filename: 'SingleCourse.html',
+            chunks: ['chunk-vendors', 'chunk-common', 'SingleCourse']
+        },
+        lessons: {
+            entry: 'src/views/lessons/main.js',
+            template: 'public/lessons.html',
+            filename: 'lessons.html',
+            chunks: ['chunk-vendors', 'chunk-common', 'lessons']
+        }
     },
     // devServer: {
     //     index: '/', // 运行时，默认打开application1页面
