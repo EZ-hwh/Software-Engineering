@@ -17,7 +17,7 @@
 
 <script>
     import CustomButton from "../../components/CustomButton";
-
+    
     export default {
         name: "first",
         components: {
@@ -25,12 +25,33 @@
         },
         methods: {
             log: function () {
+                window.location.href = "login";
+                //this.$ajax({
+                //    method: 'get',
+                //    url: '/login/',
+                //    success:function(data){
+                 //       console.log("safasfadfasf");
+                //        window.location.href = "login";
+                 //   }
+                //});
+                //.then(response => (console.log(response)))
+                //    .catch(function (error) {
+                 //       console.log(error);
+                 //   })
                 // TODO: 后端获取login.html
-                this.$router.push({name:"Login"});
+                //this.$router.push({name:"login"});
             },
             reg: function () {
+                window.location.href = "register";
+                //this.$ajax({
+                //    method: 'get',
+                //    url: '/register/',
+                //}).then(response => (console.log(response)))
+                //    .catch(function (error) {
+                //        console.log(error);
+                //    })
                 // TODO：后端获取register.html
-                this.$router.push('/Register');
+                //this.$router.push('/Register');
             }
         }
     }
@@ -82,5 +103,5 @@
     // stylelint-disable selector-max-type, selector-class-pattern
 
     // Design variables and utilities from src/design.
-    @import '../../design';
+    @import '../home/design';
 </style>

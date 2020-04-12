@@ -12,10 +12,10 @@ module.exports = {
     pwa: {},
     pages: {
         index: {
-            entry: 'src/views/lessons/main.js',
+            entry: 'src/views/first/main.js',
             template: 'public/index.html',
             filename: 'index.html',
-            chunks: ['chunk-vendors', 'chunk-common', 'lessons']
+            chunks: ['chunk-vendors', 'chunk-common', 'index']
         },
         login: {
             entry: 'src/views/login/main.js',
@@ -35,10 +35,16 @@ module.exports = {
             filename: 'home.html',
             chunks: ['chunk-vendors', 'chunk-common', 'home']
         },
-        lessons:{
-            entry:'src/views/lessons/main.js',
-            template:'public/lessons.html',
-            filename:'lessons.html',
+        SingleCourse:{
+            entry: 'src/views/SingleCourse/main.js',
+            template: 'public/SingleCourse.html',
+            filename: 'SingleCourse.html',
+            chunks: ['chunk-vendors', 'chunk-common', 'SingleCourse']
+        },
+        lessons: {
+            entry: 'src/views/lessons/main.js',
+            template: 'public/lessons.html',
+            filename: 'lessons.html',
             chunks: ['chunk-vendors', 'chunk-common', 'lessons']
         }
     },

@@ -1,14 +1,3 @@
-<template>
-    <svg xmlns="http://www.w3.org/2000/svg"
-         viewBox= "0 0 800 600" width="100%" height="100%"
-         class='lesson_book' id="bookIcon">
-        <g id = book>
-            <rect :fill="getColor()" :x="getX()" :y="getY()" width="80" :height= "getHeight()" rx="5.0"></rect>
-            <text font-family="Montserrat-ExtraBold" :x="getTextX()" :y="getTextY()" :transform ="'rotate(90, ' + getTextX() + ','+ getTextY()+ ')'" style="letter-spacing:10px; font-weight: bold" dominant-baseline="middle" rotate="-90" font-size="25px">{{name}}</text>
-        </g>
-    </svg>
-</template>
-
 <script>
     export default {
         name: "Lessonbook",
@@ -23,6 +12,11 @@
             index:{type:Number, default:0}
         },
         methods: {
+            goLesson(event){
+                event.preventDefault();
+                window.location.href = "/home";
+            },
+
             getX: function(){
                 // console.log(this.number);
                 // console.log(this.index);
@@ -146,6 +140,19 @@
         }
     }
 </script>
+
+<template>
+    <svg xmlns="http://www.w3.org/2000/svg"
+         viewBox= "0 0 800 600" width="100%" height="100%"
+         class='lesson_book' id="bookIcon">
+        <a id = book>
+            <rect :fill="getColor()" :x="getX()" :y="getY()" width="80" :height= "getHeight()" rx="5.0" onclick="window.top.location.href='/course';"></rect>
+            <text font-family="Montserrat-ExtraBold" :x="getTextX()" :y="getTextY()" :transform ="'rotate(90, ' + getTextX() + ','+ getTextY()+ ')'" style="letter-spacing:10px; font-weight: bold" dominant-baseline="middle" rotate="-90" font-size="25px"  onclick="window.top.location.href='/course';" >{{name}}</text>
+        </a>
+    </svg>
+</template>
+
+
 
 <style scoped>
     html {

@@ -49,12 +49,14 @@
                 name: "",
                 password: "",
                 password_again: "",
-                check: true
+                check: true,
+                response: null
             }
         },
         methods: {
             back_to_main: function () {
                 // TODO:获取index.html
+                window.location.href = "/";
                 // this.$router.go(-1);
             },
             next_page: function () {
@@ -67,16 +69,41 @@
                 //    TODO: 注册传参数+获取home.html
                 this.$ajax({
                     method: 'post',
-                    url: '/',
+                    url: '/register/',
                     params: {
                         name: this.name,
                         pass: this.password,
-                        type: 'reg'
+                        pass_again: this.password_again,
+                        type: 'reg',
+                        contentType:'application/json',
+                        dataType:'json',
+                        }
+                }).then(response => 
+                    {
+                        if (response.data.flag === true){
+                            console.log('Success register');
+                            window.location.href = "/login";
+                        }
+                        else{
+                            console.log('Failed register')
+                            console.log(response.data.error_msg);
+                        }
+                        //console.log("sbhwh");
+                        //console.log(response);
+                        //console.log(response.data);
+                    }/*function(response){
+                   console.log("fuck you");
+                    window.location.href = "home";
+                    var res = JSON.parse(response);
+                    console.log(res["flag"]);
+                    if (res["flag"] == "true"){
+                        window.location.href = "home";
                     }
-                }).then(response => (console.log(response)))
+                })*/)
                     .catch(function (error) {
                         console.log(error);
-                    })
+                    }
+                    )
             },
             input: function () {
                 //TODO: 更新输入框长度+store数据存储
@@ -158,5 +185,5 @@
     // stylelint-disable selector-max-type, selector-class-pattern
 
     // Design variables and utilities from src/design.
-    @import '../../design';
+    @import '../home/design';
 </style>

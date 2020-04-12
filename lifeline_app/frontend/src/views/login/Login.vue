@@ -53,6 +53,7 @@
         methods: {
             back_to_main: function () {
                 // TODO：获取index.html
+                window.location.href = "/";
                 // this.$router.go(-1);
             },
             next_page: function () {
@@ -67,11 +68,19 @@
                     method: 'post',
                     url: '/login/',
                     params: {
-                        name: this.$parent.name,
-                        pass: this.$parent.password,
+                        name: this.name,
+                        pass: this.password,
                         type: 'log'
                     }
-                }).then(response => (console.log(response)))
+                }).then(response => 
+                        {
+                            if (response.data.flag == true){
+                                window.location.href = "/home";
+                            }
+                            else{
+                                console.log(response.data.error_msg);
+                            }
+                        })
                     .catch(function (error) {
                         console.log(error);
                     })
@@ -154,5 +163,5 @@
     // stylelint-disable selector-max-type, selector-class-pattern
 
     // Design variables and utilities from src/design.
-    @import '../../design';
+    @import '../home/design';
 </style>

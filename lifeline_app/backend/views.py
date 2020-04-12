@@ -1,5 +1,6 @@
 from django.shortcuts import render,redirect,get_object_or_404
 from django.http import Http404,HttpResponse
+from django.http.response import JsonResponse
 from .models import *
 from django.views.decorators.csrf import csrf_exempt
 import json
@@ -12,8 +13,17 @@ DEBUG = True #进行调试，用于输出调试
 ACCOUNT_ID_RANGE = 100000000
 
 @csrf_exempt
+def first(request):
+    if request.method == "GET":
+        return render(request, 'index.html')
+
+@csrf_exempt
 def register_account(request):
     print("Register begin work")
+    if request.method == "GET":
+        return render(request, "register.html")
+    if request.session.get('login', None):
+        return HttpResponse("请退出登陆")
     if request.method == "POST":
         print(request)
         name = request.GET.get('name')
@@ -22,9 +32,17 @@ def register_account(request):
         ret = {"flag":False,"error_msg":None}
         #if (pwd != pwd_check):
         #    ret['error_msg']="两次输入的密码不同"
-        user = User.objects.create_user(username=name,password=pwd)
-        account = Account.objects.create(user=user,nickname="None")
-        return HttpResponse(json.dumps(ret))
+        same_name_user = User.objects.filter(username=name)
+        if same_name_user:
+            ret["error_msg"] = "same user has been registered"
+        else:
+            ret["flag"] = True
+            user = User.objects.create_user(username=name,password=pwd)
+            request.session['login'] = True # 注册后自动登陆
+            request.session['email'] = user.email
+            request.session['name'] = user.username
+            account = Account.objects.create(user=user,nickname="None")
+        return HttpResponse(json.dumps(ret),content_type="application/json")
     '''
         try:
             account = Account.objects.filter(username=name)
@@ -50,6 +68,12 @@ def register_account(request):
 @csrf_exempt
 def login_account(request):
     print("Login begin work")
+    print(request.session.get('login',None))
+    if request.session.get('login', None): #会话
+        return redirect('/home')
+        # return HttpResponse("请勿重复登陆") #最好有个提示
+    if request.method == "GET":
+        return render(request,"login.html")
     if request.method == "POST":
         print(request)
         name = request.GET.get('name')
@@ -60,6 +84,9 @@ def login_account(request):
             #如果验证成功就让登录
             login(request,user)
             ret["flag"] = True
+            request.session['login'] = True
+            request.session['email'] = user.email
+            request.session['name'] = user.username
             print("登陆成功")
         else:
             ret["error_msg"] = "用户名和密码错误"
@@ -67,3 +94,68 @@ def login_account(request):
         #else:
         #    ret["error_msg"] = "验证码错误"
         return HttpResponse(json.dumps(ret))
+
+@csrf_exempt
+def home(request):
+    print("home begin work")
+    if not request.session.get('login', None):
+        return redirect('/login')
+    if request.method == 'GET': #这里用于向前端传输数据用于渲染主页
+        ret = {}
+        user = Account.objects.get(user__username = request.session['name'])
+        print(user.user.username,user.user.password)
+        return render(request,'home.html')
+    
+@csrf_exempt
+def lesson(request):
+    print("lesson begin work")
+    if not request.session.get('login', None):
+        return redirect('/login')
+    if request.method == 'GET':
+        return render(request,'lessons.html')
+
+@csrf_exempt
+def course(request):
+    print("course begin work")
+    print(request)
+    print(request.method)
+    if not request.session.get('login', None):
+        return redirect('/login')
+    if request.method == 'GET':
+        print("it work")
+        #return render(request,'lessons.html')
+        return render(request,'SingleCourse.html')
+        
+def get_schedule(request):
+    if not request.session.get('login', None):
+        return redirect('/login_page/')
+    if request.method == 'GET':
+        ret = {}
+
+        user = Account.objects.get(email = request.session['email'])
+        courses = [x.course for x in user.takeclass_set.all()]
+        course_list = []
+        for course in courses:
+            info = {}
+            info['name'] = course.course_name
+            info['description'] = course.description
+            info['time'] = [x.course_time for x in course.time_set.all()]
+            course_list.append(info)
+        
+        schedulers = user.scheduler_set.all()
+        scheduler_list = []
+        for scheduler in scheduler_list:
+            info = {}
+            info['title'] = scheduler.title
+            info['message'] = scheduler.message
+            info['time'] = [x.course_time for x in scheduler.time_set.all()]
+            scheduler_list.append(info)
+        
+        ret['course'] = course_list
+        ret['schedule'] = scheduler_list
+        return JsonResponse(ret)
+
+@csrf_exempt
+def logout(request): #登出,此方案过于简单，需改进
+    request.session['login'] = False
+    return render(request,'index.html')
