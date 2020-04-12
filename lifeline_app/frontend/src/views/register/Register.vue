@@ -68,7 +68,7 @@
                 this.$ajax({
                     method: 'post',
                     url: '/',
-                    params: {
+                    data: {
                         name: this.name,
                         pass: this.password,
                         type: 'reg'
@@ -158,5 +158,5 @@
     // stylelint-disable selector-max-type, selector-class-pattern
 
     // Design variables and utilities from src/design.
-    @import '../../design';
+    @import '../home/design';
 </style>

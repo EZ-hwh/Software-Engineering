@@ -1,6 +1,6 @@
 <script>
     import appConfig from '../../app.config'
-    import Layout from '../../layouts/main'
+    import Layout from './layouts/main'
     import Calendar from '../../components/calendar.vue'
     import ToDoList from '../../components/toDoList.vue'
     import ToDoListWeek from '../../components/toDoListWeek.vue'
@@ -164,5 +164,5 @@
     // stylelint-disable selector-max-type, selector-class-pattern
 
     // Design variables and utilities from src/design.
-    @import '../../design';
+    @import 'design';
 </style>

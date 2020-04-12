@@ -66,7 +66,7 @@
                 this.$ajax({
                     method: 'post',
                     url: '/login/',
-                    params: {
+                    data: {
                         name: this.$parent.name,
                         pass: this.$parent.password,
                         type: 'log'
@@ -154,5 +154,5 @@
     // stylelint-disable selector-max-type, selector-class-pattern
 
     // Design variables and utilities from src/design.
-    @import '../../design';
+    @import '../home/design';
 </style>
