@@ -1,7 +1,7 @@
 <script>
-import VuePerfectScrollbar from 'vue-perfect-scrollbar'
+import VuePerfectScrollbar from "vue-perfect-scrollbar";
 // import { authComputed } from '@state/helpers'
-import SideNav from './side-nav'
+import SideNav from "./side-nav";
 
 export default {
   components: { VuePerfectScrollbar, SideNav },

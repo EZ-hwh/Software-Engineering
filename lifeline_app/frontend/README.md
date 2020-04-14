@@ -46,8 +46,6 @@ python manage.py runserver //在项目文件夹下 需要先做上一步打包
 axios.defaults.baseURL='http://127.0.0.1:8000/';
 ```
 
-
-
 ### 登录
 
 ​		在`frontend/src/views/Login.vue`中设置了点击登录的按钮（就是那个写了冲啊的按钮），会向后端发送一个get的http包。
