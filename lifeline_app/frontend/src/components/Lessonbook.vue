@@ -120,7 +120,7 @@
                 // console.log(this.index);
                  if(this.number % 2 === 0) {
                     if(this.index <= this.number/2) {
-                        return Number(460 - 15 * this.number + 30 * this.index )
+                        return Number(470 - 15 * this.number + 30 * this.index )
                     }
                     else{
                         return Number(500  + 15 * this.number - 30 * this.index)

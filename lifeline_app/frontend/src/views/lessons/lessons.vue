@@ -5,11 +5,11 @@
                 <h1>LifeLine  Lesson</h1>
             </header>
 <!--            <div class='books'>-->
-            <div class="bg">
-                <div class="'button">
-                    <CustomButton source="grinningface" size="large" message="back" @click.native="back_to_main"></CustomButton>
-                </div>
-            </div>
+<!--            <div class="bg">-->
+<!--                <div class="'button">-->
+<!--                    <CustomButton source="grinningface" size="large" message="back" @click.native="back_to_main"></CustomButton>-->
+<!--                </div>-->
+<!--            </div>-->
             <div class ='lessons' v-for="item in items">
                 <Lessonbook :index="item.index" :number="items.length" :name = "item.curriculum" v-on:click= 'go_to_lesson("item.curriculum")'></Lessonbook>
             </div>
@@ -154,7 +154,7 @@
     .lessons{
         background-size: 100% 100%;
         top: 20vh;
-        padding: 10% 0% 0% 0%;
+        padding: 1% 0% 0% 0%;
         height:50vh;
         width:100vw;
         padding:0 0;
