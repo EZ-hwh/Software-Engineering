@@ -2198,7 +2198,7 @@ Responsive Menu
   min-height: 100px; }
 
 body.authentication-bg {
-  background-image: url("../images/big/bg1.jpg");
+  background-image: url("../images/background/bg1.jpg");
   background-size: cover;
   background-position: center; }
 
@@ -2990,7 +2990,7 @@ h3.timeline-title {
     font-weight: 500; }
 
 .ms-container {
-  background: transparent url("../images/multiple-arrow.png") no-repeat 50% 50%;
+  background: transparent url("../images/template/multiple-arrow.png") no-repeat 50% 50%;
   width: auto;
   max-width: 370px; }
   .ms-container .ms-list {
@@ -3241,10 +3241,10 @@ h3.timeline-title {
     outline: none !important; }
 
 .editable-clear-x {
-  background: url("../images/clear.png") center center no-repeat; }
+  background: url("../images/template/clear.png") center center no-repeat; }
 
 .editableform-loading {
-  background: url("../images/loading.gif") center center no-repeat; }
+  background: url("../images/template/loading.gif") center center no-repeat; }
 
 .editable-checklist label {
   display: block; }
@@ -3859,7 +3859,7 @@ div.hopscotch-bubble {
 
 .jstree-default .jstree-node,
 .jstree-default .jstree-icon {
-  background-image: url("../images/jstree.png"); }
+  background-image: url("../images/template/jstree.png"); }
 
 .jstree-default .jstree-node {
   background-position: -292px -4px;
@@ -3875,7 +3875,7 @@ div.hopscotch-bubble {
   height: 28px; }
 
 .jstree-default > .jstree-container-ul .jstree-loading > .jstree-ocl {
-  background: url("../images/loading.gif") center center no-repeat; }
+  background: url("../images/template/loading.gif") center center no-repeat; }
 
 .jstree-default .jstree-icon:empty {
   width: 24px;
