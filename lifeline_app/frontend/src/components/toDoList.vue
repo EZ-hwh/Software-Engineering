@@ -38,8 +38,6 @@
 </template>
 
 <script>
-// import { authComputed } from '@state/helpers'
-//TODO：又是一个跟state相关的
 import data from '../datasample.json'
 
 export default {
@@ -49,9 +47,6 @@ export default {
       TodayList:data.TodayList,
     }
   },
-  // computed: {
-  //   ...authComputed,
-  // },
   methods: {},
 }
 </script>
