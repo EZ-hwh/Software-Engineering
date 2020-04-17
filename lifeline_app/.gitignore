@@ -1,2 +1,6 @@
 package.json
 *.pyc
+db.sqlite3
+/backend/__pycache__/
+/lifeline_app/__pycache__/
+
