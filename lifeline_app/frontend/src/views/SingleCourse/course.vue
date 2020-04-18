@@ -24,6 +24,6 @@
     // Allow element/type selectors, because this is global CSS.
     // stylelint-disable selector-max-type, selector-class-pattern
 
-    // Design variables and utilities from src/design.
-    @import 'design';
+    // Design variables and utilities from src/TopBarDesign.
+    @import '../../assets/css/SideBarDesign';
 </style>
