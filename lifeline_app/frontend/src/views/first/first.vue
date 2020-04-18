@@ -66,6 +66,7 @@
         font-style: normal;
     }
 
+
     h1 {
         font-family: Montserrat-ExtraBold, monospace;
         font-size: 150px;
@@ -96,12 +97,4 @@
         display: flex;
     }
 
-</style>
-
-<style lang="scss">
-    // Allow element/type selectors, because this is global CSS.
-    // stylelint-disable selector-max-type, selector-class-pattern
-
-    // Design variables and utilities from src/TopBarDesign.
-    @import '../../assets/css/TopBarDesign';
 </style>

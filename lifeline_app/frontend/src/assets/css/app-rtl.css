@@ -21,7 +21,7 @@ body {
     max-width: 90%; } }
 
 .wrapper {
-  padding: 130px 12px 0 12px; }
+  padding: 70px 12px 0 12px; }
 
 #topnav {
   background: #ffffff;
@@ -99,7 +99,7 @@ body {
 .navigation-menu {
   list-style: none;
   margin: 0;
-  padding: 0; }
+  padding: 4px; }
   .navigation-menu > li {
     float: left;
     position: relative; }
@@ -124,9 +124,9 @@ Responsive Menu
 */
 @media (min-width: 992px) {
   .navigation-menu > li > a:hover, .navigation-menu > li > a:focus, .navigation-menu > li > a:active {
-    color: #71b6f9; }
+    color: rgba(8, 76, 97, 1); }
   .navigation-menu > li:hover a {
-    color: #71b6f9; }
+    color: rgba(8, 76, 97, 1); }
   .navigation-menu > li:first-of-type > a {
     padding-left: 0; }
   .navigation-menu > li.last-elements .submenu {
@@ -138,7 +138,7 @@ Responsive Menu
       margin-left: 0;
       margin-right: 10px; }
   .navigation-menu > li > ul > li.has-submenu:active > a, .navigation-menu > li > ul > li.has-submenu:hover > a {
-    color: #71b6f9; }
+    color: rgba(8, 76, 97, 1); }
   .navigation-menu > li .submenu {
     position: absolute;
     top: 100%;
@@ -181,7 +181,7 @@ Responsive Menu
         white-space: nowrap;
         color: #6c757d; }
         .navigation-menu > li .submenu li a:hover {
-          color: #71b6f9; }
+          color: rgba(8, 76, 97, 1); }
       .navigation-menu > li .submenu li.has-submenu > a .arrow-down:after {
         right: 20px !important;
         -webkit-transform: rotate(-135deg) translateY(-50%) !important;
@@ -255,9 +255,9 @@ Responsive Menu
           display: block;
           position: relative;
           padding: 7px 20px;
-          color: #323a46; }
+          color: rgba(8, 76, 97, 1); }
           #topnav .navigation-menu > li .submenu li a:hover {
-            color: #71b6f9; }
+            color: rgba(230, 235, 224, 1); }
         #topnav .navigation-menu > li .submenu.open {
           display: block; }
         #topnav .navigation-menu > li .submenu .submenu {
@@ -589,7 +589,7 @@ Responsive Menu
     display: none; } }
 
 .footer {
-  bottom: 0;
+  /* bottom: 0; */
   padding: 19px 15px 20px;
   position: absolute;
   right: 0;

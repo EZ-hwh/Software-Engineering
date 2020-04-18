@@ -21,7 +21,7 @@ body {
     max-width: 90%; } }
 
 .wrapper {
-  padding: 130px 12px 0 12px; }
+  padding: 70px 12px 0 12px; }
 
 #topnav {
   background: #ffffff;
@@ -589,7 +589,7 @@ Responsive Menu
     display: none; } }
 
 .footer {
-  bottom: 0;
+  /* bottom: 0; */
   padding: 19px 15px 20px;
   position: absolute;
   right: 0;

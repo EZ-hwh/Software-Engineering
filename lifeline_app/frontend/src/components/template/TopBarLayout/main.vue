@@ -30,7 +30,7 @@
         <header id="topnav">
             <TopBar/>
             <!-- 这里有一个 :user="user" 先注释掉了-->
-            <NavBar :is-menu-opened="isMenuOpened"/>
+            <!-- <NavBar :is-menu-opened="isMenuOpened"/> -->
         </header>
 
 

@@ -1,6 +1,7 @@
 <script>
 // import { authComputed } from '@state/helpers'
-import VuePerfectScrollbar from 'vue-perfect-scrollbar'
+import VuePerfectScrollbar from "vue-perfect-scrollbar";
+import data from '../../datasample.json';
 
 export default {
   components: { VuePerfectScrollbar },
@@ -13,27 +14,94 @@ export default {
     title: {
       type: String,
       required: false,
-      default: () => '',
+      default: () => "",
     },
   },
   data() {
     return {
+      courses: data.Curriculum,
       isMenuOpened: false,
-    }
+    };
   },
   // computed: {
   //   ...authComputed,
   // },
   methods: {
     toggleMenu() {
-      this.isMenuOpened = !this.isMenuOpened
-      this.$parent.toggleMenu()
+      this.isMenuOpened = !this.isMenuOpened;
+      this.$parent.toggleMenu();
     },
     toggleRightSidebar() {
-      this.$parent.toggleRightSidebar()
+      this.$parent.toggleRightSidebar();
+    },
+    onMenuClick(event) {
+      event.preventDefault();
+      const nextEl = event.target.nextSibling;
+      if (nextEl && !nextEl.classList.contains("open")) {
+        const parentEl = event.target.parentNode;
+        if (parentEl) {
+          parentEl.classList.remove("open");
+        }
+
+        nextEl.classList.add("open");
+      } else if (nextEl) {
+        nextEl.classList.remove("open");
+      }
+      //TODO: 这里可以做到homepage的跳转 暂时可以不动 这里response好像要改改...
+      window.location.href = "/home"; //转跳到home
+      /*console.log("qitadejiubudong")
+                this.$ajax({
+                    method: 'get',
+                    url: '/home',
+                }).then(response => (console.log(response)))
+                    .catch(function (error) {
+                        console.log(error);
+                    })
+                return false*/
+    },
+
+    ToLessons(event) {
+      event.preventDefault();
+      const nextEl = event.target.nextSibling;
+      if (nextEl && !nextEl.classList.contains("open")) {
+        const parentEl = event.target.parentNode;
+        if (parentEl) {
+          parentEl.classList.remove("open");
+        }
+
+        nextEl.classList.add("open");
+      } else if (nextEl) {
+        nextEl.classList.remove("open");
+      }
+      //TODO: 这里跳转lessons
+      console.log("从这里应该可以跳转");
+      window.location.href = "/lesson"; //转跳到lesson
+      /*this.$ajax({
+                    method: 'get',
+                    url: '/lessons',
+                }).then(response => (console.log(response)))
+                    .catch(function (error) {
+                        console.log(error);
+                    })
+                return false*/
+    },
+    ToCourse(value) {
+      //TODO: 这里跳转singlecourse的界面
+      console.log(value);
+      window.location.href = "/course"; //还没有加课程的value
+      /*this.$ajax({
+                    method: 'get',
+                    url: '/SingleCourse',
+                    params: {
+                      name: value
+                    }
+                }).then(response => (console.log(response)))
+                    .catch(function (error) {
+                        console.log(error);
+                    })*/
     },
   },
-}
+};
 </script>
 
 <template>
@@ -67,10 +135,7 @@ export default {
                   placeholder="Search..."
                 />
                 <div class="input-group-append">
-                  <button
-                    class="btn"
-                    type="submit"
-                  >
+                  <button class="btn" type="submit">
                     <i class="fe-search"></i>
                   </button>
                 </div>
@@ -79,41 +144,29 @@ export default {
           </form>
         </li>
 
-        <b-nav-item-dropdown
-          right
-          class="notification-list"
-        >
+        <b-nav-item-dropdown right class="notification-list">
           <template
             slot="button-content"
             class="nav-link dropdown-toggle  waves-effect waves-light"
           >
             <i class="fe-bell noti-icon"></i>
-            <span class="badge badge-danger rounded-circle noti-icon-badge">9</span>
+            <span class="badge badge-danger rounded-circle noti-icon-badge"
+              >9</span
+            >
           </template>
 
-          <b-dropdown-text
-            href="#"
-            class="dropdown-item noti-title"
-          >
+          <b-dropdown-text href="#" class="dropdown-item noti-title">
             <h5 class="m-0">
               <span class="float-right">
-                <a
-                  href=""
-                  class="text-dark"
-                >
+                <a href="" class="text-dark">
                   <small>Clear All</small>
-                </a> </span>Notification
+                </a> </span
+              >Notification
             </h5>
           </b-dropdown-text>
 
-          <b-dropdown-text
-            href="#"
-            class="p-0"
-          >
-            <VuePerfectScrollbar
-              v-once
-              class="noti-scroll"
-            >
+          <b-dropdown-text href="#" class="p-0">
+            <VuePerfectScrollbar v-once class="noti-scroll">
               <a
                 href="javascript:void(0);"
                 class="dropdown-item notify-item active"
@@ -123,7 +176,8 @@ export default {
                     src="../../assets/images/user/user-1.jpg"
                     class="img-fluid rounded-circle"
                     alt=""
-                  /> </div>
+                  />
+                </div>
                 <p class="notify-details">Cristina Pride</p>
                 <p class="text-muted mb-0 user-msg">
                   <small>Hi, How are you? What about our next meeting</small>
@@ -131,29 +185,25 @@ export default {
               </a>
 
               <!-- item-->
-              <a
-                href="javascript:void(0);"
-                class="dropdown-item notify-item"
-              >
+              <a href="javascript:void(0);" class="dropdown-item notify-item">
                 <div class="notify-icon bg-primary">
                   <i class="mdi mdi-comment-account-outline"></i>
                 </div>
-                <p class="notify-details">Caleb Flakelar commented on Admin
+                <p class="notify-details">
+                  Caleb Flakelar commented on Admin
                   <small class="text-muted">1 min ago</small>
                 </p>
               </a>
 
               <!-- item-->
-              <a
-                href="javascript:void(0);"
-                class="dropdown-item notify-item"
-              >
+              <a href="javascript:void(0);" class="dropdown-item notify-item">
                 <div class="notify-icon">
                   <img
                     src="../../assets/images/user/user-1.jpg"
                     class="img-fluid rounded-circle"
                     alt=""
-                  /> </div>
+                  />
+                </div>
                 <p class="notify-details">Karen Robinson</p>
                 <p class="text-muted mb-0 user-msg">
                   <small>Wow ! this admin looks good and awesome design</small>
@@ -161,40 +211,34 @@ export default {
               </a>
 
               <!-- item-->
-              <a
-                href="javascript:void(0);"
-                class="dropdown-item notify-item"
-              >
+              <a href="javascript:void(0);" class="dropdown-item notify-item">
                 <div class="notify-icon bg-warning">
                   <i class="mdi mdi-account-plus"></i>
                 </div>
-                <p class="notify-details">New user registered.
+                <p class="notify-details">
+                  New user registered.
                   <small class="text-muted">5 hours ago</small>
                 </p>
               </a>
 
               <!-- item-->
-              <a
-                href="javascript:void(0);"
-                class="dropdown-item notify-item"
-              >
+              <a href="javascript:void(0);" class="dropdown-item notify-item">
                 <div class="notify-icon bg-info">
                   <i class="mdi mdi-comment-account-outline"></i>
                 </div>
-                <p class="notify-details">Caleb Flakelar commented on Admin
+                <p class="notify-details">
+                  Caleb Flakelar commented on Admin
                   <small class="text-muted">4 days ago</small>
                 </p>
               </a>
 
               <!-- item-->
-              <a
-                href="javascript:void(0);"
-                class="dropdown-item notify-item"
-              >
+              <a href="javascript:void(0);" class="dropdown-item notify-item">
                 <div class="notify-icon bg-secondary">
                   <i class="mdi mdi-heart"></i>
                 </div>
-                <p class="notify-details">Carlos Crouch liked
+                <p class="notify-details">
+                  Carlos Crouch liked
                   <b>Admin</b>
                   <small class="text-muted">13 days ago</small>
                 </p>
@@ -224,7 +268,7 @@ export default {
                 class="rounded-circle"
               />
               <span class="pro-user-name ml-1">
-                {{user ? user.name : ''}} <i class="mdi mdi-chevron-down"></i>
+                {{ user ? user.name : "" }} <i class="mdi mdi-chevron-down"></i>
               </span>
             </div>
           </template>
@@ -263,10 +307,7 @@ export default {
 
       <!-- LOGO -->
       <div class="logo-box">
-        <a
-          href="index.html"
-          class="logo text-center"
-        >
+        <a href="index.html" class="logo text-center">
           <!-- 这个图片不知道哪里出错了 -->
           <span class="logo-lg">
             <img
@@ -284,6 +325,40 @@ export default {
           </span>
         </a>
       </div>
+
+      <b-collapse id="navigation" v-model="isMenuOpened">
+        <!-- Navigation Menu-->
+        <ul class="navigation-menu">
+          <li class="has-submenu active">
+            <a href="#" @click="onMenuClick">
+              <i class="mdi mdi-view-dashboard"></i>Main
+            </a>
+          </li>
+
+          <li class="has-submenu">
+            <a href="#" @click="ToLessons">
+              <i class="mdi mdi-share-variant"></i>Curriculum
+              <div class="arrow-down"></div>
+            </a>
+
+            <ul class="submenu">
+              <li v-for="value in courses" :key="value">
+                <a href="#" @click="ToCourse(value)">
+                  {{ value }}
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          <li class="has-submenu">
+            <a href="#"> <i class="mdi mdi-invert-colors"></i>Ispace </a>
+          </li>
+        </ul>
+        <!-- End navigation menu -->
+
+        <div class="clearfix"></div>
+      </b-collapse>
+      <!-- end #navigation -->
     </div>
   </div>
   <!-- end Topbar -->

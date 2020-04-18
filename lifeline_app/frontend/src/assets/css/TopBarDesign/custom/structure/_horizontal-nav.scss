@@ -11,7 +11,7 @@
 
 // Content start wrapper
 .wrapper {
-    padding: ($topbar-height + 60px) ($grid-gutter-width / 2) 0 ($grid-gutter-width / 2);
+    padding: ($topbar-height ) ($grid-gutter-width / 2) 0 ($grid-gutter-width / 2);
 }
 
 // Top header
@@ -115,7 +115,7 @@
 .navigation-menu {
     list-style: none;
     margin: 0;
-    padding: 0;
+    padding: 4px;
 
     > li {
         float: left;
