@@ -145,7 +145,7 @@ sup {
   top: -.5em; }
 
 a {
-  color: #71b6f9;
+  color: rgba(155, 193, 188, 1);
   text-decoration: none;
   background-color: transparent; }
   a:hover {

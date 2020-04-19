@@ -105,7 +105,7 @@ $colors: map-merge((
   "gray-dark":  $gray-800
 ), $colors);
 
-$primary:       $blue;
+$primary:       rgba(155, 193, 188, 1);
 $secondary:     $gray-700;
 $success:       $green;
 $info:          $cyan;

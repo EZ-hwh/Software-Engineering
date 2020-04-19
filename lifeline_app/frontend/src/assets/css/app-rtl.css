@@ -90,9 +90,9 @@ body {
         -webkit-transform: rotate(-45deg);
         transform: rotate(-45deg); }
   #topnav .has-submenu.active > a {
-    color: #71b6f9; }
+    color: rgba(155, 193, 188, 1); }.navigation-menu > li
   #topnav .has-submenu.active .submenu li.active > a {
-    color: #71b6f9; }
+    color: rgba(155, 193, 188, 1); }
   #topnav .topbar-menu {
     margin-top: 70px; }
 
@@ -105,7 +105,7 @@ body {
     position: relative; }
     .navigation-menu > li > a {
       display: block;
-      color: #6c757d;
+      color: rgba(8, 76, 97, 1);
       font-size: 15px;
       font-family: "Karla", sans-serif;
       -webkit-transition: all .5s ease;
@@ -179,7 +179,7 @@ Responsive Menu
         padding: 9px 25px;
         clear: both;
         white-space: nowrap;
-        color: #6c757d; }
+        color: rgba(8, 76, 97, 1); }
         .navigation-menu > li .submenu li a:hover {
           color: rgba(8, 76, 97, 1); }
       .navigation-menu > li .submenu li.has-submenu > a .arrow-down:after {
@@ -269,11 +269,11 @@ Responsive Menu
           list-style: none;
           padding-left: 0; }
       #topnav .navigation-menu > li.has-submenu.open > a {
-        color: #71b6f9; }
+        color: rgba(155, 193, 188, 1); }
   #topnav .has-submenu.active a {
-    color: #71b6f9; }
+    color: rgba(155, 193, 188, 1); }
   #topnav .has-submenu.active .submenu li.active > a {
-    color: #71b6f9; }
+    color: rgba(155, 193, 188, 1); }
   #topnav .arrow-down:after {
     right: 15px;
     position: absolute; }
@@ -314,9 +314,9 @@ Responsive Menu
       background-color: #f1f5f7;
       color: #adb5bd; }
   .menubar-dark #topnav .has-submenu.active > a {
-    color: #71b6f9; }
+    color: rgba(155, 193, 188, 1); }
   .menubar-dark #topnav .has-submenu.active .submenu li.active > a {
-    color: #71b6f9; }
+    color: rgba(155, 193, 188, 1); }
 
 .menubar-dark .navigation-menu > li > a {
   color: rgba(255, 255, 255, 0.7); }
@@ -1550,7 +1550,7 @@ Responsive Menu
   margin-bottom: 10px; }
   .icons-list-demo .col-lg-4:hover,
   .icons-list-demo .col-lg-4:hover i {
-    color: #71b6f9; }
+    color: rgba(155, 193, 188, 1); }
 
 .scrollspy-example {
   position: relative;
