@@ -1,9 +1,9 @@
-#Zenhub 使用指南
+# Zenhub 使用指南
 请根据本指南的要求在`zenhub`中管理本项目
 
 
 
-##安装
+## 安装
 
 我们推荐使用`chrome`浏览器扩展程序的方式安装`zenhub`
 - 在`chrome`网上应用店搜索扩展程序`Zenhub for Github`
@@ -20,7 +20,7 @@
 
 ## 使用
 
-###添加issue
+### 添加issue
 
 - **在每次任务开始前，你需要进入zenhub管理界面，添加新issue**
 - 点击页面绿色按钮，添加`new issue`

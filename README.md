@@ -6,7 +6,7 @@
 
 ## Prerequisites
 
-###本地
+### 本地
 
 - 我们的项目使用 `Vue.js` 和 `django`作为开发框架。因此，在使用/开发我们的网页前，需要确保它们已经安装成功（同时应确保 `npm` 安装完成)。
 
@@ -19,7 +19,7 @@
   cd lifeline_app
   ```
 
-###服务器
+### 服务器
 
 - 项目暂时还未部署，现阶段仅支持本地运行
 
@@ -66,7 +66,7 @@
 
 ### 完善文档
 
-【[**issue**]((https://github.com/EZ-hwh/Software-Engineering/issues/35))】从主页的readme.md维护一个树状的文档，希望有如下功能：
+【[**issue**](https://github.com/EZ-hwh/Software-Engineering/issues/35)】从主页的readme.md维护一个树状的文档，希望有如下功能：
 
 1. 用户可以下载本项目后成功运行
 2. 介绍Feature，项目完成情况
@@ -77,7 +77,7 @@
 
 
 
-###前端总体设计美化
+### 前端总体设计美化
 
 【[**issue**](https://github.com/EZ-hwh/Software-Engineering/issues/36)】解决前端不同网页设计风格不同的问题，改进的目标是：
 
@@ -96,10 +96,10 @@
 
 ### 项目管理
 
-- 加入我们的**[项目仓库](https://github.com/EZ-hwh/Software-Engineering)**
-- 按照**[合作开发流程指南](documents/开发流程.md)**更新自己的开发工作
+- 加入我们的[项目仓库](https://github.com/EZ-hwh/Software-Engineering)
+- 按照[合作开发流程指南](documents/开发流程.md)更新自己的开发工作
   - 在将自己分支的代码 merge 到 master branch 时，需要提交 `pull request`，其它小组成员可以添加`review`，在确认提交代码正确性后，可以 `merge pull request`
-- 学习使用zenhub，**按照[zenhub使用指南](documents/zenhub指南.md)**添加/处理issue。
+- 学习使用zenhub，**按照[zenhub使用指南](documents/zenhub指南.md)添加/处理issue**。
   - 确保及时更新自己的issue
 - **文档维护**
   - 记录自己开发过程中的技术细节和问题解决方案。将文档更新在master branch的`/documents/`文件夹下。文档更新无需 `pull request`。
@@ -119,7 +119,7 @@
 
 ### 前端
 
-####前端框架
+#### 前端框架
 
 - 在设计自己的网页时，**请保证你的前端组织结构符合团队框架规范，以便于合并前端所有文件，详见[前端框架说明](documents/前端结构文档.md)**。
 
@@ -177,7 +177,7 @@
   - 文件：发放PPT/作业
   - 作业：同学提交作业
 
-####
+
 
 ### 后端
 
@@ -196,15 +196,15 @@
 
 
 
-###会议记录
+### 会议记录
 
 - **Sprint1会议**：[会议记录](documents/Sprint1会议.md)
 
 
 
-###开发感想
+### 开发感想
 
- [Yixian Du](documents/工作记录 RIki Du.md) 
+ [Yixian Du](documents/工作记录-Du.md) 
 
 
 
