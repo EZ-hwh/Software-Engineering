@@ -30,8 +30,8 @@
         },
         computed: {
             getImage: function () {
-                console.log('../assets/images/' + this.source + '.png');
-                return require('../assets/images/' + this.source + '.png');
+                console.log('../assets/images/button/' + this.source + '.png');
+                return require('../assets/images/button/' + this.source + '.png');
             }
         }
     }
