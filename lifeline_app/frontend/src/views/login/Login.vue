@@ -195,18 +195,18 @@
         border: 0px;
         outline: #7B7988;
         font-size: 55px;
-        font-family: AD;
+        font-family: Montserrat-ExtraBold;
         /*TODO: 字体待更换*/
     }
 
     input::placeholder {
         font-size: 45px;
-        font-family: AD;
+        font-family: Montserrat-ExtraBold;
     }
 
     .sec {
         margin: auto;
-        padding: 7% 10%;
+        padding: 9% 10%;
         display: flex;
         align-items: center;
         font-size: 4.5em;

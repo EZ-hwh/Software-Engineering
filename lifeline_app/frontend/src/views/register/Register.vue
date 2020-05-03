@@ -1,15 +1,35 @@
 <template>
-    <div id="register">
+    <div>
         <div id="register_window">
             <header>
                 <h1>LifeLine</h1>
             </header>
             <div v-show="check">
                 <p class="sec">
-                    {{ name_message }}<input v-model="name" placeholder="Your name?">
+                    <svg width="100%" height="100%">
+                        <symbol id="s-text">
+                            <text text-anchor="middle"
+                                  x="50%" y="70%">
+                                Nice to meet you
+                            </text>
+                        </symbol>
+                        <use xlink:href="#s-text" class="text"
+                        ></use>
+                        <use xlink:href="#s-text" class="text"
+                        ></use>
+                        <use xlink:href="#s-text" class="text"
+                        ></use>
+                        <use xlink:href="#s-text" class="text"
+                        ></use>
+                    </svg>
+
+                        <input v-model="name" placeholder="Your name?" type="text" maxlength="11">
+
                     <CustomButton source="grinningface" size="large" message="设置暗号=3="
                                   @click.native="next_page"></CustomButton>
                 </p>
+
+
                 <p>
                     <CustomButton source="grinningface" size="large" message="我走错了:("
                                   @click.native="back_to_main"></CustomButton>
@@ -73,21 +93,19 @@
                         pass: this.password,
                         pass_again: this.password_again,
                         type: 'reg',
-                        contentType:'application/json',
-                        dataType:'json',
-                        }
-                }).then(response => 
-                    {
-                        if (response.data.flag == true){
-                            window.location.href = "/login";
-                        }
-                        else{
-                            console.log(response.data.error_msg);
-                        }
-                        //console.log("sbhwh");
-                        //console.log(response);
-                        //console.log(response.data);
-                    }/*function(response){
+                        contentType: 'application/json',
+                        dataType: 'json',
+                    }
+                }).then(response => {
+                    if (response.data.flag == true) {
+                        window.location.href = "/login";
+                    } else {
+                        console.log(response.data.error_msg);
+                    }
+                    //console.log("sbhwh");
+                    //console.log(response);
+                    //console.log(response.data);
+                }/*function(response){
                    console.log("fuck you");
                     window.location.href = "home";
                     var res = JSON.parse(response);
@@ -97,8 +115,8 @@
                     }
                 })*/)
                     .catch(function (error) {
-                        console.log(error);
-                    }
+                            console.log(error);
+                        }
                     )
             },
         },
@@ -111,13 +129,6 @@
 </script>
 
 <style scoped>
-    @font-face {
-        font-family: 'Montserrat-ExtraBold';
-        src: url('../../assets/fonts/Montserrat-ExtraBold.ttf') format('truetype');
-        font-weight: normal;
-        font-style: normal;
-    }
-
     #register_window {
         background-color: aliceblue;
         background-size: cover;
@@ -129,25 +140,25 @@
     header {
         font-family: Montserrat-ExtraBold, monospace;
         text-align: left;
-        padding: 20px;
+        padding: 1% 2.5%;
     }
 
     h1 {
-        font-family: Montserrat-ExtraBold, sans-serif;
-        padding: 10px 0;
-        width: 200px;
+        font-family: Montserrat-ExtraBold;
+        padding: 0.8% 0;
+        width: 12%;
         text-align: center;
         border: dotted 10px lightskyblue;
     }
 
     input {
-        padding: 0 0 0 50px;
+        padding: 0 0 0 2%;
         background: transparent;
-        width: 300px;
+        width: 55%;
         height: 100px;
         border: 0px;
         outline: #7B7988;
-        font-size: 60px;
+        font-size: 55px;
         font-family: Montserrat-ExtraBold, sans-serif;
     }
 
@@ -157,10 +168,10 @@
 
     .sec {
         margin: auto;
-        padding: 10% 10% 10% 18%;
+        padding: 9% 5%;
         display: flex;
         align-items: center;
-        font-size: 60px;
+        font-size: 4.5em;
     }
 
     .sec2 {
@@ -168,15 +179,70 @@
         padding: 5% 10% 6.4% 20%;
         display: flex;
         align-items: center;
-        font-size: 60px;
+        font-size: 4.5em;
     }
 
-</style>
+    .text {
+        font-weight: bold;
+        text-transform: uppercase;
+        fill: none;
+        stroke: #3498db;
+        stroke-width: 2px;
+        stroke-dasharray: 0 350;
+        stroke-dashoffset: 0;
+    }
 
-<style lang="scss">
-    // Allow element/type selectors, because this is global CSS.
-    // stylelint-disable selector-max-type, selector-class-pattern
+    .text:nth-child(4n+1) {
+        stroke: #3498db;
+        text-shadow: 0 0 5px #3498db;
+        animation: stroke 6s ease-in-out forwards;
+    }
 
-    // Design variables and utilities from src/TopBarDesign.
-    @import '../../assets/css/TopBarDesign';
+    .text:nth-child(4n+2) {
+        stroke: #f39c12;
+        text-shadow: 0 0 5px #f39c12;
+        animation: stroke1 6s ease-in-out forwards;
+    }
+
+    .text:nth-child(4n+3) {
+        stroke: #e74c3c;
+        text-shadow: 0 0 5px #e74c3c;
+        animation: stroke2 6s ease-in-out forwards;
+    }
+
+    .text:nth-child(4n+4) {
+        stroke: #9b59b6;
+        text-shadow: 0 0 5px #9b59b6;
+        animation: stroke3 6s ease-in-out forwards;
+    }
+
+    @keyframes stroke {
+        100% {
+            stroke-dashoffset: 0;
+            stroke-dasharray: 80 240;
+        }
+    }
+
+    @keyframes stroke1 {
+        100% {
+            stroke-dashoffset: 90;
+            stroke-dasharray: 80 240;
+        }
+    }
+
+    @keyframes stroke2 {
+        100% {
+            stroke-dashoffset: 180;
+            stroke-dasharray: 80 240;
+        }
+    }
+
+    @keyframes stroke3 {
+        100% {
+            stroke-dashoffset: 270;
+            stroke-dasharray: 80 240;
+        }
+    }
+
+
 </style>
