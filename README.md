@@ -66,6 +66,14 @@
 
 ### 完善文档
 
+【[**issue**](https://github.com/EZ-hwh/Software-Engineering/issues/45)】邮箱验证接口，问题如下：
+
+1. 前端传输数据内容与原来设置不同
+2. 需要重新设置一个url
+3. 后端返回数据类型需要修改
+
+**问题状态**：需要后端帮助，完善前后端交互
+
 【[**issue**](https://github.com/EZ-hwh/Software-Engineering/issues/35)】从主页的readme.md维护一个树状的文档，希望有如下功能：
 
 1. 用户可以下载本项目后成功运行
