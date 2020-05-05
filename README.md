@@ -62,10 +62,7 @@
 
 *本板块有待完善，在新建立 issue 后，请及时将其内容更新到 in-progress板块并保持对问题状态的更新，对于已经 close 的 issue，请及时移除并将完成的功能更新至 feature 板块*
 
-
-
-### 完善文档
-
+### 邮箱验证接口
 【[**issue**](https://github.com/EZ-hwh/Software-Engineering/issues/45)】邮箱验证接口，问题如下：
 
 1. 前端传输数据内容与原来设置不同
@@ -73,6 +70,9 @@
 3. 后端返回数据类型需要修改
 
 **问题状态**：需要后端帮助，完善前后端交互
+
+
+### 完善文档
 
 【[**issue**](https://github.com/EZ-hwh/Software-Engineering/issues/35)】从主页的readme.md维护一个树状的文档，希望有如下功能：
 
