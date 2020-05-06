@@ -23,7 +23,9 @@
                         ></use>
                     </svg>
                     <input v-model="name" placeholder="报上名来" style="overflow: visible">
-                    <CustomButton source="zipper-mouth-face" size="large" message="来对暗号=3="
+                    <CustomButton v-show="!NameCheck" source="face-screaming-in-fear" size="large" message="输入不正确哦"
+                                  type="alert"></CustomButton>
+                    <CustomButton v-show="NameCheck" source="zipper-mouth-face" size="large" message="来对暗号=3="
                                   @click.native="next_page"></CustomButton>
                 </p>
 
@@ -36,7 +38,9 @@
                 <p class="sec">
                     {{password_message}}<input v-model="password" type="password" placeholder="交出密码"
                                                style="overflow: visible">
-                    <CustomButton source="heavy-black-heart" size="large" message="!冲呀!"
+                    <CustomButton v-show="!PassCheck" source="face-screaming-in-fear" size="large" message="输入不正确哦"
+                                  type="alert"></CustomButton>
+                    <CustomButton v-show="PassCheck" source="heavy-black-heart" size="large" message="!冲呀!"
                                   @click.native="Login"></CustomButton>
                 </p>
 
@@ -45,42 +49,6 @@
                                   @click.native="back_to_name"></CustomButton>
                 </p>
             </div>
-            <Modal v-model="name_error" width="360">
-                <p slot="header" style="color:#f60;text-align:center">
-                    <span>输错啦</span>
-                </p>
-                <div style="text-align:center" display="flex">
-                    <img src="../../assets/images/button/face-screaming-in-fear.png" style="zoom:20%">
-                    <p>没有输入用户名哦</p>
-                </div>
-                <p slot="footer">
-                    <Button type="error" size="large" @click="redo" long>再来一次</Button>
-                </p>
-            </Modal>
-            <Modal v-model="pass_error" width="360">
-                <p slot="header" style="color:#f60;text-align:center">
-                    <span>输错啦</span>
-                </p>
-                <div style="text-align:center" display="flex">
-                    <img src="../../assets/images/button/face-screaming-in-fear.png" style="zoom:20%">
-                    <p>没有输入密码哦</p>
-                </div>
-                <p slot="footer">
-                    <Button type="error" size="large" @click="redo" long>再来一次</Button>
-                </p>
-            </Modal>
-            <Modal v-model="login_error" width="360">
-                <p slot="header" style="color:#f60;text-align:center">
-                    <span>登录失败QAQ</span>
-                </p>
-                <div style="text-align:center" display="flex">
-                    <img src="../../assets/images/button/face-screaming-in-fear.png" style="zoom:20%">
-                    <p>用户名或密码错误啦呜呜呜</p>
-                </div>
-                <p slot="footer">
-                    <Button type="error" size="large" @click="submit" long>再来一次</Button>
-                </p>
-            </Modal>
         </div>
     </div>
 </template>
@@ -100,9 +68,6 @@
                 name: "",
                 password: "",
                 check: true,
-                name_error: false,
-                pass_error: false,
-                login_error: false
             }
         },
         methods: {
@@ -110,44 +75,47 @@
                 window.location.href = "/";
             },
             next_page: function () {
-                if (this.name === "") this.name_error = true;
-                else this.check = false;
+                this.check = false;
             },
             back_to_name: function () {
                 this.check = true;
-            },
-            redo: function () {
-                this.name_error = false;
-                this.pass_error = false;
             },
             submit: function () {
                 window.location.href = "/login";
             },
             Login: function () {
-                if (this.password === "") this.pass_error = true;
-                else {
-                    this.$ajax({
-                        method: 'post',
-                        url: '/login/',
-                        params: {
-                            name: this.name,
-                            pass: this.password,
-                            type: 'log'
-                        }
-                    }).then(response => {
-                        if (response.data.flag === true) {
-                            window.location.href = "/home";
-                        } else {
-                            this.login_error = true;
-                        }
+                this.$ajax({
+                    method: 'post',
+                    url: '/login/',
+                    params: {
+                        name: this.name,
+                        pass: this.password,
+                        type: 'log'
+                    }
+                }).then(response => {
+                    if (response.data.flag === true) {
+                        this.$Notice.success({
+                            title: 'Login Successfully!',
+                            duration: 2,
+                        });
+                        setTimeout(() => {
+                            window.location.href = "/home"
+                        }, 2000);
+                    } else {
+                        this.$Notice.error({
+                            title: 'Error!Try again',
+                            duration: 2,
+                        });
+                        setTimeout(() => {
+                            window.location.href = "/home"
+                        }, 2000)
+                    }
+                })
+                    .catch(function (error) {
+                        console.log(error);
                     })
-                        .catch(function (error) {
-                            console.log(error);
-                        })
-                }
             }
-        }
-        ,
+        },
         watch: {
             check: function (newCheck, oldCheck) {
                 console.log(newCheck, oldCheck);
@@ -159,6 +127,20 @@
             ,
             password: function (newPass, oldPass) {
                 console.log(newPass, oldPass);
+            }
+        },
+        computed: {
+            /**
+             * @return {boolean}
+             */
+            NameCheck: function () {
+                return (this.name.length > 3);
+            },
+            /**
+             * @return {boolean}
+             */
+            PassCheck: function () {
+                return (this.password.length > 6);
             }
         }
     }

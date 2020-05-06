@@ -1,7 +1,7 @@
 <template>
     <div class="but">
         <img :src="getImage" :style="getStyle()">
-        <p id="button_tag">{{message}}</p>
+        <p id="button_tag" v-bind:style="FontColor">{{message}}</p>
     </div>
 </template>
 
@@ -11,7 +11,8 @@
         props: {
             source: String,
             size: String,
-            message: String
+            message: String,
+            type: String,
         },
         methods: {
             getStyle: function () {
@@ -32,6 +33,9 @@
             getImage: function () {
                 console.log( '../assets/images/button/' + this.source + '.png');
                 return require('../assets/images/button/' + this.source + '.png');
+            },
+            FontColor: function () {
+                return this.type==="alert"? {color: "salmon"} : {color: "black"};
             }
         }
     }
