@@ -12,8 +12,8 @@ module.exports = {
     pwa: {},
     pages: {
         index: {
-            entry: 'src/views/first/main.js',
-            template: 'public/index.html',
+            entry: 'src/views/personal/main.js',
+            template: 'public/personal.html',
             filename: 'index.html',
             chunks: ['chunk-vendors', 'chunk-common', 'index']
         },
@@ -46,6 +46,12 @@ module.exports = {
             template: 'public/lessons.html',
             filename: 'lessons.html',
             chunks: ['chunk-vendors', 'chunk-common', 'lessons']
+        },
+        personal: {
+            entry: 'src/views/personal/main.js',
+            template: 'public/personal.html',
+            filename: 'personal.html',
+            chunks: ['chunk-vendors', 'chunk-common', 'personal']
         }
     },
     // devServer: {
