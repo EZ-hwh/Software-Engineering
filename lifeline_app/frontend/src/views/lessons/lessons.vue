@@ -2,31 +2,43 @@
     <div id = 'lesson_window'>
         <Layout>
             <header>
-                <h1>LifeLine  Lesson</h1>
+                <svg width="100%" height="100%">
+                        <text text-anchor="middle" x="15%" y="20%" class="text text-1">
+                            LIFELINE
+                        </text>
+                        <text text-anchor="middle" x="15%" y="20%" class="text text-2">
+                            LIFELINE
+                        </text>
+                        <text text-anchor="middle" x="15%" y="20%" class="text text-3">
+                            LIFELINE
+                        </text>
+                        <text text-anchor="middle" x="15%" y="20%" class="text text-4">
+                            LIFELINE
+                        </text>
+                </svg>
+<!--                <h1>LifeLine  Lesson</h1>-->
             </header>
-<!--            <div class='books'>-->
-            <div class="bg">
-                <div class="'button">
-                    <CustomButton source="grinningface" size="large" message="back" @click.native="back_to_main"></CustomButton>
+            <div class ='lessons'>
+<!--                <div class="semester" v-if="item.term === page">-->
+                    <Lessonbook :lessons="items[number-page].lesson" :number="items[number-page].lesson.length"></Lessonbook>
+<!--                </div>-->
+                <div class="prev_button" v-if="page > 1">
+                     <CustomButton  source="grinningface" size="large" message="prev" @click.native="go_to_prev"></CustomButton>
+                </div>
+                <div class="next_button" v-if="page < number">
+                    <CustomButton  source="grinningface" size="large" message="next" @click.native="go_to_next"></CustomButton>
                 </div>
             </div>
-            <div class ='lessons' v-for="item in items">
-                <Lessonbook :index="item.index" :number="items.length" :name = "item.curriculum"></Lessonbook>
-            </div>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox= "0 0 800 600" width="100%" height="100%">
-                <rect id="desk" x = -400 y = 540 width= 1600 height= 100 fill="#a09890"></rect>
-            </svg>
-<!--            </div>-->
+
         </Layout>
     </div>
-    
+
 </template>
 
 <script>
-    import Layout from "../../views/lessons/layouts/main"
-    import Lessonbook from "../../components/Lessonbook"
+    import Layout from "../../components/template/TopBarLayout/main"
+    import Lessonbook from "./component/Lessonbook"
     import CustomButton from "../../../../frontend/src/components/CustomButton";
-
     export default {
         name: "Lessons",
         components: {
@@ -36,19 +48,33 @@
         },
         data() {
             return {
-                number: 3,
+                number: 2,
+                page:2,
                 items:[
-                    {curriculum:'人工智能', index:1},
-                    {curriculum:'模式识别与机器学习', index:2},
-                    {curriculum:'数字信号处理', index:3},
-                    {curriculum:'软件工程', index:4},
-                    {curriculum:'数据挖掘', index:5},
-                    {curriculum:'算法设计',index:6}
-
+                    {term : 2, lesson:[{name:'人工智能', index:1},
+                    {name:'模式识别与机器学习', index:2},
+                    {name:'数字信号处理', index:3},
+                    {name:'软件工程', index:4},
+                    {name:'数据挖掘', index:5},
+                    {name:'算法设计',index:6}]
+                    },
+                    {term: 1, lesson:[{name:'数据库', index: 1},
+                        {name: '代数结构', index: 2}]
+                    }
                 ]
             }
         },
         methods:{
+            go_to_prev: function(){
+                console.log('prev');
+                this.page = this.page - 1;
+                // window.reload();
+            },
+            go_to_next:function(){
+                console.log('next');
+                this.page = this.page + 1;
+                // window.reload();
+            },
             back_to_main: function () {
                 window.location.href = "/home";
                 // 回到课程主页
@@ -72,57 +98,46 @@
                     var obj = JSON.parse(JSON.stringify());
                     console.log(JSON.stringify(jsonObj));
                     this.data.number = obj.length;
+                    this.data.page = obj.length;
                     for (var i = 0; i < obj.length; i++) {
-                        this.data.items.append({curriculum: jsonobj[i], index: i + 1}); //前端接收json加入list
+                        this.data.items.append(jsonobj[i]); //前端接收json加入list
                     }
                 }).catch(error => {
                     console.log(error.response.data.code)
                 });
             }
         },
-
         created: function(){
             // this.lessons()
-            // console.log(this.items)
+            console.log(this.page, this.items)
         },
-
+        mounted:function () {
+            console.log(this.page)
+        }
     }
 </script>
 
 
 <style scoped>
-
     @font-face {
         font-family: 'Montserrat-ExtraBold';
         src: url('../../../../frontend/src/assets/fonts/Montserrat-ExtraBold.ttf') format('truetype');
         font-weight: normal;
         font-style: normal;
     }
-
-
     #lesson_window {
-        background-color: #c8e17b;
+        background-color: #e7f7a9;
         background-size: 100% 100%;
         padding: 0 0;
         font-family: Montserrat-ExtraBold, sans-serif;
         bottom:0
     }
-
     header {
+        font-size: 80px;
         text-align: left;
         padding: 20px;
-        height: 25vh;
+        height: 10vh;
     }
-
-    h1 {
-        padding: 10px 0;
-        width: 200px;
-        left: 50px;
-        text-align: center;
-        font-family: Montserrat-ExtraBold, sans-serif;
-        border: dotted 10px yellow;
-    }
-
 
     input {
         padding: 0 20px;
@@ -134,17 +149,10 @@
         font-size: 60px;
         font-family: Montserrat-ExtraBold, sans-serif;
     }
-
     input::placeholder {
         font-size: 45px;
     }
 
-    .bg{
-        position:absolute;
-        top: 15%;
-         z-index:19;
-        right:10%;
-    }
     button{
         margin: auto;
         padding: 10% 10% 10% 18%;
@@ -152,42 +160,78 @@
         align-items: center;
         font-size: 60px;
         position:absolute;
-        z-index:99;
-
     }
-
     .lessons{
-        background-size: 100% 100%;
-        top: 20vh;
-        padding: 10% 0% 0% 0%;
-        height:50vh;
-        width:100vw;
-        z-index:29;
-        position: absolute;
+        /*background-size: 100% 100%;*/
+        /*top: 20vh;*/
+        padding: 0% 0% 0% 0%;
+        height:60vh;
+        width:100%;
+        /*position: absolute;*/
         background-color:transparent;
-
     }
-
     svg{
         height: 60vh;
         width: 100vw;
-
     }
-
-    .books{
-        background-size: 100% 100%;
-        height: 75vh;
-        width: 100vw;
-        /*position: absolute;*/
-        top: 25vh;
-        padding: 0 0;
-        background-color: #c8e17b;
+    .prev_button{
+        padding: 0 0 0 0;
+        bottom: 20%;
+        left: 15%;
+        position: absolute;
+        font-size: 60px;
+    }
+    .next_button{
+        padding: 0 0 0 0;
+        bottom: 20%;
+        right: 15%;
+        position: absolute;
+        font-size: 60px;
     }
     p{
         background-size: 100% 100%;
         height: 100vh;
         width: 100vw;
+    }
+    .text {
+        /*font-size: 64px;*/
+        font-weight: bold;
+        text-transform: uppercase;
+        fill: none;
+        stroke: #3498db;
+        stroke-width: 2px;
+        stroke-dasharray: 90 310;
+        animation: stroke 6s infinite linear;
+    }
 
+    .text-1 {
+        stroke: #3498db;
+        text-shadow: 0 0 5px #3498db;
+        animation-delay: -1.5s;
+    }
+
+    .text-2 {
+        stroke: #f39c12;
+        text-shadow: 0 0 5px #f39c12;
+        animation-delay: -3s;
+    }
+
+    .text-3 {
+        stroke: #e74c3c;
+        text-shadow: 0 0 5px #e74c3c;
+        animation-delay: -4.5s;
+    }
+
+    .text-4 {
+        stroke: #9b59b6;
+        text-shadow: 0 0 5px #9b59b6;
+        animation-delay: -6s;
+    }
+
+    @keyframes stroke {
+        100% {
+            stroke-dashoffset: -400;
+        }
     }
 
 </style>
@@ -196,6 +240,6 @@
     // Allow element/type selectors, because this is global CSS.
     // stylelint-disable selector-max-type, selector-class-pattern
 
-    // Design variables and utilities from src/design.
-    @import '../home/design';
+    // Design variables and utilities from src/TopBarDesign.
+    @import '../../assets/css/TopBarDesign';
 </style>

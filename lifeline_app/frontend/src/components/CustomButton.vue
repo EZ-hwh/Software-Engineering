@@ -30,8 +30,8 @@
         },
         computed: {
             getImage: function () {
-                console.log('../assets/images/' + this.source + '.png');
-                return require('../assets/images/' + this.source + '.png');
+                console.log( '../assets/images/button/' + this.source + '.png');
+                return require('../assets/images/button/' + this.source + '.png');
             }
         }
     }
@@ -51,7 +51,8 @@
         margin: auto;
     }
     .but {
-        font-family: Montserrat-ExtraBold, sans-serif;
+        font-family: Montserrat-ExtraBold, FZSJ;
+        font-weight: bolder;
         margin: 20px auto 0;
         font-size: 15px;
         width: 100px;

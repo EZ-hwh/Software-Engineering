@@ -12,9 +12,11 @@ module.exports = {
     pwa: {},
     pages: {
         index: {
-            entry: 'src/views/first/main.js',
-            template: 'public/index.html',
-            filename: 'index.html',
+            // entry: 'src/views/first/main.js',
+            // template: 'public/index.html',
+            // filename: 'index.html',
+            entry:'src/views/lessons/main.js',
+            template: 'public/lessons.html',
             chunks: ['chunk-vendors', 'chunk-common', 'index']
         },
         login: {

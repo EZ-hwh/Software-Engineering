@@ -2,12 +2,27 @@
     <div id="first">
         <div class="main">
             <div id="header">
-                <h1>LIFELINE</h1>
+                <h1>
+                    <svg width="100%" height="100%">
+                        <text text-anchor="middle" x="50%" y="100%" class="text text-1">
+                            LIFELINE
+                        </text>
+                        <text text-anchor="middle" x="50%" y="100%" class="text text-2">
+                            LIFELINE
+                        </text>
+                        <text text-anchor="middle" x="50%" y="100%" class="text text-3">
+                            LIFELINE
+                        </text>
+                        <text text-anchor="middle" x="50%" y="100%" class="text text-4">
+                            LIFELINE
+                        </text>
+                    </svg>
+                </h1>
             </div>
             <div id="But">
                 <div id="buttons">
-                    <CustomButton source="grinningface" size="large" message="login" @click.native="log"></CustomButton>
-                    <CustomButton source="grinningface" size="large" message="register"
+                    <CustomButton source="face-throwing-a-kiss" size="large" message="login" @click.native="log"></CustomButton>
+                    <CustomButton source="smiling-face-with-open-mouth" size="large" message="register"
                                   @click.native="reg"></CustomButton>
                 </div>
             </div>
@@ -17,7 +32,7 @@
 
 <script>
     import CustomButton from "../../components/CustomButton";
-    
+
     export default {
         name: "first",
         components: {
@@ -26,32 +41,9 @@
         methods: {
             log: function () {
                 window.location.href = "login";
-                //this.$ajax({
-                //    method: 'get',
-                //    url: '/login/',
-                //    success:function(data){
-                 //       console.log("safasfadfasf");
-                //        window.location.href = "login";
-                 //   }
-                //});
-                //.then(response => (console.log(response)))
-                //    .catch(function (error) {
-                 //       console.log(error);
-                 //   })
-                // TODO: 后端获取login.html
-                //this.$router.push({name:"login"});
             },
             reg: function () {
                 window.location.href = "register";
-                //this.$ajax({
-                //    method: 'get',
-                //    url: '/register/',
-                //}).then(response => (console.log(response)))
-                //    .catch(function (error) {
-                //        console.log(error);
-                //    })
-                // TODO：后端获取register.html
-                //this.$router.push('/Register');
             }
         }
     }
@@ -59,36 +51,74 @@
 
 <style scoped>
 
-    @font-face {
-        font-family: 'Montserrat-ExtraBold';
-        src: url('../../assets/fonts/Montserrat-ExtraBold.ttf') format('truetype');
-        font-weight: normal;
-        font-style: normal;
-    }
-
     h1 {
         font-family: Montserrat-ExtraBold, monospace;
-        font-size: 150px;
+        font-size: 12em;
+        margin-top: 4%;
+        margin-bottom: 4%;
+    }
+
+    .text {
+        /*font-size: 64px;*/
+        font-weight: bold;
+        text-transform: uppercase;
+        fill: none;
+        stroke: #3498db;
+        stroke-width: 2px;
+        stroke-dasharray: 90 310;
+        animation: stroke 6s infinite linear;
+    }
+
+    .text-1 {
+        stroke: #3498db;
+        text-shadow: 0 0 5px #3498db;
+        animation-delay: -1.5s;
+    }
+
+    .text-2 {
+        stroke: #f39c12;
+        text-shadow: 0 0 5px #f39c12;
+        animation-delay: -3s;
+    }
+
+    .text-3 {
+        stroke: #e74c3c;
+        text-shadow: 0 0 5px #e74c3c;
+        animation-delay: -4.5s;
+    }
+
+    .text-4 {
+        stroke: #9b59b6;
+        text-shadow: 0 0 5px #9b59b6;
+        animation-delay: -6s;
+    }
+
+    @keyframes stroke {
+        100% {
+            stroke-dashoffset: -400;
+        }
     }
 
     .main {
         font-family: Montserrat-ExtraBold, monospace;
-        background-color: antiquewhite;
+        background-color: rgba(230, 235, 224, 1);
+        color: #2E1C22;
         background-size: cover;
-        padding: 15% 0 12.9%;
+        padding: 0;
         width: 100%;
         height: 100%;
         text-align: center;
     }
 
     #header {
+        padding-top: 8%;
         text-align: center;
     }
 
     #But {
-        padding: 1% 0 0;
+        padding: 0;
         margin: 0 auto;
-        width: 190px;
+        width: 20%;
         text-align: center;
     }
 
@@ -96,12 +126,4 @@
         display: flex;
     }
 
-</style>
-
-<style lang="scss">
-    // Allow element/type selectors, because this is global CSS.
-    // stylelint-disable selector-max-type, selector-class-pattern
-
-    // Design variables and utilities from src/design.
-    @import '../home/design';
 </style>

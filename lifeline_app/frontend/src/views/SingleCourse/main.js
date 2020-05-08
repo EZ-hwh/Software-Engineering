@@ -2,7 +2,7 @@ import Vue from "vue";
 import course from "./course";
 import router from "./router";
 import axios from 'axios';
-import "../../components/_globals";
+import "../../components/template/_globals";
 import BootstrapVue from "bootstrap-vue";
 import ViewUI from "view-design";
 import "view-design/dist/styles/iview.css";
