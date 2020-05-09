@@ -20,7 +20,9 @@
 
       </div>
       <button type="button" @click="modal1=true,formValidate2=JSON.parse(JSON.stringify(formValidate))" class="btn btn-primary btn-rounded waves-effect waves-light">修改个人信息</button>
-      <button type="button" @click="modal2=true" class="btn btn-primary btn-rounded waves-effect waves-light">登录elearning</button>
+      <button v-if="!elearning_stats" type="button" @click="modal2=true" class="btn btn-primary btn-rounded waves-effect waves-light">登录elearning</button>
+      <button v-if="elearning_stats" type="button" @click="del_register" class="btn btn-primary btn-rounded waves-effect waves-light">退出elearning登录</button>
+
       <Modal v-model="modal1" width="360">
         <p slot="header" style="color:#98a6ad;text-align:center">
           <Icon type="ios-bulb" />
@@ -84,6 +86,7 @@
         return {
           elearning_username:'',
           elearning_password:'',
+          elearning_stats:false,
           modal_loading: false,
           modal1: false,
           modal2:false,
@@ -126,6 +129,17 @@
 
               },
       methods: {
+          del_register()
+          {
+            this.elearning_stats=false;
+            this.elearning_password='';
+            this.elearning_username='';
+
+
+
+
+            this.$Message.success('退出elearning');
+          },
           change_del(){
             this.modal_loading = false;
             this.modal1 = false;
@@ -139,11 +153,30 @@
         },
         try_register()
         {
-          this.modal_loading = false;
-          this.modal2 = false;
-          this.$Message.success('登录成功');
+
+
+
+
+
+          this.elearning_stats=true
+          if(this.elearning_stats== true){
+            this.modal_loading = false;
+            this.modal2 = false;
+            this.$Message.success('登录成功');
+          }
+          else {
+            console.log('fail')
+            this.$Message.success('登录失败，请重新登录');
+          }
         },
         handleSubmit (name) {
+
+
+
+
+
+
+
           this.$refs[name].validate((valid) => {
             if (valid) {
               this.formValidate=this.formValidate2
