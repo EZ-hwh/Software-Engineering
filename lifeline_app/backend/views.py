@@ -239,17 +239,21 @@ def checkcode(request):
 @csrf_exempt
 def getcode(request):
     if request.method == 'POST':
+        print("getcode begin!!!")
         email = request.GET.get("email")
         ret = {}
-        if (Account.objects.filter(email=email).exist()):
+        temp = Account.objects.filter(email = email)
+        print(temp)
+        if(Account.objects.filter(email = email).exist()):
             ret["flag"] = False
             ret["error_msg"] = "邮箱已注册！"
-            return ret
+            return JsonResponse(ret)
         try:
             register = Register.objects.get(email=email)
         except:
             register = Register(email=email)
         register.checksum = random.randint(1000, 9999)
+        register.save()
         ret["checksum"] = register.checksum
         ret["flag"] = True
         return JsonResponse(ret)
