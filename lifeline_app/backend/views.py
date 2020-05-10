@@ -142,7 +142,7 @@ def course(request):
         # return render(request,'lessons.html')
         return render(request, 'SingleCourse.html')
 
-
+@csrf_exempt
 def get_schedule(request):
     if not request.session.get('login', None):
         return redirect('/login_page/')
@@ -172,7 +172,7 @@ def get_schedule(request):
         ret['schedule'] = scheduler_list
         return JsonResponse(ret)
 
-
+@csrf_exempt
 def get_todolist(request):
     if not request.session.get('login', None):
         return redirect('/login_page/')
@@ -216,6 +216,7 @@ def get_todolist(request):
         ret = {"TodayList": ret}
         return JsonResponse(ret)
 
+@csrf_exempt
 def checkcode(request):
     if request.method == 'POST':
         ret = {}
@@ -231,10 +232,14 @@ def checkcode(request):
             ret["error_msg"] = "请您请求验证码！"
         return JsonResponse(ret)
 
+@csrf_exempt
 def getcode(request):
     if request.method == 'POST':
+        print("getcode begin!!!")
         email = request.GET.get("email")
         ret = {}
+        temp = Account.objects.filter(email = email)
+        print(temp)
         if(Account.objects.filter(email = email).exist()):
             ret["flag"] = False
             ret["error_msg"] = "邮箱已注册！"
@@ -244,6 +249,7 @@ def getcode(request):
         except:
             register = Register(email = email)
         register.checksum = random.randint(1000, 9999)
+        register.save()
         ret["checksum"] = register.checksum
         ret["flag"] = True
         return JsonResponse(ret)
