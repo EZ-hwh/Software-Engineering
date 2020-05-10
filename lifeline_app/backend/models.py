@@ -60,10 +60,8 @@ class Todolist(models.Model):
     scheduler = models.ForeignKey(Scheduler,on_delete=models.CASCADE)
 
 class Register(models.Model):
-    username = models.CharField(max_length=50)
-    password = models.CharField(max_length=50)
     email = models.EmailField(primary_key=True) #验证邮箱
-    checksum = models.TextField() #验证码
+    checksum = models.TextField(null=True) #验证码
     time = models.DateTimeField(auto_now = True) #用于设置验证时间
 
 class Takeclass(models.Model):
