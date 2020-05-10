@@ -20,14 +20,14 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box">
-<!--                        <div class="page-title-right">-->
-<!--                            <ol class="breadcrumb m-0">-->
-<!--                                <li class="breadcrumb-item">-->
-<!--                                    LifeLine-->
-<!--                                </li>-->
-<!--                                <li class="breadcrumb-item">Curriculum</li>-->
-<!--                            </ol>-->
-<!--                        </div>-->
+                        <div class="page-title-right">
+                            <ol class="breadcrumb m-0">
+                                <li class="breadcrumb-item">
+                                    <a href="javascript: void(0);">LifeLine</a>
+                                </li>
+                                <li class="breadcrumb-item active">Curriculum</li>
+                            </ol>
+                        </div>
                         <h4 class="page-title">Keep studying.</h4>
                     </div>
                 </div>
@@ -43,15 +43,12 @@
                             <ToDoList/>
                             <ToDoListWeek/>
                         </div>
+                        
+                        
 
                         <!-- end col-->
-                        <div class="col-lg-8">
-                            <div class="card-box">
-                                <Calendar/>
-                            </div>
-
-                        </div>
-                        <div class="col-lg-1">
+                        <div class="col-lg-9">
+                            <Calendar/>
                         </div>
                         <!-- end col -->
                     </div>

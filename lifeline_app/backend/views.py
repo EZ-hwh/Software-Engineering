@@ -155,6 +155,27 @@ def get_schedule(request):
         ret['schedule'] = scheduler_list
         return JsonResponse(ret)
 
+def get_todolist(request):
+    if not request.session.get('login', None):
+        return redirect('/login_page/')
+    if request.method == 'GET':
+        ret = []
+        user = Account.objects.get(email = request.session['email'])
+        todolist = user.todolist_set.all()
+        todolist.order_by('deadline_time')
+
+        for todo in todolist:
+            now = {}
+            now["name"] = todo.name
+            now["time"] = todo.deadline_time
+            now["description"] = todo.description
+            ret.append(now)
+
+        ret = {"TodayList" : ret}
+        return JsonResponse(ret)
+
+
+
 @csrf_exempt
 def logout(request): #登出,此方案过于简单，需改进
     request.session['login'] = False
