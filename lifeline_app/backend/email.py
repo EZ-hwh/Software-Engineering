@@ -1,9 +1,9 @@
 from django.core.mail import send_mail,send_mass_mail
 import random
 
-def send_my_email(email):
+def send_my_email(email,checksum):
     title = 'lifeline_app验证码'
-    msg = '欢迎注册Lifeline_app,您的验证码是'+str(random.randint(100000,999999))+'请尽快完成账号验证'
+    msg = '欢迎注册Lifeline_app,您的验证码是'+str(checksum)+'请尽快完成账号验证'
     email_from = 'lifeline_app@126.com'
     reciever = [
         email

@@ -17,7 +17,6 @@ ACCOUNT_ID_RANGE = 100000000
 @csrf_exempt
 def first(request):
     if request.method == "GET":
-        #send_my_email("240836592@qq.com")
         return render(request, 'index.html')
 
 
@@ -249,11 +248,13 @@ def getcode(request):
         except:
             register = Register(email = email)
             print("except")
-        register.checksum = random.randint(1000, 9999)
+        register.checksum = random.randint(100000, 999999)
         print(register.email, register.checksum)
+        send_my_email(register.email,register.checksum) #通过邮箱进行验证码的发送
         register.save()
         ret["checksum"] = register.checksum
         ret["flag"] = True
+        print(1)
         return JsonResponse(ret)
 
 
