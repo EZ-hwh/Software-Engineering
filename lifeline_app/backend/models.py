@@ -54,18 +54,17 @@ class Todolist(models.Model):
     todolist_id = models.AutoField(primary_key=True)
     account_id = models.ForeignKey(Account,on_delete=models.CASCADE)
     name = models.TextField(null=True)
-    info = models.TextField(null=True)
+    description = models.TextField(null=True)
     deadline_time = models.DateTimeField()
     homework = models.ForeignKey(Homework,on_delete=models.CASCADE,null=True)
     scheduler = models.ForeignKey(Scheduler,on_delete=models.CASCADE)
 
 class Register(models.Model):
-    register_id = models.AutoField(primary_key=True)
     username = models.CharField(max_length=50)
     password = models.CharField(max_length=50)
-    email = models.EmailField() #验证邮箱
+    email = models.EmailField(primary_key=True) #验证邮箱
     checksum = models.TextField() #验证码
-    time = models.DateTimeField() #用于设置验证时间
+    time = models.DateTimeField(auto_now = True) #用于设置验证时间
 
 class Takeclass(models.Model):
     account = models.ForeignKey(Account,on_delete=models.CASCADE)

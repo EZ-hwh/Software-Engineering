@@ -78,6 +78,8 @@ def login_account(request):
         print(request)
         name = request.GET.get('name')
         pwd = request.GET.get("pass")
+        print(name)
+        print(request.POST.get('name'))
         ret = {"flag":False,"error_msg":None}
         user = authenticate(username=name, password=pwd)
         if user:
@@ -174,6 +176,37 @@ def get_todolist(request):
         ret = {"TodayList" : ret}
         return JsonResponse(ret)
 
+def checkcode(request):
+    if request.method == 'POST':
+        ret = {}
+        try:
+            register = Register.objects.get(email = request.GET.get("email"))
+            if request.GET.get("code") == register.checksum:
+                ret["flag"] = True
+            else:
+                ret["flag"] = False
+                ret["error_msg"] = "验证码错误！"
+        except:
+            ret["flag"] = False
+            ret["error_msg"] = "请您请求验证码！"
+        return JsonResponse(ret)
+
+def getcode(request):
+    if request.method == 'POST':
+        email = request.GET.get("email")
+        ret = {}
+        if(Account.objects.filter(email = email).exist()):
+            ret["flag"] = False
+            ret["error_msg"] = "邮箱已注册！"
+            return ret
+        try:
+            register = Register.objects.get(email = email)
+        except:
+            register = Register(email = email)
+        register.checksum = random.randint(1000, 9999)
+        ret["checksum"] = register.checksum
+        ret["flag"] = True
+        return JsonResponse(ret)
 
 
 @csrf_exempt

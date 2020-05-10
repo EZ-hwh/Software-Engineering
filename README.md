@@ -34,7 +34,7 @@
   npm install
   npm run-script build
   python manage.py migrate
-  python manage.py rusnerver
+  python manage.py runserver
   ```
 
 - 若正常运行，则终端返回默认本机地址：`127.0.0.1:8080`，在浏览器中输入后即可访问我们的网页
