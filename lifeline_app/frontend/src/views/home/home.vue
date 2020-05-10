@@ -43,18 +43,12 @@
                             <ToDoList/>
                             <ToDoListWeek/>
                         </div>
+                        
+                        
 
                         <!-- end col-->
-                        <div class="col-lg-8">
-                            <div class="card-box">
-                                <Calendar/>
-                            </div>
-
-                            <!-- <div class="card-box">
-                              <div id="calendar"></div>
-                            </div> -->
-                        </div>
-                        <div class="col-lg-1">
+                        <div class="col-lg-9">
+                            <Calendar/>
                         </div>
                         <!-- end col -->
                     </div>
