@@ -10,14 +10,16 @@ from django.contrib.auth import authenticate, login
 from .email import *
 # Create your views here.
 
-DEBUG = True #进行调试，用于输出调试
+DEBUG = True  # 进行调试，用于输出调试
 ACCOUNT_ID_RANGE = 100000000
+
 
 @csrf_exempt
 def first(request):
     if request.method == "GET":
         #send_my_email("240836592@qq.com")
         return render(request, 'index.html')
+
 
 @csrf_exempt
 def register_account(request):
@@ -30,21 +32,21 @@ def register_account(request):
         print(request)
         name = request.GET.get('name')
         pwd = request.GET.get("pass")
-        #pwd_check = request.GET.get("pass_again")
-        ret = {"flag":False,"error_msg":None}
-        #if (pwd != pwd_check):
+        # pwd_check = request.GET.get("pass_again")
+        ret = {"flag": False, "error_msg": None}
+        # if (pwd != pwd_check):
         #    ret['error_msg']="两次输入的密码不同"
         same_name_user = User.objects.filter(username=name)
         if same_name_user:
             ret["error_msg"] = "same user has been registered"
         else:
             ret["flag"] = True
-            user = User.objects.create_user(username=name,password=pwd)
-            request.session['login'] = True # 注册后自动登陆
+            user = User.objects.create_user(username=name, password=pwd)
+            request.session['login'] = True  # 注册后自动登陆
             request.session['email'] = user.email
             request.session['name'] = user.username
-            account = Account.objects.create(user=user,nickname="None")
-        return HttpResponse(json.dumps(ret),content_type="application/json")
+            account = Account.objects.create(user=user, nickname="None")
+        return HttpResponse(json.dumps(ret), content_type="application/json")
     '''
         try:
             account = Account.objects.filter(username=name)
@@ -67,24 +69,25 @@ def register_account(request):
     #content = request.GET['reg']
     '''
 
+
 @csrf_exempt
 def login_account(request):
     print("Login begin work")
-    print(request.session.get('login',None))
-    if request.session.get('login', None): #会话
+    print(request.session.get('login', None))
+    if request.session.get('login', None):  # 会话
         return redirect('/home')
-        return HttpResponse("请勿重复登陆") #最好有个提示
+        return HttpResponse("请勿重复登陆")  # 最好有个提示
     if request.method == "GET":
-        return render(request,"login.html")
+        return render(request, "login.html")
     if request.method == "POST":
         print(request)
         name = request.GET.get('name')
         pwd = request.GET.get("pass")
-        ret = {"flag":False,"error_msg":None}
+        ret = {"flag": False, "error_msg": None}
         user = authenticate(username=name, password=pwd)
         if user:
-            #如果验证成功就让登录
-            login(request,user)
+            # 如果验证成功就让登录
+            login(request, user)
             ret["flag"] = True
             request.session['login'] = True
             request.session['email'] = user.email
@@ -93,28 +96,40 @@ def login_account(request):
         else:
             ret["error_msg"] = "用户名和密码错误"
             print("登陆错误")
-        #else:
+        # else:
         #    ret["error_msg"] = "验证码错误"
         return HttpResponse(json.dumps(ret))
+
 
 @csrf_exempt
 def home(request):
     print("home begin work")
     if not request.session.get('login', None):
         return redirect('/login')
-    if request.method == 'GET': #这里用于向前端传输数据用于渲染主页
+    if request.method == 'GET':  # 这里用于向前端传输数据用于渲染主页
         ret = {}
-        user = Account.objects.get(user__username = request.session['name'])
-        print(user.user.username,user.user.password)
-        return render(request,'home.html')
-    
+        user = Account.objects.get(user__username=request.session['name'])
+        print(user.user.username, user.user.password)
+        return render(request, 'home.html')
+
+
 @csrf_exempt
 def lesson(request):
     print("lesson begin work")
     if not request.session.get('login', None):
         return redirect('/login')
     if request.method == 'GET':
-        return render(request,'lessons.html')
+        return render(request, 'lessons.html')
+
+
+@csrf_exempt
+def personal(request):
+    print("personal begin work")
+    if not request.session.get('login', None):
+        return redirect('/login')
+    if request.method == 'GET':
+        return render(request, 'personal.html')
+
 
 @csrf_exempt
 def course(request):
@@ -125,16 +140,17 @@ def course(request):
         return redirect('/login')
     if request.method == 'GET':
         print("it work")
-        #return render(request,'lessons.html')
-        return render(request,'SingleCourse.html')
-        
+        # return render(request,'lessons.html')
+        return render(request, 'SingleCourse.html')
+
+@csrf_exempt
 def get_schedule(request):
     if not request.session.get('login', None):
         return redirect('/login_page/')
     if request.method == 'GET':
         ret = {}
 
-        user = Account.objects.get(email = request.session['email'])
+        user = Account.objects.get(email=request.session['email'])
         courses = [x.course for x in user.takeclass_set.all()]
         course_list = []
         for course in courses:
@@ -143,7 +159,7 @@ def get_schedule(request):
             info['description'] = course.description
             info['time'] = [x.course_time for x in course.time_set.all()]
             course_list.append(info)
-        
+
         schedulers = user.scheduler_set.all()
         scheduler_list = []
         for scheduler in scheduler_list:
@@ -152,16 +168,41 @@ def get_schedule(request):
             info['message'] = scheduler.message
             info['time'] = [x.course_time for x in scheduler.time_set.all()]
             scheduler_list.append(info)
-        
+
         ret['course'] = course_list
         ret['schedule'] = scheduler_list
         return JsonResponse(ret)
 
+@csrf_exempt
 def get_todolist(request):
     if not request.session.get('login', None):
         return redirect('/login_page/')
     if request.method == 'GET':
         ret = []
+
+        test = True
+        if test:
+            ret = {
+                "TodayList": [
+                    {
+                        "name": "Algorithm Assignment 3",
+                        "time": "2020.5.9 10:30",
+                        "description": "Complete 15-2.3,17.1"
+                    },
+                    {
+                        "name": "Software Engineer homework",
+                        "time": "2020.5.9 18:30",
+                        "description": "Implement the demo website."
+                    },
+                    {
+                        "name": "Watch a movie",
+                        "time": "2020.5.9 24:00",
+                        "description": ""
+                    }
+                ],
+                "WeekList":[]
+            }
+            return JsonResponse(ret)
         user = Account.objects.get(email = request.session['email'])
         todolist = user.todolist_set.all()
         todolist.order_by('deadline_time')
@@ -173,12 +214,50 @@ def get_todolist(request):
             now["description"] = todo.description
             ret.append(now)
 
-        ret = {"TodayList" : ret}
+        ret = {"TodayList": ret}
+        return JsonResponse(ret)
+
+@csrf_exempt
+def checkcode(request):
+    if request.method == 'POST':
+        ret = {}
+        try:
+            register = Register.objects.get(email = request.GET.get("email"))
+            if request.GET.get("code") == register.checksum:
+                ret["flag"] = True
+            else:
+                ret["flag"] = False
+                ret["error_msg"] = "验证码错误！"
+        except:
+            ret["flag"] = False
+            ret["error_msg"] = "请您请求验证码！"
+        return JsonResponse(ret)
+
+@csrf_exempt
+def getcode(request):
+    if request.method == 'POST':
+        print("getcode begin!!!")
+        email = request.GET.get("email")
+        ret = {}
+        if Account.objects.filter(email = email).exists():
+            ret["flag"] = False
+            ret["error_msg"] = "邮箱已注册！"
+            return JsonResponse(ret)
+        try:
+            register = Register.objects.get(email = email)
+            print("try")
+        except:
+            register = Register(email = email)
+            print("except")
+        register.checksum = random.randint(1000, 9999)
+        print(register.email, register.checksum)
+        register.save()
+        ret["checksum"] = register.checksum
+        ret["flag"] = True
         return JsonResponse(ret)
 
 
-
 @csrf_exempt
-def logout(request): #登出,此方案过于简单，需改进
+def logout(request):  # 登出,此方案过于简单，需改进
     request.session['login'] = False
     return render(request,'index.html')

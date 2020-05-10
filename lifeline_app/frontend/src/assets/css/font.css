@@ -1,0 +1,23 @@
+@font-face {
+        font-family: 'Montserrat-ExtraBold';
+        src: url('../fonts/Montserrat-ExtraBold.ttf') format('truetype');
+        font-weight: normal;
+        font-style: normal;
+    }
+
+@font-face {
+        font-family: 'FZXIANGSU';
+        src: url('../fonts/FZXIANGSU14.TTF') format('truetype');
+        font-weight: bold;
+        font-style: normal;
+    }
+
+@font-face {
+    font-family: 'FZSJ';
+    src: url("../fonts/FZSJ-AQMLTJW.TTF") format('truetype');
+}
+
+@font-face {
+    font-family: "AD";
+    src: url("../fonts/AiDuZongYiJianTi-2.ttf") format('truetype');
+}
