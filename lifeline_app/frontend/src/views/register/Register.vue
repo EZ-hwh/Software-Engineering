@@ -65,7 +65,7 @@
                     <img src="../../assets/images/button/open-mailbox-with-raised-flag.png" class="pic">
                     <input id="codeInput" v-model="code" placeholder="code?" type="text" style="padding-left: 5%">
                     <CustomButton source="zipper-mouth-face" size="large" message="设置暗号"
-                                  @click.native="next_page"></CustomButton>
+                                  @click.native="check_code"></CustomButton>
                 </div>
                 <CustomButton source="white-left-pointing-backhand-index" size="large" message="邮箱搞错liao"
                               @click.native="back"></CustomButton>
@@ -111,7 +111,6 @@
                 password: "",
                 email: "",
                 code: "",
-                ret: "",
                 password_again: "",
                 check: 1,
                 response: null,
@@ -131,7 +130,6 @@
                     method: 'post',
                     url: '/getcode/',
                     params: {
-                        // name: this.name,
                         email: this.email,
                         type: 'code',
                         contentType: 'application/json',
@@ -143,9 +141,8 @@
                             title: 'Send Successfully!',
                             duration: 2,
                         });
+                        console.log(response.data.ret);
                         setTimeout(this.next_page, 2000);
-                        this.ret = response.data.code;
-                        console.log("发送成功");
                     } else {
                         this.$Notice.error({
                             title: 'Error!Try again!',
@@ -156,20 +153,31 @@
                 })
             },
             check_code: function () {
-                if (this.code === this.ret) {
-                    this.$Notice.success({
-                        title: 'Right Code!',
-                        duration: 2,
-                    });
-                    setTimeout(this.next_page, 2000);
-                    console.log("验证码正确");
-                } else {
-                    this.$Notice.error({
-                        title: 'Error!Try again!',
-                        duration: 2,
-                    });
-                    document.getElementById('codeInput').value = '';
-                }
+                this.$ajax({
+                    method: 'post',
+                    url: '/checkcode/',
+                    params: {
+                        email: this.email,
+                        code: this.code,
+                        type: 'code',
+                        contentType: 'application/json',
+                        dataType: 'json',
+                    }
+                }).then(response => {
+                    if (response.data.flag === true) {
+                        this.$Notice.success({
+                            title: 'Right Code!',
+                            duration: 2,
+                        });
+                        setTimeout(this.next_page, 2000);
+                    } else {
+                        this.$Notice.error({
+                            title: 'Wrong!Try again!',
+                            duration: 2,
+                        });
+                        console.log(response.data.error_msg);
+                    }
+                })
             },
             back: function () {
                 this.check -= 1;
@@ -182,7 +190,7 @@
                     params: {
                         name: this.name,
                         pass: this.password,
-                        pass_again: this.password_again,
+                        email: this.email,
                         type: 'reg',
                         contentType: 'application/json',
                         dataType: 'json',

@@ -48,6 +48,12 @@ module.exports = {
       filename: "lessons.html",
       chunks: ["chunk-vendors", "chunk-common", "lessons"],
     },
+    personal: {
+      entry: "src/views/personal/main.js",
+      template: "public/personal.html",
+      filename: "personal.html",
+      chunks: ["chunk-vendors", "chunk-common", "personal"],
+    },
   },
   configureWebpack: {
     plugins: [

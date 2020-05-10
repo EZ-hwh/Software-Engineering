@@ -308,6 +308,7 @@ export default {
       .then((response) => {
         if (response.data.flag == true) {
           this.TodayList = response.data.TodayList;
+          console.log(response.data.TodayList)
         } else {
           console.log(response.data.error_msg);
         }
