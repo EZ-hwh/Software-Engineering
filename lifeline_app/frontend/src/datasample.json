@@ -1,8 +1,8 @@
 {
   "TodayList": [
-    "Algorithm Assignment 3",
-    "Software Engineer homework",
-    "Watch a movie"
+    ["Algorithm Assignment 3", "2020.5.9 10:30", "Complete 15-2.3,17.1"],
+    ["Software Engineer homework","2020.5.9 18:30","Implement the demo website."],
+    ["Watch a movie","2020.5.9 24:00","<Spider man>"]
   ],
   "WeekList": [
     "Algorithm Assignment 4",
