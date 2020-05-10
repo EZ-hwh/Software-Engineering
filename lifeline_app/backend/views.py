@@ -1,5 +1,5 @@
-from django.shortcuts import render, redirect, get_object_or_404
-from django.http import Http404, HttpResponse
+from django.shortcuts import render,redirect,get_object_or_404
+from django.http import Http404,HttpResponse
 from django.http.response import JsonResponse
 from .models import *
 from django.views.decorators.csrf import csrf_exempt
@@ -178,7 +178,31 @@ def get_todolist(request):
         return redirect('/login_page/')
     if request.method == 'GET':
         ret = []
-        user = Account.objects.get(email=request.session['email'])
+
+        test = True
+        if test:
+            ret = {
+                "TodayList": [
+                    {
+                        "name": "Algorithm Assignment 3",
+                        "time": "2020.5.9 10:30",
+                        "description": "Complete 15-2.3,17.1"
+                    },
+                    {
+                        "name": "Software Engineer homework",
+                        "time": "2020.5.9 18:30",
+                        "description": "Implement the demo website."
+                    },
+                    {
+                        "name": "Watch a movie",
+                        "time": "2020.5.9 24:00",
+                        "description": ""
+                    }
+                ],
+                "WeekList":[]
+            }
+            return JsonResponse(ret)
+        user = Account.objects.get(email = request.session['email'])
         todolist = user.todolist_set.all()
         todolist.order_by('deadline_time')
 
