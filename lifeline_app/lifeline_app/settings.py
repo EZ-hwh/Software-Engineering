@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'corsheaders',
+    'captcha', #图片验证码的app
     'backend', #add backend
 ]
 
@@ -157,3 +158,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# email settings
+EMAIL_USE_SSL = True
+EMAIL_HOST = "smtp.126.com"
+EMAIL_PORT = 465
+EMAIL_HOST_USER = 'lifeline_app@126.com'
+EMAIL_HOST_PASSWORD = 'UJWSZIXONMVZSUAG'
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER

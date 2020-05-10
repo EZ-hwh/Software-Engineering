@@ -7,6 +7,7 @@ import json
 import random
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
+from .email import *
 # Create your views here.
 
 DEBUG = True #进行调试，用于输出调试
@@ -15,6 +16,7 @@ ACCOUNT_ID_RANGE = 100000000
 @csrf_exempt
 def first(request):
     if request.method == "GET":
+        #send_my_email("240836592@qq.com")
         return render(request, 'index.html')
 
 @csrf_exempt
