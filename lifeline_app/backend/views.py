@@ -222,7 +222,7 @@ def getcode(request):
         if(Account.objects.filter(email = email).exist()):
             ret["flag"] = False
             ret["error_msg"] = "邮箱已注册！"
-            return ret
+            return JsonResponse(ret)
         try:
             register = Register.objects.get(email = email)
         except:
