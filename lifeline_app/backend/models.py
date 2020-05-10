@@ -53,7 +53,8 @@ class Timezone(models.Model): #时间段
 class Todolist(models.Model):
     todolist_id = models.AutoField(primary_key=True)
     account_id = models.ForeignKey(Account,on_delete=models.CASCADE)
-    message = models.TextField(null=True)
+    name = models.TextField(null=True)
+    info = models.TextField(null=True)
     deadline_time = models.DateTimeField()
     homework = models.ForeignKey(Homework,on_delete=models.CASCADE,null=True)
     scheduler = models.ForeignKey(Scheduler,on_delete=models.CASCADE)
