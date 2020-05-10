@@ -238,17 +238,18 @@ def getcode(request):
         print("getcode begin!!!")
         email = request.GET.get("email")
         ret = {}
-        temp = Account.objects.filter(email = email)
-        print(temp)
-        if(Account.objects.filter(email = email).exist()):
+        if Account.objects.filter(email = email).exists():
             ret["flag"] = False
             ret["error_msg"] = "邮箱已注册！"
             return JsonResponse(ret)
         try:
             register = Register.objects.get(email = email)
+            print("try")
         except:
             register = Register(email = email)
+            print("except")
         register.checksum = random.randint(1000, 9999)
+        print(register.email, register.checksum)
         register.save()
         ret["checksum"] = register.checksum
         ret["flag"] = True
