@@ -238,7 +238,7 @@ def getcode(request):
         if(Account.objects.filter(email = email).exist()):
             ret["flag"] = False
             ret["error_msg"] = "邮箱已注册！"
-            return ret
+            return HttpResponse(json.dumps(ret))
         try:
             register = Register.objects.get(email = email)
         except:
@@ -246,7 +246,7 @@ def getcode(request):
         register.checksum = random.randint(1000, 9999)
         ret["checksum"] = register.checksum
         ret["flag"] = True
-        return JsonResponse(ret)
+        return HttpResponse(json.dumps(ret))
 
 
 @csrf_exempt

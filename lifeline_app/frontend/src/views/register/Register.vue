@@ -55,7 +55,7 @@
                                   type="alert" message="输入不正确哦"
                     ></CustomButton>
                     <CustomButton v-show="EmailCheck" source="winking-face" size="large" message="给我码"
-                                  @click.native="next_page"></CustomButton>
+                                  @click.native="get_email"></CustomButton>
                 </div>
                 <CustomButton source="white-left-pointing-backhand-index" size="large" message="想换名字QAQ"
                               @click.native="back"></CustomButton>

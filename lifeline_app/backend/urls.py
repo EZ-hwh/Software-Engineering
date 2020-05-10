@@ -10,6 +10,8 @@ urlpatterns = [
     url('home', views.home),
     url('register', views.register_account, ),
     url('login', views.login_account, ),
+    url('getcode', views.getcode),
+    url('checkcode', views.checkcode),
     url('personal', views.personal),
     url('lesson', views.lesson),
     url('course', views.course),
