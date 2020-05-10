@@ -55,7 +55,7 @@
                                   type="alert" message="输入不正确哦"
                     ></CustomButton>
                     <CustomButton v-show="EmailCheck" source="winking-face" size="large" message="给我码"
-                                  @click.native="get_email"></CustomButton>
+                                  @click.native="next_page"></CustomButton>
                 </div>
                 <CustomButton source="white-left-pointing-backhand-index" size="large" message="想换名字QAQ"
                               @click.native="back"></CustomButton>
@@ -65,7 +65,7 @@
                     <img src="../../assets/images/button/open-mailbox-with-raised-flag.png" class="pic">
                     <input id="codeInput" v-model="code" placeholder="code?" type="text" style="padding-left: 5%">
                     <CustomButton source="zipper-mouth-face" size="large" message="设置暗号"
-                                  @click.native="check_code"></CustomButton>
+                                  @click.native="next_page"></CustomButton>
                 </div>
                 <CustomButton source="white-left-pointing-backhand-index" size="large" message="邮箱搞错liao"
                               @click.native="back"></CustomButton>

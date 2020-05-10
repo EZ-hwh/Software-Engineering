@@ -307,9 +307,11 @@ export default {
     })
       .then((response) => {
         if (response.data.flag == true) {
+          console.log("get info");
           this.TodayList = response.data.TodayList;
           console.log(response.data.TodayList)
         } else {
+          console.log("meiyou");
           console.log(response.data.error_msg);
         }
       })
