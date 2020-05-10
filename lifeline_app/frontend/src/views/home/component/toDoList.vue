@@ -39,9 +39,9 @@
           </div>
 
           <div class="kanban-detail">
-            <span class="badge badge-danger float-right">{{ ddl[1] }}</span>
+            <span class="badge badge-danger float-right">{{ ddl["time"] }}</span>
             <h5 class="mt-0">
-              <a href="" class="text-dark">{{ ddl[0] }}</a>
+              <a href="" class="text-dark">{{ ddl["name"] }}</a>
             </h5>
 
             <ul class="list-inline">
@@ -73,7 +73,7 @@
                 </a>
               </li>
               <li class="list-inline-item">
-                {{ ddl[2] }}
+                {{ ddl["description"] }}
               </li>
             </ul>
           </div>
@@ -298,8 +298,8 @@ export default {
   methods: {},
   created: function() {
     this.$ajax({
-      method: "post",
-      url: "/home/todaylist/",
+      method: "get",
+      url: "/get_todolist/",
       params: {
         // 后端应该保存了现在登陆的人？
         type: "log",
