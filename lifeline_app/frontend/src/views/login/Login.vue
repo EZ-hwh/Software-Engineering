@@ -35,9 +35,11 @@
                 </p>
             </div>
             <div v-show="!check">
-                <p class="sec">
-                    {{password_message}}<input v-model="password" type="password" placeholder="交出密码"
-                                               style="overflow: visible">
+                <p class="sec" style="padding: 6% 10%">
+                    <img v-show="!InputFocus" src="../../assets/images/button/hear-no-evil-monkey.png" class="pic">
+                    <img v-show="InputFocus" src="../../assets/images/button/see-no-evil-monkey.png" class="pic">
+                    <input v-model="password" type="password" placeholder="交出密码"
+                                               style="overflow: visible;padding-left: 8%" @focus="Yfocus" @blur="Nfocus">
                     <CustomButton v-show="!PassCheck" source="face-screaming-in-fear" size="large" message="输入不正确哦"
                                   type="alert"></CustomButton>
                     <CustomButton v-show="PassCheck" source="heavy-black-heart" size="large" message="!冲呀!"
@@ -64,10 +66,10 @@
         data() {
             return {
                 //todo: 做动画
-                password_message: '不看不看~',
                 name: "",
                 password: "",
                 check: true,
+                InputFocus: false,
             }
         },
         methods: {
@@ -82,6 +84,14 @@
             },
             submit: function () {
                 window.location.href = "/login";
+            },
+            Yfocus: function(){
+                console.log("YES");
+                this.InputFocus=true;
+            },
+            Nfocus: function(){
+                console.log("NO");
+                this.InputFocus=false;
             },
             Login: function () {
                 this.$ajax({
@@ -207,25 +217,25 @@
     .text:nth-child(4n+1) {
         stroke: #3498db;
         text-shadow: 0 0 5px #3498db;
-        animation: stroke 6s ease-in-out forwards;
+        animation: stroke 4s ease-in-out forwards;
     }
 
     .text:nth-child(4n+2) {
         stroke: #f39c12;
         text-shadow: 0 0 5px #f39c12;
-        animation: stroke1 6s ease-in-out forwards;
+        animation: stroke1 4s ease-in-out forwards;
     }
 
     .text:nth-child(4n+3) {
         stroke: #e74c3c;
         text-shadow: 0 0 5px #e74c3c;
-        animation: stroke2 6s ease-in-out forwards;
+        animation: stroke2 4s ease-in-out forwards;
     }
 
     .text:nth-child(4n+4) {
         stroke: #9b59b6;
         text-shadow: 0 0 5px #9b59b6;
-        animation: stroke3 6s ease-in-out forwards;
+        animation: stroke3 4s ease-in-out forwards;
     }
 
     @keyframes stroke {
@@ -254,6 +264,10 @@
             stroke-dashoffset: 270;
             stroke-dasharray: 80 240;
         }
+    }
+
+    .pic {
+        zoom: 75%;
     }
 
 </style>

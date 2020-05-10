@@ -45,8 +45,8 @@
                 </p>
             </div>
             <div v-show="check===2">
-                <div class="sec">
-                    <p>Email check</p>
+                <div class="sec2">
+                    <img src="../../assets/images/button/closed-mailbox-with-raised-flag.png" class="pic">
                     <div>
                         <input v-model="email" placeholder="Your email?" type="text" style="padding-left: 5%">
                         <p class="tip" v-show="!EmailCheck" style="color: salmon">邮箱格式不对哦！</p>
@@ -55,29 +55,30 @@
                                   type="alert" message="输入不正确哦"
                     ></CustomButton>
                     <CustomButton v-show="EmailCheck" source="winking-face" size="large" message="给我码"
-                                  @click.native="get_email"></CustomButton>
+                                  @click.native="next_page"></CustomButton>
                 </div>
                 <CustomButton source="white-left-pointing-backhand-index" size="large" message="想换名字QAQ"
                               @click.native="back"></CustomButton>
             </div>
             <div v-show="check===3">
-                <div class="sec">
-                    <p>Code Check</p>
+                <div class="sec2">
+                    <img src="../../assets/images/button/open-mailbox-with-raised-flag.png" class="pic">
                     <input id="codeInput" v-model="code" placeholder="code?" type="text" style="padding-left: 5%">
                     <CustomButton source="zipper-mouth-face" size="large" message="设置暗号"
-                                  @click.native="check_code"></CustomButton>
+                                  @click.native="next_page"></CustomButton>
                 </div>
                 <CustomButton source="white-left-pointing-backhand-index" size="large" message="邮箱搞错liao"
                               @click.native="back"></CustomButton>
             </div>
             <div v-show="check===4">
-                <div class="sec2">
-                    {{password_message}}
+                <div class="sec2" style="padding-bottom: 4%">
+                    <img v-show="!InputFocus" src="../../assets/images/button/hear-no-evil-monkey.png" class="pic" style="padding-right: 6%">
+                    <img v-show="InputFocus" src="../../assets/images/button/see-no-evil-monkey.png" class="pic" style="padding-right: 6%">
                     <div id="pass_input">
-                        <p><input v-model="password" type="password" placeholder="嘘~"></p>
+                        <p><input v-model="password" type="password" placeholder="嘘~" @blur="Nfocus" @focus="Yfocus"></p>
                         <p class="tip" v-bind:style="PassNumberStyle">要超过6个字符哦</p>
                         <p class="tip" v-bind:style="PassCheckStyle">由大小写字母、下划线和数字组成哦，而且至少要有一个大写字母哦！</p>
-                        <p><input v-model="password_again" type="password" laceholder="再嘘~"></p>
+                        <p><input v-model="password_again" type="password" placeholder="再嘘~" @blur="Nfocus" @focus="Yfocus"></p>
                         <p class="tip" v-bind:style="PassAgainStyle">要跟第一遍一模一样哦</p>
                     </div>
                     <CustomButton v-show="!(PassNumber&&PassCheck&&PassAgain)" source="face-screaming-in-fear" size="large"
@@ -114,6 +115,7 @@
                 password_again: "",
                 check: 1,
                 response: null,
+                InputFocus: false,
             }
         },
         methods: {
@@ -209,6 +211,14 @@
                             console.log(error);
                         }
                     )
+            },
+            Yfocus: function(){
+                console.log("YES");
+                this.InputFocus=true;
+            },
+            Nfocus: function(){
+                console.log("NO");
+                this.InputFocus=false;
             },
         }
         ,
@@ -330,6 +340,10 @@
         color: grey;
     }
 
+    .pic {
+        zoom: 75%;
+    }
+
     .sec {
         margin: auto;
         padding: 9% 5%;
@@ -340,7 +354,7 @@
 
     .sec2 {
         margin: auto;
-        padding: 5% 10% 6.4% 20%;
+        padding: 7% 10%;
         display: flex;
         align-items: center;
         font-size: 4.5em;
@@ -359,25 +373,25 @@
     .text:nth-child(4n+1) {
         stroke: #3498db;
         text-shadow: 0 0 5px #3498db;
-        animation: stroke 6s ease-in-out forwards;
+        animation: stroke 4s ease-in-out forwards;
     }
 
     .text:nth-child(4n+2) {
         stroke: #f39c12;
         text-shadow: 0 0 5px #f39c12;
-        animation: stroke1 6s ease-in-out forwards;
+        animation: stroke1 4s ease-in-out forwards;
     }
 
     .text:nth-child(4n+3) {
         stroke: #e74c3c;
         text-shadow: 0 0 5px #e74c3c;
-        animation: stroke2 6s ease-in-out forwards;
+        animation: stroke2 4s ease-in-out forwards;
     }
 
     .text:nth-child(4n+4) {
         stroke: #9b59b6;
         text-shadow: 0 0 5px #9b59b6;
-        animation: stroke3 6s ease-in-out forwards;
+        animation: stroke3 4s ease-in-out forwards;
     }
 
     @keyframes stroke {

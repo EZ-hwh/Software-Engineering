@@ -12,8 +12,8 @@ module.exports = {
     pwa: {},
     pages: {
         index: {
-            entry: 'src/views/personal/main.js',
-            template: 'public/personal.html',
+            entry: 'src/views/home/main.js',
+            template: 'public/home.html',
             filename: 'index.html',
             chunks: ['chunk-vendors', 'chunk-common', 'index']
         },

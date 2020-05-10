@@ -1,14 +1,12 @@
 <template>
 <div>
     <div id="coursesTable"></div>
-  <button @click="onChange" style="background-color: #00a2ae; color: #fff; padding: 5px 10px; border-radius: 4px;border: none"
-  >切换课表</button>
 </div>
 
 </template>
 
 <script>
-import { Timetables } from '../../../assets/js/pages/Timetables.min.js'
+import { Timetables } from "../../../assets/js/pages/Timetables.min.js";
 
 var courseList = [
   [
@@ -35,7 +33,7 @@ var courseList = [
     '',
     '',
     '',
-    '',
+    "",
     '',
     '',
   ],
@@ -70,7 +68,7 @@ var courseList = [
   [
     '',
     '',
-    '计算机体系结构',
+    "计算机体系结构",
     '计算机体系结构',
     '',
     '',
@@ -147,11 +145,11 @@ var week =
     : ['一', '二', '三', '四', '五']
 var day = new Date().getDay()
 var courseType = [
-  [{ index: '1', name: '8:30' }, 1],
-  [{ index: '2', name: '9:30' }, 1],
-  [{ index: '3', name: '10:30' }, 1],
-  [{ index: '4', name: '11:30' }, 1],
-  [{ index: '5', name: '12:30' }, 1],
+  [{ index: '1', name: '8:00' }, 1],
+  [{ index: '2', name: '8:55' }, 1],
+  [{ index: '3', name: '9:55' }, 1],
+  [{ index: '4', name: '10:50' }, 1],
+  [{ index: '5', name: '11:45' }, 1],
   [{ index: '6', name: '14:30' }, 1],
   [{ index: '7', name: '15:30' }, 1],
   [{ index: '8', name: '16:30' }, 1],
