@@ -2,7 +2,7 @@
   <div class="text-center card-box">
 
     <div>
-      <img src="../assets/images/users/user-10.jpg" class="rounded-circle avatar-xl img-thumbnail mb-2" alt="profile-image">
+      <img src="../../assets/images/user/user-10.jpg" class="rounded-circle avatar-xl img-thumbnail mb-2" alt="profile-image">
 
       <p class="text-muted font-13 mb-4">
         {{formValidate.desc}}
@@ -195,5 +195,10 @@
     }
 </script>
 
-<style scoped >
+<style lang="scss">
+    // Allow element/type selectors, because this is global CSS.
+    // stylelint-disable selector-max-type, selector-class-pattern
+
+    // Design variables and utilities from src/TopBarDesign.
+    @import '../../assets/css/TopBarDesign';
 </style>

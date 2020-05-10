@@ -1,156 +1,184 @@
 <template>
     <svg xmlns="http://www.w3.org/2000/svg"
-         viewBox= "0 0 800 600" width="100%" height="100%"
+         viewBox= "0 0 1600 600"
          class='lesson_book' id="bookIcon">
-        <a id = book>
-            <rect :fill="getColor()" :x="getX()" :y="getY()" width="80" :height= "getHeight()" rx="5.0" onclick="window.top.location.href='/course';"></rect>
-            <text font-family="Montserrat-ExtraBold" :x="getTextX()" :y="getTextY()" :transform ="'rotate(90, ' + getTextX() + ','+ getTextY()+ ')'" style="letter-spacing:10px; font-weight: bold" dominant-baseline="middle" rotate="-90" font-size="25px"  onclick="window.top.location.href='/course';" >{{name}}</text>
-        </a>
+        <g v-for="lesson in lessons">
+            <g id = book onclick="go_to_lesson(lesson.name)">
+                <g id = cover>
+                    <rect id=cover :fill="getColor(lesson.index)" :x="getX(lesson.index)" :y="getY(lesson.index)" width="80" :height= "getHeight(lesson.index)" rx="5.0" onclick="window.top.location.href='/course'"></rect>
+                </g>
+                <g id = title>
+                    <text class="text text-1" font-family="Montserrat-ExtraBold" :x="getTextX(lesson.index) + 10" :y="getTextY(lesson.index)- 10" :transform ="'rotate(90, ' + getTextX(lesson.index) + ','+ getTextY(lesson.index)+ ')'" style="letter-spacing:10px;" dominant-baseline="middle" rotate="-90" font-size="30px"  onclick="window.top.location.href='/course';" >{{lesson.name}}</text>
+                    <text class="text text-2" font-family="Montserrat-ExtraBold" :x="getTextX(lesson.index) + 10" :y="getTextY(lesson.index)- 10" :transform ="'rotate(90, ' + getTextX(lesson.index) + ','+ getTextY(lesson.index)+ ')'" style="letter-spacing:10px;" dominant-baseline="middle" rotate="-90" font-size="30px"  onclick="window.top.location.href='/course';" >{{lesson.name}}</text>
+                    <text class="text text-3" font-family="Montserrat-ExtraBold" :x="getTextX(lesson.index) + 10" :y="getTextY(lesson.index)- 10" :transform ="'rotate(90, ' + getTextX(lesson.index) + ','+ getTextY(lesson.index)+ ')'" style="letter-spacing:10px;" dominant-baseline="middle" rotate="-90" font-size="30px"  onclick="window.top.location.href='/course';" >{{lesson.name}}</text>
+                    <text class="text text-4" font-family="Montserrat-ExtraBold" :x="getTextX(lesson.index) + 10" :y="getTextY(lesson.index)- 10" :transform ="'rotate(90, ' + getTextX(lesson.index) + ','+ getTextY(lesson.index)+ ')'" style="letter-spacing:10px;" dominant-baseline="middle" rotate="-90" font-size="30px"  onclick="window.top.location.href='/course';" >{{lesson.name}}</text>
+
+                </g>
+                <!--                <rect fill="#fefffe" fill-opacity="0.8" :x="getTextX(lesson.index) - 10" width="10" :y="getY(lesson.index) + 10" rx="3.0" :height="getHeight(lesson.index) - 20" onclick="window.top.location.href='/course'"></rect>-->
+            </g>
+        </g>
+        <g id = shelve>
+            <rect id="desk" x = 0 y = 540 width= 1400 height= 60 fill="#a09890"></rect>
+<!--            540 -> 480-->
+        </g>
     </svg>
+
 </template>
 
 <script>
     export default {
         name: "Lessonbook",
+        book: '#book',
         props: {
-            name: String,
-            xv: Number,
-            yv: Number,
-            // items:[
-            //     {}
-            // ]
+            lessons:{type:Array},
             number:{type:Number, default:0},
-            index:{type:Number, default:0}
+        },
+        data(){
+            return{
+                get_id:0,
+                get_hover:false}
         },
         methods: {
-            getX: function(){
+            go_to_lesson:function(name){
+                window.location.href = "/course";
+                },
+            getX: function(index){
                 // console.log(this.number);
                 // console.log(this.index);
                 if(this.number % 2 === 0) {
-                    return Number(360 - 40 * this.number + 80 * this.index);
+                    return Number(600 - 40 * this.number + 80 * index);
                 }
                 else {
-                    return Number(360 - 40 * this.number + 80 * this.index);
+                    return Number(600 - 40 * this.number + 80 * index);
                 }
             },
 
-            getTextX:function(){
+            getTextX:function(index){
                 // console.log(this.number);
                 // console.log(this.index);
                 if(this.number % 2 === 0) {
-                    return Number(360 - 40 * this.number + 80 * this.index + 25)
+                    return Number(600 - 40 * this.number + 80 * index + 25)
                 }
                 else {
-                    return Number(360 - 40 * this.number  + 80 * this.index + 25)
+                    return Number(600 - 40 * this.number  + 80 * index + 25)
                 }
             },
 
 
-            getTextY:function(){
+            getTextY:function(index){
                 // console.log(this.number);
                 // console.log(this.index);
                 if(this.number % 2 === 0) {
-                    if (this.index <= this.number / 2) {
-                        return Number(190 + 15 * this.number - 30 * this.index)
+                    if (index <= this.number / 2) {
+                        return Number(130 + 15 * this.number - 30 * index)
                     } else {
-                        return Number(160 - 15 * this.number + 30 * this.index)
+                        return Number(100 - 15 * this.number + 30 * index)
                     }
                 }
                 else {
-                    if (this.index <= (this.number + 1) / 2) {
-                        return Number(205 + 15 * this.number - 30 * this.index)
+                    if (index <= (this.number + 1) / 2) {
+                        return Number(145 + 15 * this.number - 30 * index)
                     } else {
-                        return Number(175 - 15 * this.number + 30 * this.index)
-                    }
-                }
-            },
-
-            getY:function(){
-                // console.log(this.number);
-                // console.log(this.index);
-                if(this.number % 2 === 0) {
-                    if (this.index <= this.number / 2) {
-                        return Number(130 + 15 * this.number - 30 * this.index)
-                    } else {
-                        return Number(100 - 15 * this.number + 30 * this.index)
-                    }
-                }
-                else {
-                    if (this.index <= (this.number + 1) / 2) {
-                        return Number(145 + 15 * this.number - 30 * this.index)
-                    } else {
-                        return Number(115 - 15 * this.number + 30 * this.index)
+                        return Number(115 - 15 * this.number + 30 * index)
                     }
                 }
             },
 
-            getColor:function(){
-                if(this.index === 1){
-                    return '#68e4aa'
+            getY:function(index){
+                // console.log(this.number);
+                // console.log(this.index);
+                var y = 0;
+                if(this.number % 2 === 0) {
+                    if (index <= this.number / 2) {
+                        y =  Number(70 + 15 * this.number - 30 * index)
+                    } else {
+                        y  = Number(40 - 15 * this.number + 30 * index)
+                    }
                 }
-                else if(this.index === 2){
-                    return  '#7ec6cc'
+                else {
+                    if (index <= (this.number + 1) / 2) {
+                        y = Number(85 + 15 * this.number - 30 * index)
+                    } else {
+                        y = Number(55 - 15 * this.number + 30 * index)
+                    }
                 }
-                else if(this.index === 3){
-                    return '#6d4fd8'
+
+                if (index === this.get_id && this.get_hover === true){
+                    y = y + 40
                 }
-                else if(this.index === 4){
-                    return '#d976c2'
+
+                return y
+            },
+
+            getColor:function(index){
+                if(index % 10 === 1){
+                    return '#8ae9bd'
                 }
-                else if(this.index === 5){
-                    return  '#f5926e'
+                else if(index  % 10 === 2){
+                    return  '#9cdadf'
                 }
-                else if(this.index === 6){
-                    return '#f7d95c'
+                else if(index   % 10=== 3){
+                    return '#947ce8'
                 }
-                else if(this.index === 7){
+                else if(index   % 10=== 4){
+                    return '#ee92d9'
+                }
+                else if(index   % 10=== 5){
+                    return  '#fba383'
+                }
+                else if(index  % 10 === 6){
+                    return '#f7dd73'
+                }
+                else if(index  % 10 === 7){
                     return '#cef9ad'
                 }
-                else if(this.index === 8){
-                    return '#f4737e'
+                else if(index  % 10 === 8){
+                    return '#dd87e6'
                 }
-                else if(this.index === 9){
+                else if(index  % 10=== 9){
                     return '#e0cb6e'
+                }
+                else{
+                    return '#b3d3ec'
                 }
 
             },
-
-            getHeight:function(){
+            getHeight:function(index){
                 // console.log(this.number);
                 // console.log(this.index);
                  if(this.number % 2 === 0) {
-                    if(this.index <= this.number/2) {
-                        return Number(470 - 15 * this.number + 30 * this.index )
+                    if(index <= this.number/2) {
+                        return Number(470 - 15 * this.number + 30 * index )
                     }
                     else{
-                        return Number(500  + 15 * this.number - 30 * this.index)
+                        return Number(500  + 15 * this.number - 30 * index)
                     }
                  }
                 else{
                     if(this.index <= (this.number + 1)/2){
-                        return Number(455 -  15 * this.number + 30 * this.index)
+                        return Number(455 -  15 * this.number + 30 * index)
                      }
                     else{
-                        return Number(485 + 15 * this.number - 30 *this.index)
+                        return Number(485 + 15 * this.number - 30 * index)
                     }
                 }
-            }
+            },
 
         },
 
         created:function(){
-            console.log(this.name + this.index +this.number);
+            console.log(this.lessons +this.number);
         },
         mounted:function () {
-            console.log(this.name + this.index +this.number);
+            console.log(this.lessons +this.number);
         }
     }
 </script>
 
 <style scoped>
-    html {
-	  overflow: hidden;
-	}
+    /*html {*/
+	/*  overflow: hidden;*/
+	/*}*/
 
     @font-face {
         font-family: 'Montserrat-ExtraBold';
@@ -163,17 +191,94 @@
         text-align: center;
         margin: auto;
     }
+
+    #cover :hover {
+        transform: translate(0px, -50px);
+    }
+    #cover :hover:after {
+        transform: translateY(-50px);
+        transition: all 2s ease-in-out;
+    }
+    #title :hover{
+        transform: translate(0px, 50px) rotate(90deg);
+    }
+    #title :hover:after {
+        transform: translateY(-50px) rotate(90deg);
+        transition: all 2s ease-in-out;
+    }
+
     .lesson_book {
         font-family: Montserrat-ExtraBold, sans-serif;
         padding: 0 0;
         font-size: 10px;
-        width: 100vw;
-        height: 75vh;
         text-align: center;
-        position:absolute;
+        /*position:absolute;*/
     }
-    svg {
-	    height: 75vh;
-	    width: 100vw;
-	}
+
+    .text {
+        /*font-size: 64px;*/
+        font-weight: bold;
+        text-transform: uppercase;
+        fill: #ffffff;
+        /*fill: none;*/
+        stroke: #a09890;
+        stroke-width: 1px;
+        /*stroke-dasharray: 90 310;*/
+        /*animation: stroke 12s infinite linear;*/
+    }
+    .text:hover{
+        fill:#a09890;
+        stroke-dasharray: 90 310;
+        animation: stroke 12s infinite linear;
+    }
+
+
+    .text-1 {
+        stroke: #a09890;
+        text-shadow: 0 0 1px #a09890;
+        /*animation-delay: -3s;*/
+    }
+     .text-1:hover {
+         animation-delay: -3s;
+     }
+
+    .text-2 {
+        stroke: #a09890;
+        text-shadow: 0 0 1px #a09890;
+        /*animation-delay: -6s;*/
+    }
+
+    .text-2:hover {
+         animation-delay: -6s;
+     }
+
+    .text-3 {
+        stroke: #a09890;
+        text-shadow: 0 0 1px #a09890;
+        /*animation-delay: -9s;*/
+    }
+
+    .text-3:hover {
+         animation-delay: -9s;
+     }
+
+    .text-4 {
+        stroke: #a09890;
+        text-shadow: 0 0 1px #a09890;
+        /*animation-delay: -12s;*/
+    }
+
+    .text-4:hover {
+         animation-delay: -12s;
+     }
+
+
+
+
+    @keyframes stroke {
+        100% {
+            stroke-dashoffset: -400;
+        }
+    }
+
 </style>

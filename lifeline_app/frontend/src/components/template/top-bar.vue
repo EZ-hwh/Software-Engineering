@@ -89,17 +89,10 @@ export default {
       //TODO: 这里跳转singlecourse的界面
       console.log(value);
       window.location.href = "/course"; //还没有加课程的value
-      /*this.$ajax({
-                    method: 'get',
-                    url: '/SingleCourse',
-                    params: {
-                      name: value
-                    }
-                }).then(response => (console.log(response)))
-                    .catch(function (error) {
-                        console.log(error);
-                    })*/
     },
+    ToPersonal: function () {
+      window.location.href="/personal" //TODO：修改成带value的get
+    }
   },
 };
 </script>
@@ -125,7 +118,8 @@ export default {
           <!-- End mobile menu toggle-->
         </li>
 
-        <li class="d-none d-sm-block">
+        <!-- 这里是search框 视情况添加 -->
+        <!-- <li class="d-none d-sm-block">
           <form class="app-search">
             <div class="app-search-box">
               <div class="input-group">
@@ -142,17 +136,18 @@ export default {
               </div>
             </div>
           </form>
-        </li>
+        </li> -->
 
+        <!-- 这里是通知栏 -->
         <b-nav-item-dropdown right class="notification-list">
           <template
             slot="button-content"
             class="nav-link dropdown-toggle  waves-effect waves-light"
           >
             <i class="fe-bell noti-icon"></i>
-            <span class="badge badge-danger rounded-circle noti-icon-badge"
+            <!-- <span class="badge badge-danger rounded-circle noti-icon-badge"
               >9</span
-            >
+            > -->
           </template>
 
           <b-dropdown-text href="#" class="dropdown-item noti-title">
@@ -184,7 +179,7 @@ export default {
                 </p>
               </a>
 
-              <!-- item-->
+
               <a href="javascript:void(0);" class="dropdown-item notify-item">
                 <div class="notify-icon bg-primary">
                   <i class="mdi mdi-comment-account-outline"></i>
@@ -195,7 +190,6 @@ export default {
                 </p>
               </a>
 
-              <!-- item-->
               <a href="javascript:void(0);" class="dropdown-item notify-item">
                 <div class="notify-icon">
                   <img
@@ -210,7 +204,7 @@ export default {
                 </p>
               </a>
 
-              <!-- item-->
+
               <a href="javascript:void(0);" class="dropdown-item notify-item">
                 <div class="notify-icon bg-warning">
                   <i class="mdi mdi-account-plus"></i>
@@ -221,7 +215,7 @@ export default {
                 </p>
               </a>
 
-              <!-- item-->
+
               <a href="javascript:void(0);" class="dropdown-item notify-item">
                 <div class="notify-icon bg-info">
                   <i class="mdi mdi-comment-account-outline"></i>
@@ -232,7 +226,7 @@ export default {
                 </p>
               </a>
 
-              <!-- item-->
+
               <a href="javascript:void(0);" class="dropdown-item notify-item">
                 <div class="notify-icon bg-secondary">
                   <i class="mdi mdi-heart"></i>
@@ -255,6 +249,7 @@ export default {
           </b-dropdown-text>
         </b-nav-item-dropdown>
 
+        <!-- 这里是头像和下拉菜单 -->
         <b-nav-item-dropdown
           right
           class="notification-list"
@@ -273,7 +268,7 @@ export default {
             </div>
           </template>
 
-          <b-dropdown-item href="#">
+          <b-dropdown-item @click="ToPersonal">
             <i class="fe-user mr-1"></i>
             <span>My Account</span>
           </b-dropdown-item>
@@ -283,11 +278,6 @@ export default {
             <span>Settings</span>
           </b-dropdown-item>
 
-          <b-dropdown-item href="#">
-            <i class="fe-lock mr-1"></i>
-            <span>Lock Screen</span>
-          </b-dropdown-item>
-
           <b-dropdown-divider></b-dropdown-divider>
           <b-dropdown-item href="/logout">
             <i class="fe-log-out mr-1"></i>
@@ -295,14 +285,15 @@ export default {
           </b-dropdown-item>
         </b-nav-item-dropdown>
 
-        <li class="dropdown notification-list">
+        <!-- 这里是侧栏 按需求添加吧 -->
+        <!-- <li class="dropdown notification-list">
           <button
             class="btn btn-link nav-link right-bar-toggle waves-effect waves-light"
             @click="toggleRightSidebar"
           >
             <i class="fe-settings noti-icon"></i>
           </button>
-        </li>
+        </li> -->
       </ul>
 
       <!-- LOGO -->
@@ -311,7 +302,7 @@ export default {
           <!-- 这个图片不知道哪里出错了 -->
           <span class="logo-lg">
             <img
-              src="../../assets/images/logo/logo-sm.png"
+              src="../../assets/images/logo/logo-dark.png"
               alt=""
               height="16"
             />
@@ -337,21 +328,12 @@ export default {
 
           <li class="has-submenu">
             <a href="#" @click="ToLessons">
-              <i class="mdi mdi-share-variant"></i>Curriculum
-              <div class="arrow-down"></div>
+              <i class="mdi mdi-book-open-variant"></i>Curriculum
             </a>
-
-            <ul class="submenu">
-              <li v-for="value in courses" :key="value">
-                <a href="#" @click="ToCourse(value)">
-                  {{ value }}
-                </a>
-              </li>
-            </ul>
           </li>
 
           <li class="has-submenu">
-            <a href="#"> <i class="mdi mdi-invert-colors"></i>Ispace </a>
+            <a href="#"> <i class="mdi mdi-account-badge-outline"></i>Ispace </a>
           </li>
         </ul>
         <!-- End navigation menu -->

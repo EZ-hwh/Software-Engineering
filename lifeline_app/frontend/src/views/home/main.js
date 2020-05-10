@@ -1,3 +1,5 @@
+import moment from "moment";
+import "../../assets/libs/jquery-ui/jquery-ui.min";
 import Vue from "vue";
 import home from "./home";
 import axios from 'axios';
