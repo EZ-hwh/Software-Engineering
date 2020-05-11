@@ -104,24 +104,24 @@ export default {
   },
   methods: {},
   created: function() {
-    this.$ajax({
-      method: "post",
-      url: "/home/weeklist/",
-      params: {
-        // 后端应该保存了现在登陆的人？
-        type: "log",
-      },
-    })
-      .then((response) => {
-        if (response.data.flag == true) {
-          this.WeekList = response.data.WeekList;
-        } else {
-          console.log(response.data.error_msg);
-        }
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
+    // this.$ajax({
+    //   method: "post",
+    //   url: "/get_todolist/",
+    //   params: {
+    //     // 后端应该保存了现在登陆的人？
+    //     type: "log",
+    //   },
+    // })
+    //   .then((response) => {
+    //     if (response.data.flag == true) {
+    //       this.WeekList = response.data.WeekList;
+    //     } else {
+    //       console.log(response.data.error_msg);
+    //     }
+    //   })
+    //   .catch(function(error) {
+    //     console.log(error);
+    //   });
   },
 }
 </script>

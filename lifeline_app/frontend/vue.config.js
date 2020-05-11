@@ -15,7 +15,6 @@ module.exports = {
     index: {
       entry: "src/views/first/main.js",
       template: "public/index.html",
-      filename: "index.html",
       chunks: ["chunk-vendors", "chunk-common", "index"],
     },
     login: {

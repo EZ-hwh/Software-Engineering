@@ -9,6 +9,7 @@
         data() {
             return {
                 isMenuOpened: false,
+                showFooter: true,
             }
         },
         created: () => {
@@ -37,7 +38,7 @@
                 <slot/>
             </div>
         </div>
-        <Footer/>
+        <Footer v-show="showFooter"></Footer>
         <RightBar/>
     </div>
 </template>
