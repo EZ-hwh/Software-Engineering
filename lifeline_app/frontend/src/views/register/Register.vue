@@ -147,7 +147,7 @@
                             title: 'Send Successfully!',
                             duration: 2,
                         });
-                        console.log(response.data.checkSum);
+                        // console.log(response.data.checksum);
                         setTimeout(() => {
                             this.check = 3;
                         }, 2000);

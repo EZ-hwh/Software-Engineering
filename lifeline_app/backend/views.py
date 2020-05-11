@@ -302,7 +302,7 @@ def getcode(request):
         print(register.email, register.checksum)
         send_my_email(register.email, register.checksum)  # 通过邮箱进行验证码的发送
         register.save()
-        ret["checksum"] = register.checksum
+        # ret["checksum"] = register.checksum
         ret["flag"] = True
         print(1)
         return JsonResponse(ret)
