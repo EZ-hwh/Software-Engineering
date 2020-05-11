@@ -46,21 +46,21 @@
 
             <ul class="list-inline">
               <!-- <button type="button" class="btn btn-info btn-xs" id="sa-success">Click me</button> -->
-              <li class="list-inline-item">
-                <a
-                  href=""
-                  data-toggle="tooltip"
-                  data-placement="top"
-                  title=""
-                  data-original-title="Username"
-                >
-                  <img
-                    src="../../../assets/images/user/user-1.jpg"
-                    alt="img"
-                    class="avatar-sm rounded-circle"
-                  />
-                </a>
-              </li>
+<!--              <li class="list-inline-item">-->
+<!--                <a-->
+<!--                  href=""-->
+<!--                  data-toggle="tooltip"-->
+<!--                  data-placement="top"-->
+<!--                  title=""-->
+<!--                  data-original-title="Username"-->
+<!--                >-->
+<!--                  <img-->
+<!--                    src="../../../assets/images/user/user-1.jpg"-->
+<!--                    alt="img"-->
+<!--                    class="avatar-sm rounded-circle"-->
+<!--                  />-->
+<!--                </a>-->
+<!--              </li>-->
               <li class="list-inline-item">
                 <a
                   href=""
