@@ -6,7 +6,8 @@ import re
 app_name = 'backend'
 urlpatterns = [
     url('get_schedule', views.get_schedule),
-    url('get_todolist', views.get_todolist),
+    url('get_Todaylist', views.get_Todaylist),
+    url('get_Weeklist', views.get_Weeklist),
     url('getcode', views.getcode),
     url('checkcode', views.checkcode),
     url('home', views.home),

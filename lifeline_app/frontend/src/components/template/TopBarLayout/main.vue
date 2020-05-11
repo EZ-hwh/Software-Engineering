@@ -9,11 +9,10 @@
         data() {
             return {
                 isMenuOpened: false,
-                showFooter: true,
             }
         },
         created: () => {
-            document.body.classList.remove('authentication-bg')
+            document.body.classList.remove('authentication-bg');
         },
         methods: {
             toggleMenu() {
@@ -23,6 +22,12 @@
                 document.body.classList.toggle('right-bar-enabled')
             },
         },
+        computed: {
+            checkFooter: function () {
+                console.log(this.showFooter);
+                return this.showFooter !== "false";
+            }
+        }
     }
 </script>
 
@@ -38,7 +43,7 @@
                 <slot/>
             </div>
         </div>
-        <Footer v-show="showFooter"></Footer>
+        <Footer/>
         <RightBar/>
     </div>
 </template>

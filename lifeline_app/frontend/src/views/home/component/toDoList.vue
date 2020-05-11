@@ -299,7 +299,7 @@ export default {
   created: function() {
     this.$ajax({
       method: "get",
-      url: "/get_todolist/",
+      url: "/get_Todaylist/",
       params: {
         // 后端应该保存了现在登陆的人？
         type: "log",
@@ -307,8 +307,9 @@ export default {
     })
       .then(response => {
         if (response.data.flag === true) {
+          console.log("get info")
           this.TodayList = response.data.TodayList;
-          console.log(response.data.TodayList);
+          console.log(response.data.TodayList[1]);
         } else {
           console.log(response.data.error_msg);
         }
