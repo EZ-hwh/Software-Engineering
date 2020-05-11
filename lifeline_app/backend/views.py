@@ -1,5 +1,5 @@
-from django.shortcuts import render,redirect,get_object_or_404
-from django.http import Http404,HttpResponse
+from django.shortcuts import render, redirect, get_object_or_404
+from django.http import Http404, HttpResponse
 from django.http.response import JsonResponse
 from .models import *
 from django.views.decorators.csrf import csrf_exempt
@@ -8,6 +8,7 @@ import random
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from .email import *
+
 # Create your views here.
 
 DEBUG = True  # 进行调试，用于输出调试
@@ -142,6 +143,7 @@ def course(request):
         # return render(request,'lessons.html')
         return render(request, 'SingleCourse.html')
 
+
 @csrf_exempt
 def get_schedule(request):
     if not request.session.get('login', None):
@@ -172,6 +174,7 @@ def get_schedule(request):
         ret['schedule'] = scheduler_list
         return JsonResponse(ret)
 
+
 @csrf_exempt
 def get_todolist(request):
     if not request.session.get('login', None):
@@ -199,10 +202,10 @@ def get_todolist(request):
                         "description": ""
                     }
                 ],
-                "WeekList":[]
+                "WeekList": []
             }
             return JsonResponse(ret)
-        user = Account.objects.get(email = request.session['email'])
+        user = Account.objects.get(email=request.session['email'])
         todolist = user.todolist_set.all()
         todolist.order_by('deadline_time')
 
@@ -216,12 +219,13 @@ def get_todolist(request):
         ret = {"TodayList": ret}
         return JsonResponse(ret)
 
+
 @csrf_exempt
 def checkcode(request):
     if request.method == 'POST':
         ret = {}
         try:
-            register = Register.objects.get(email = request.GET.get("email"))
+            register = Register.objects.get(email=request.GET.get("email"))
             if request.GET.get("code") == register.checksum:
                 ret["flag"] = True
             else:
@@ -232,25 +236,26 @@ def checkcode(request):
             ret["error_msg"] = "请您请求验证码！"
         return JsonResponse(ret)
 
+
 @csrf_exempt
 def getcode(request):
     if request.method == 'POST':
         print("getcode begin!!!")
         email = request.GET.get("email")
         ret = {}
-        if Account.objects.filter(email = email).exists():
+        if Account.objects.filter(email=email).exists():
             ret["flag"] = False
             ret["error_msg"] = "邮箱已注册！"
             return JsonResponse(ret)
         try:
-            register = Register.objects.get(email = email)
+            register = Register.objects.get(email=email)
             print("try")
         except:
-            register = Register(email = email)
+            register = Register(email=email)
             print("except")
         register.checksum = random.randint(100000, 999999)
         print(register.email, register.checksum)
-        send_my_email(register.email,register.checksum) #通过邮箱进行验证码的发送
+        send_my_email(register.email, register.checksum)  # 通过邮箱进行验证码的发送
         register.save()
         ret["checksum"] = register.checksum
         ret["flag"] = True
@@ -261,4 +266,4 @@ def getcode(request):
 @csrf_exempt
 def logout(request):  # 登出,此方案过于简单，需改进
     request.session['login'] = False
-    return render(request,'index.html')
+    return render(request, 'index.html')

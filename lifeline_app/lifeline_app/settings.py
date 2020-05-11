@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'corsheaders',
-    'captcha', #图片验证码的app
+    # 'captcha', #图片验证码的app
     'backend', #add backend
 ]
 
