@@ -181,6 +181,7 @@ def get_todolist(request):
 
         test = True
         if test:
+            print("abc")
             ret = {
                 "TodayList": [
                     {
@@ -199,8 +200,10 @@ def get_todolist(request):
                         "description": ""
                     }
                 ],
-                "WeekList":[]
+                "WeekList": []
             }
+
+            print(ret)
             return JsonResponse(ret)
         user = Account.objects.get(email = request.session['email'])
         todolist = user.todolist_set.all()
