@@ -51,7 +51,62 @@
           >
         </div>
       </div>
-    
+      <!-- BEGIN MODAL -->
+                        <div class="modal fade none-border" id="event-modal">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title mt-0"><strong>Add New Event</strong></h4>
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                    </div>
+                                    <div class="modal-body"></div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-light waves-effect" data-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-success save-event waves-effect waves-light">Create event</button>
+                                        <button type="button" class="btn btn-danger delete-event waves-effect waves-light" data-dismiss="modal">Delete</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Modal Add Category -->
+                        <div class="modal fade none-border" id="add-category">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title mt-0"><strong>Add a category </strong></h4>
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form role="form">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label class="control-label">Category Name</label>
+                                                    <input class="form-control form-white" placeholder="Enter name" type="text" name="category-name"/>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label class="control-label">Choose Category Color</label>
+                                                    <select class="form-control form-white" data-placeholder="Choose a color..." name="category-color">
+                                                        <option value="success">Success</option>
+                                                        <option value="danger">Danger</option>
+                                                        <option value="info">Info</option>
+                                                        <option value="pink">Pink</option>
+                                                        <option value="primary">Primary</option>
+                                                        <option value="warning">Warning</option>
+                                                        <option value="inverse">Inverse</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-light waves-effect" data-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-danger waves-effect waves-light save-category" data-dismiss="modal">Save</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END MODAL -->
     
     </div>
   </div>
@@ -62,7 +117,7 @@
 </template>
 
 <script>
-import "jquery";
+import $ from "jquery";
 import "bootstrap";
 import "moment";
 import 'jquery-ui/ui/widgets/draggable'
@@ -199,70 +254,11 @@ export default {
     };
   },
   mounted: function() {
-    calendar1(window.jQuery);
+    console.log($)
+    calendar1($);
     calendar2();
   },
   methods: {
-    onSelect(n, a, e) {
-      console.log("onSelect");
-      var o = this;
-      console.log(this.$modal.modal);
-      o.$modal.modal({ backdrop: "static" });
-      var i = l("<form></form>");
-      i.append("<div class='row'></div>"),
-        i
-          .find(".row")
-          .append(
-            "<div class='col-md-6'><div class='form-group'><label class='control-label'>Event Name</label><input class='form-control' placeholder='Insert Event Name' type='text' name='title'/></div></div>"
-          )
-          .append(
-            "<div class='col-md-6'><div class='form-group'><label class='control-label'>Category</label><select class='form-control' name='category'></select></div></div>"
-          )
-          .find("select[name='category']")
-          .append("<option value='bg-danger'>Danger</option>")
-          .append("<option value='bg-success'>Success</option>")
-          .append("<option value='bg-purple'>Purple</option>")
-          .append("<option value='bg-primary'>Primary</option>")
-          .append("<option value='bg-pink'>Pink</option>")
-          .append("<option value='bg-info'>Info</option>")
-          .append("<option value='bg-inverse'>Inverse</option>")
-          .append("<option value='bg-warning'>Warning</option></div></div>"),
-        o.$modal
-          .find(".delete-event")
-          .hide()
-          .end()
-          .find(".save-event")
-          .show()
-          .end()
-          .find(".modal-body")
-          .empty()
-          .prepend(i)
-          .end()
-          .find(".save-event")
-          .unbind("click")
-          .click(function() {
-            i.submit();
-          }),
-        o.$modal.find("form").on("submit", function() {
-          var e = i.find("input[name='title']").val(),
-            t =
-              (i.find("input[name='beginning']").val(),
-              i.find("input[name='ending']").val(),
-              i.find("select[name='category'] option:checked").val());
-          return (
-            null !== e && 0 != e.length
-              ? (o.$calendarObj.fullCalendar(
-                  "renderEvent",
-                  { title: e, start: n, end: a, allDay: !1, className: t },
-                  !0
-                ),
-                o.$modal.modal("hide"))
-              : alert("You have to give a title to your event"),
-            !1
-          );
-        }),
-        o.$calendarObj.fullCalendar("unselect");
-    },
   },
 };
 </script>

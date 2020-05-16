@@ -29,9 +29,12 @@
           <div class="checkbox-wrapper float-left">
             <div class="checkbox checkbox-success checkbox-single">
               <input
+                @click="check_todolist(ddl['id'], ddl['status'])"
                 type="checkbox"
-                id="singleCheckbox2"
+                :id="'singleCheckbox' + ddl['id']"
                 value="option2"
+                :checked="ddl['status'] == 1 ? 'checked' : ''"
+                :disabled="ddl['status'] == 2 ? 'disabled' : ''"
                 aria-label="Single checkbox Two"
               />
               <label></label>
@@ -39,28 +42,16 @@
           </div>
 
           <div class="kanban-detail">
-            <span class="badge badge-danger float-right">{{ ddl["time"] }}</span>
+            <span class="badge badge-danger float-right">{{
+              ddl["time"]
+            }}</span>
             <h5 class="mt-0">
               <a href="" class="text-dark">{{ ddl["name"] }}</a>
             </h5>
 
             <ul class="list-inline">
               <!-- <button type="button" class="btn btn-info btn-xs" id="sa-success">Click me</button> -->
-<!--              <li class="list-inline-item">-->
-<!--                <a-->
-<!--                  href=""-->
-<!--                  data-toggle="tooltip"-->
-<!--                  data-placement="top"-->
-<!--                  title=""-->
-<!--                  data-original-title="Username"-->
-<!--                >-->
-<!--                  <img-->
-<!--                    src="../../../assets/images/user/user-1.jpg"-->
-<!--                    alt="img"-->
-<!--                    class="avatar-sm rounded-circle"-->
-<!--                  />-->
-<!--                </a>-->
-<!--              </li>-->
+
               <li class="list-inline-item">
                 <a
                   href=""
@@ -79,195 +70,6 @@
           </div>
         </div>
       </li>
-
-      <!-- <li>
-        <div class="kanban-box">
-          <div class="checkbox-wrapper float-left">
-            <div class="checkbox checkbox-success checkbox-single">
-              <input
-                type="checkbox"
-                id="singleCheckbox3"
-                value="option3"
-                aria-label="Single checkbox Two"
-              />
-              <label></label>
-            </div>
-          </div>
-
-          <div class="kanban-detail">
-            <span class="badge badge-warning float-right">High</span>
-            <h5 class="mt-0">
-              <a href="" class="text-dark"
-                >Write a release note for Admin v1.5</a
-              >
-            </h5>
-            <ul class="list-inline">
-              <li class="list-inline-item">
-                <a
-                  href=""
-                  data-toggle="tooltip"
-                  data-placement="top"
-                  title=""
-                  data-original-title="Username"
-                >
-                  <img
-                    src="assets/images/users/user-3.jpg"
-                    alt="img"
-                    class="avatar-sm rounded-circle"
-                  />
-                </a>
-              </li>
-              <li class="list-inline-item">
-                <a
-                  href=""
-                  data-toggle="tooltip"
-                  data-placement="top"
-                  title=""
-                  data-original-title="5 Tasks"
-                >
-                  <i class="mdi mdi-format-align-left"></i>
-                </a>
-              </li>
-              <li class="list-inline-item">
-                <a
-                  href=""
-                  data-toggle="tooltip"
-                  data-placement="top"
-                  title=""
-                  data-original-title="3 Comments"
-                >
-                  <i class="mdi mdi-comment-outline"></i>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </li>
-
-      <li>
-        <div class="kanban-box">
-          <div class="checkbox-wrapper float-left">
-            <div class="checkbox checkbox-success checkbox-single">
-              <input
-                type="checkbox"
-                id="singleCheckbox4"
-                value="option4"
-                aria-label="Single checkbox Two"
-              />
-              <label></label>
-            </div>
-          </div>
-
-          <div class="kanban-detail">
-            <h5 class="mt-0">
-              <a href="" class="text-dark">Invite user to a project</a>
-            </h5>
-            <ul class="list-inline">
-              <li class="list-inline-item">
-                <a
-                  href=""
-                  data-toggle="tooltip"
-                  data-placement="top"
-                  title=""
-                  data-original-title="Username"
-                >
-                  <img
-                    src="assets/images/users/user-4.jpg"
-                    alt="img"
-                    class="avatar-sm rounded-circle"
-                  />
-                </a>
-              </li>
-              <li class="list-inline-item">
-                <a
-                  href=""
-                  data-toggle="tooltip"
-                  data-placement="top"
-                  title=""
-                  data-original-title="5 Tasks"
-                >
-                  <i class="mdi mdi-format-align-left"></i>
-                </a>
-              </li>
-              <li class="list-inline-item">
-                <a
-                  href=""
-                  data-toggle="tooltip"
-                  data-placement="top"
-                  title=""
-                  data-original-title="3 Comments"
-                >
-                  <i class="mdi mdi-comment-outline"></i>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </li>
-
-      <li>
-        <div class="kanban-box">
-          <div class="checkbox-wrapper float-left">
-            <div class="checkbox checkbox-success checkbox-single">
-              <input
-                type="checkbox"
-                id="singleCheckbox5"
-                value="option2"
-                aria-label="Single checkbox Two"
-              />
-              <label></label>
-            </div>
-          </div>
-
-          <div class="kanban-detail">
-            <span class="badge badge-danger float-right">Urgent</span>
-            <h5 class="mt-0">
-              <a href="" class="text-dark"
-                >Code HTML email template for welcome email</a
-              >
-            </h5>
-            <ul class="list-inline">
-              <li class="list-inline-item">
-                <a
-                  href=""
-                  data-toggle="tooltip"
-                  data-placement="top"
-                  title=""
-                  data-original-title="Username"
-                >
-                  <img
-                    src="assets/images/users/user-5.jpg"
-                    alt="img"
-                    class="avatar-sm rounded-circle"
-                  />
-                </a>
-              </li>
-              <li class="list-inline-item">
-                <a
-                  href=""
-                  data-toggle="tooltip"
-                  data-placement="top"
-                  title=""
-                  data-original-title="5 Tasks"
-                >
-                  <i class="mdi mdi-format-align-left"></i>
-                </a>
-              </li>
-              <li class="list-inline-item">
-                <a
-                  href=""
-                  data-toggle="tooltip"
-                  data-placement="top"
-                  title=""
-                  data-original-title="3 Comments"
-                >
-                  <i class="mdi mdi-comment-outline"></i>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </li> -->
     </ul>
 
     <div class="text-center pt-2">
@@ -295,28 +97,73 @@ export default {
       TodayList: null,
     };
   },
-  methods: {},
-  created: function() {
-    this.$ajax({
-      method: "get",
-      url: "/get_Todaylist/",
-      params: {
-        // 后端应该保存了现在登陆的人？
-        type: "log",
-      },
-    })
-      .then(response => {
-        if (response.data.flag === true) {
-          console.log("get info")
-          this.TodayList = response.data.TodayList;
-          console.log(response.data.TodayList[1]);
-        } else {
-          console.log(response.data.error_msg);
-        }
+  methods: {
+    update_todaylist: function() {
+      this.$ajax({
+        method: "get",
+        url: "/get_Todaylist/",
+        params: {
+          // 后端应该保存了现在登陆的人？
+          type: "log",
+        },
       })
-      .catch(function(error) {
-        console.log(error);
-      });
+        .then((response) => {
+          if (response.data.flag === true) {
+            console.log("get info");
+            this.TodayList = response.data.TodayList;
+            console.log(response.data.TodayList[1]);
+          } else {
+            console.log(response.data.error_msg);
+          }
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+    },
+    checkbox: function(id, std) {
+      this.$ajax({
+        method: "get",
+        url: "/check_todolist/",
+        params: {
+          data_check: id,
+          data_status: !std,
+          type: "log",
+        },
+      })
+        .then((response) => {
+          if (response.data.flag === true) {
+            console.log("check");
+            update_todaylist();
+          } else {
+            console.log(response.data.error_msg);
+          }
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+    },
   },
+  created: function() {
+      this.$ajax({
+        method: "get",
+        url: "/get_Todaylist/",
+        params: {
+          // 后端应该保存了现在登陆的人？
+          type: "log",
+        },
+      })
+        .then((response) => {
+          if (response.data.flag === true) {
+            console.log("get info");
+            this.TodayList = response.data.TodayList;
+            console.log(response.data.TodayList[1]);
+          } else {
+            console.log(response.data.error_msg);
+          }
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+    },
 };
 </script>
