@@ -52,12 +52,13 @@ class Timezone(models.Model): #时间段
 
 class Todolist(models.Model):
     todolist_id = models.AutoField(primary_key=True)
-    account_id = models.ForeignKey(Account,on_delete=models.CASCADE)
+    account = models.ForeignKey(Account,on_delete=models.CASCADE)
     name = models.TextField(null=True)
     description = models.TextField(null=True)
     deadline_time = models.DateTimeField()
     homework = models.ForeignKey(Homework,on_delete=models.CASCADE,null=True)
     scheduler = models.ForeignKey(Scheduler,on_delete=models.CASCADE)
+    status = models.IntegerField(default=0) # 0代表未完成，1代表已完成，2代表过期
 
 class Register(models.Model):
     email = models.EmailField(primary_key=True) #验证邮箱

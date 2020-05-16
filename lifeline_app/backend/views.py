@@ -1,5 +1,5 @@
-from django.shortcuts import render, redirect, get_object_or_404
-from django.http import Http404, HttpResponse
+from django.shortcuts import render,redirect,get_object_or_404
+from django.http import Http404,HttpResponse
 from django.http.response import JsonResponse
 from .models import *
 from django.views.decorators.csrf import csrf_exempt
@@ -7,7 +7,6 @@ import json
 import random
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
-from .email import *
 
 # Create your views here.
 
@@ -143,7 +142,6 @@ def course(request):
         # return render(request,'lessons.html')
         return render(request, 'SingleCourse.html')
 
-
 @csrf_exempt
 def get_schedule(request):
     if not request.session.get('login', None):
@@ -174,7 +172,6 @@ def get_schedule(request):
         ret['schedule'] = scheduler_list
         return JsonResponse(ret)
 
-
 @csrf_exempt
 def get_Todaylist(request):
     if not request.session.get('login', None):
@@ -184,28 +181,37 @@ def get_Todaylist(request):
         print("kaishi")
         test = True
         if test:
+            print("abc")
             ret = {
                 "flag": True,
                 "TodayList": [
                     {
                         "name": "Algorithm Assignment 3",
                         "time": "2020.5.9 10:30",
-                        "description": "Complete 15-2.3,17.1"
+                        "description": "Complete 15-2.3,17.1",
+                        "status": 0,
+                        "id": 1
                     },
                     {
                         "name": "Software Engineer homework",
                         "time": "2020.5.9 18:30",
-                        "description": "Implement the demo website."
+                        "description": "Implement the demo website.",
+                        "status": 1,
+                        "id": 2
                     },
                     {
                         "name": "Watch a movie",
                         "time": "2020.5.9 24:00",
-                        "description": ""
+                        "description": "",
+                        "status": 2,
+                        "id": 3
                     }
                 ],
             }
+
+            print(ret)
             return JsonResponse(ret)
-        user = Account.objects.get(email=request.session['email'])
+        user = Account.objects.get(email = request.session['email'])
         todolist = user.todolist_set.all()
         todolist.order_by('deadline_time')
 
@@ -218,7 +224,6 @@ def get_Todaylist(request):
 
         ret = {"TodayList": ret}
         return JsonResponse(ret)
-
 
 @csrf_exempt
 def get_Weeklist(request):
@@ -235,17 +240,23 @@ def get_Weeklist(request):
                     {
                         "name": "Algorithm Assignment 3",
                         "time": "2020.5.9 10:30",
-                        "description": "Complete 15-2.3,17.1"
+                        "description": "Complete 15-2.3,17.1",
+                        "status": 2,
+                        "id": 4
                     },
                     {
                         "name": "Software Engineer homework",
                         "time": "2020.5.9 18:30",
-                        "description": "Implement the demo website."
+                        "description": "Implement the demo website.",
+                        "status": 1,
+                        "id": 5
                     },
                     {
                         "name": "Watch a movie",
                         "time": "2020.5.9 24:00",
-                        "description": ""
+                        "description": "",
+                        "status": 0,
+                        "id": 6
                     }
                 ],
             }
@@ -270,7 +281,7 @@ def checkcode(request):
     if request.method == 'POST':
         ret = {}
         try:
-            register = Register.objects.get(email=request.GET.get("email"))
+            register = Register.objects.get(email = request.GET.get("email"))
             if request.GET.get("code") == register.checksum:
                 ret["flag"] = True
             else:
@@ -281,34 +292,60 @@ def checkcode(request):
             ret["error_msg"] = "请您请求验证码！"
         return JsonResponse(ret)
 
-
 @csrf_exempt
 def getcode(request):
     if request.method == 'POST':
         print("getcode begin!!!")
         email = request.GET.get("email")
         ret = {}
-        if Account.objects.filter(email=email).exists():
+        if Account.objects.filter(email = email).exists():
             ret["flag"] = False
             ret["error_msg"] = "邮箱已注册！"
             return JsonResponse(ret)
         try:
-            register = Register.objects.get(email=email)
+            register = Register.objects.get(email = email)
             print("try")
         except:
-            register = Register(email=email)
+            register = Register(email = email)
             print("except")
-        register.checksum = random.randint(100000, 999999)
+        register.checksum = random.randint(1000, 9999)
         print(register.email, register.checksum)
-        send_my_email(register.email, register.checksum)  # 通过邮箱进行验证码的发送
         register.save()
         # ret["checksum"] = register.checksum
         ret["flag"] = True
-        print(1)
         return JsonResponse(ret)
 
 
 @csrf_exempt
 def logout(request):  # 登出,此方案过于简单，需改进
     request.session['login'] = False
-    return render(request, 'index.html')
+    return render(request,'index.html')
+
+@csrf_exempt
+def check_todolist(request):
+    if not request.session.get('login', None):
+        return redirect('/login_page/')
+    if request.method == 'GET':
+        ret = {}
+        test = True
+        if test:
+            ret["flag"] = True
+            return JsonResponse(ret)
+        if not Todolist.objects.filter(todolist_id = request.GET.get("id")).exists():
+            ret["flag"] = False
+            ret["error_msg"] = "Todolist id doen'st exist!"
+            return JsonResponse(ret)
+        Todo = Todolist.objects.get(todolist_id = request.GET.get("id"))
+        if Todo.account.email != request.session["email"]:
+            ret["flag"] = False
+            ret["error_msg"] = "Your account doesn't own this todolist!"
+            return JsonResponse(ret)
+        switch = {0: 0, 1: 1, 2: 2}
+        status = request.GET["status"]
+        if status not in switch:
+            ret["flag"] = False
+            ret["error_msg"] = "Wrong status!"
+            return JsonResponse(ret)
+        Todo.status = status
+        ret["flag"] = True
+        return JsonResponse(ret)
