@@ -4,6 +4,7 @@
     import Calendar from './component/calendar.vue'
     import ToDoList from './component/toDoList.vue'
     import ToDoListWeek from './component/toDoListWeek.vue'
+    import $ from "jquery"
 
     export default {
         page: {

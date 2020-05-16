@@ -89,17 +89,10 @@ export default {
       //TODO: 这里跳转singlecourse的界面
       console.log(value);
       window.location.href = "/course"; //还没有加课程的value
-      /*this.$ajax({
-                    method: 'get',
-                    url: '/SingleCourse',
-                    params: {
-                      name: value
-                    }
-                }).then(response => (console.log(response)))
-                    .catch(function (error) {
-                        console.log(error);
-                    })*/
     },
+    ToPersonal: function () {
+      window.location.href="/personal" //TODO：修改成带value的get
+    }
   },
 };
 </script>
@@ -275,7 +268,7 @@ export default {
             </div>
           </template>
 
-          <b-dropdown-item href="#">
+          <b-dropdown-item @click="ToPersonal">
             <i class="fe-user mr-1"></i>
             <span>My Account</span>
           </b-dropdown-item>
