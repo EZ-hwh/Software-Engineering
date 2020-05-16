@@ -72,19 +72,25 @@
             </div>
             <div v-show="check===4">
                 <div class="sec2" style="padding-bottom: 4%">
-                    <img v-show="!InputFocus" src="../../assets/images/button/hear-no-evil-monkey.png" class="pic" style="padding-right: 6%">
-                    <img v-show="InputFocus" src="../../assets/images/button/see-no-evil-monkey.png" class="pic" style="padding-right: 6%">
+                    <img v-show="!InputFocus" src="../../assets/images/button/hear-no-evil-monkey.png" class="pic"
+                         style="padding-right: 6%">
+                    <img v-show="InputFocus" src="../../assets/images/button/see-no-evil-monkey.png" class="pic"
+                         style="padding-right: 6%">
                     <div id="pass_input">
-                        <p><input v-model="password" type="password" placeholder="嘘~" @blur="Nfocus" @focus="Yfocus"></p>
+                        <p><input v-model="password" type="password" placeholder="嘘~" @blur="Nfocus" @focus="Yfocus">
+                        </p>
                         <p class="tip" v-bind:style="PassNumberStyle">要超过6个字符哦</p>
                         <p class="tip" v-bind:style="PassCheckStyle">由大小写字母、下划线和数字组成哦，而且至少要有一个大写字母哦！</p>
-                        <p><input v-model="password_again" type="password" placeholder="再嘘~" @blur="Nfocus" @focus="Yfocus"></p>
+                        <p><input v-model="password_again" type="password" placeholder="再嘘~" @blur="Nfocus"
+                                  @focus="Yfocus"></p>
                         <p class="tip" v-bind:style="PassAgainStyle">要跟第一遍一模一样哦</p>
                     </div>
-                    <CustomButton v-show="!(PassNumber&&PassCheck&&PassAgain)" source="face-screaming-in-fear" size="large"
+                    <CustomButton v-show="!(PassNumber&&PassCheck&&PassAgain)" source="face-screaming-in-fear"
+                                  size="large"
                                   type="alert" message="输入不正确哦"
                     ></CustomButton>
-                    <CustomButton v-show="PassNumber&&PassCheck&&PassAgain" source="heavy-black-heart" size="large" message="!冲呀!"
+                    <CustomButton v-show="PassNumber&&PassCheck&&PassAgain" source="heavy-black-heart" size="large"
+                                  message="!冲呀!"
                                   @click.native="Register"></CustomButton>
                 </div>
                 <p>
@@ -141,8 +147,10 @@
                             title: 'Send Successfully!',
                             duration: 2,
                         });
-                        console.log(response.data.ret);
-                        setTimeout(this.next_page, 2000);
+                        // console.log(response.data.checksum);
+                        setTimeout(() => {
+                            this.check = 3;
+                        }, 2000);
                     } else {
                         this.$Notice.error({
                             title: 'Error!Try again!',
@@ -169,7 +177,9 @@
                             title: 'Right Code!',
                             duration: 2,
                         });
-                        setTimeout(this.next_page, 2000);
+                        setTimeout(() => {
+                            this.check = 4;
+                        }, 2000);
                     } else {
                         this.$Notice.error({
                             title: 'Wrong!Try again!',
@@ -220,13 +230,13 @@
                         }
                     )
             },
-            Yfocus: function(){
+            Yfocus: function () {
                 console.log("YES");
-                this.InputFocus=true;
+                this.InputFocus = true;
             },
-            Nfocus: function(){
+            Nfocus: function () {
                 console.log("NO");
-                this.InputFocus=false;
+                this.InputFocus = false;
             },
         }
         ,
@@ -251,11 +261,11 @@
             /**
              * @return {boolean}
              */
-            NameLength: function(){
-                return this.name.length >3;
+            NameLength: function () {
+                return this.name.length > 3;
             },
-            NameLengthStyle: function(){
-                if(this.NameLength) return {color: "grey"};
+            NameLengthStyle: function () {
+                if (this.NameLength) return {color: "grey"};
                 else return {color: "salmon"};
             },
             /**
@@ -269,12 +279,12 @@
             /**
              * @return {boolean}
              */
-            PassNumber: function() {
+            PassNumber: function () {
                 return this.password.length > 6;
             },
-            PassNumberStyle: function(){
-                if(this.PassNumber) return {color:"grey"};
-                else return {color:"salmon"};
+            PassNumberStyle: function () {
+                if (this.PassNumber) return {color: "grey"};
+                else return {color: "salmon"};
             },
             /**
              * @return {boolean}
@@ -286,19 +296,19 @@
                 const re2 = new RegExp(regu2);
                 return re1.test(this.password) && re2.test(this.password);
             },
-            PassCheckStyle: function(){
-                if(this.PassCheck) return {color:"grey"};
-                else return {color:"salmon"};
+            PassCheckStyle: function () {
+                if (this.PassCheck) return {color: "grey"};
+                else return {color: "salmon"};
             },
             /**
              * @return {boolean}
              */
             PassAgain: function () {
-                return this.password===this.password_again;
+                return this.password === this.password_again;
             },
             PassAgainStyle: function () {
-                if(this.PassAgain) return {color:"grey"};
-                else return {color:"salmon"};
+                if (this.PassAgain) return {color: "grey"};
+                else return {color: "salmon"};
             }
         }
     }

@@ -46,21 +46,21 @@
 
             <ul class="list-inline">
               <!-- <button type="button" class="btn btn-info btn-xs" id="sa-success">Click me</button> -->
-              <li class="list-inline-item">
-                <a
-                  href=""
-                  data-toggle="tooltip"
-                  data-placement="top"
-                  title=""
-                  data-original-title="Username"
-                >
-                  <img
-                    src="../../../assets/images/user/user-1.jpg"
-                    alt="img"
-                    class="avatar-sm rounded-circle"
-                  />
-                </a>
-              </li>
+<!--              <li class="list-inline-item">-->
+<!--                <a-->
+<!--                  href=""-->
+<!--                  data-toggle="tooltip"-->
+<!--                  data-placement="top"-->
+<!--                  title=""-->
+<!--                  data-original-title="Username"-->
+<!--                >-->
+<!--                  <img-->
+<!--                    src="../../../assets/images/user/user-1.jpg"-->
+<!--                    alt="img"-->
+<!--                    class="avatar-sm rounded-circle"-->
+<!--                  />-->
+<!--                </a>-->
+<!--              </li>-->
               <li class="list-inline-item">
                 <a
                   href=""
@@ -299,16 +299,17 @@ export default {
   created: function() {
     this.$ajax({
       method: "get",
-      url: "/get_todolist/",
+      url: "/get_Todaylist/",
       params: {
         // 后端应该保存了现在登陆的人？
         type: "log",
       },
     })
-      .then((response) => {
-        if (response.data.flag == true) {
+      .then(response => {
+        if (response.data.flag === true) {
+          console.log("get info")
           this.TodayList = response.data.TodayList;
-          console.log(response.data.TodayList)
+          console.log(response.data.TodayList[1]);
         } else {
           console.log(response.data.error_msg);
         }

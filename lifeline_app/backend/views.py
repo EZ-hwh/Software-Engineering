@@ -173,16 +173,17 @@ def get_schedule(request):
         return JsonResponse(ret)
 
 @csrf_exempt
-def get_todolist(request):
+def get_Todaylist(request):
     if not request.session.get('login', None):
         return redirect('/login_page/')
     if request.method == 'GET':
         ret = []
-
+        print("kaishi")
         test = True
         if test:
             print("abc")
             ret = {
+                "flag": True,
                 "TodayList": [
                     {
                         "name": "Algorithm Assignment 3",
@@ -200,7 +201,6 @@ def get_todolist(request):
                         "description": ""
                     }
                 ],
-                "WeekList": []
             }
 
             print(ret)
@@ -218,6 +218,51 @@ def get_todolist(request):
 
         ret = {"TodayList": ret}
         return JsonResponse(ret)
+
+@csrf_exempt
+def get_Weeklist(request):
+    if not request.session.get('login', None):
+        return redirect('/login_page/')
+    if request.method == 'GET':
+        ret = []
+        print("kaishiWeek")
+        test = True
+        if test:
+            ret = {
+                "flag": True,
+                "WeekList": [
+                    {
+                        "name": "Algorithm Assignment 3",
+                        "time": "2020.5.9 10:30",
+                        "description": "Complete 15-2.3,17.1"
+                    },
+                    {
+                        "name": "Software Engineer homework",
+                        "time": "2020.5.9 18:30",
+                        "description": "Implement the demo website."
+                    },
+                    {
+                        "name": "Watch a movie",
+                        "time": "2020.5.9 24:00",
+                        "description": ""
+                    }
+                ],
+            }
+            return JsonResponse(ret)
+        user = Account.objects.get(email=request.session['email'])
+        Weeklist = user.todolist_set.all()
+        Weeklist.order_by('deadline_time')
+
+        for todo in Weeklist:
+            now = {}
+            now["name"] = todo.name
+            now["time"] = todo.deadline_time
+            now["description"] = todo.description
+            ret.append(now)
+
+        ret = {"WeekList": ret}
+        return JsonResponse(ret)
+
 
 @csrf_exempt
 def checkcode(request):
@@ -254,7 +299,7 @@ def getcode(request):
         register.checksum = random.randint(1000, 9999)
         print(register.email, register.checksum)
         register.save()
-        ret["checksum"] = register.checksum
+        # ret["checksum"] = register.checksum
         ret["flag"] = True
         return JsonResponse(ret)
 

@@ -12,7 +12,7 @@
             }
         },
         created: () => {
-            document.body.classList.remove('authentication-bg')
+            document.body.classList.remove('authentication-bg');
         },
         methods: {
             toggleMenu() {
@@ -22,6 +22,12 @@
                 document.body.classList.toggle('right-bar-enabled')
             },
         },
+        computed: {
+            checkFooter: function () {
+                console.log(this.showFooter);
+                return this.showFooter !== "false";
+            }
+        }
     }
 </script>
 
