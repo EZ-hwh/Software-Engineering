@@ -182,6 +182,7 @@ def get_Todaylist(request):
         print("kaishi")
         test = True
         if test:
+            global Status
             print("abc")
             ret = {
                 "flag": True,
@@ -190,21 +191,21 @@ def get_Todaylist(request):
                         "name": "Algorithm Assignment 3",
                         "time": "2020.5.9 10:30",
                         "description": "Complete 15-2.3,17.1",
-                        "status": 0,
+                        "status": Status[1],
                         "id": 1
                     },
                     {
                         "name": "Software Engineer homework",
                         "time": "2020.5.9 18:30",
                         "description": "Implement the demo website.",
-                        "status": 1,
+                        "status": Status[2],
                         "id": 2
                     },
                     {
                         "name": "Watch a movie",
                         "time": "2020.5.9 24:00",
                         "description": "",
-                        "status": 2,
+                        "status": Status[3],
                         "id": 3
                     }
                 ],
@@ -226,6 +227,8 @@ def get_Todaylist(request):
         ret = {"TodayList": ret}
         return JsonResponse(ret)
 
+Status = {1: 0, 2: 1, 3: 2, 4: 2, 5: 1, 6: 0}
+
 @csrf_exempt
 def get_Weeklist(request):
     if not request.session.get('login', None):
@@ -235,6 +238,7 @@ def get_Weeklist(request):
         print("kaishiWeek")
         test = True
         if test:
+            global Status
             ret = {
                 "flag": True,
                 "WeekList": [
@@ -242,21 +246,21 @@ def get_Weeklist(request):
                         "name": "Algorithm Assignment 3",
                         "time": "2020.5.9 10:30",
                         "description": "Complete 15-2.3,17.1",
-                        "status": 2,
+                        "status": Status[4],
                         "id": 4
                     },
                     {
                         "name": "Software Engineer homework",
                         "time": "2020.5.9 18:30",
                         "description": "Implement the demo website.",
-                        "status": 1,
+                        "status": Status[5],
                         "id": 5
                     },
                     {
                         "name": "Watch a movie",
                         "time": "2020.5.9 24:00",
                         "description": "",
-                        "status": 0,
+                        "status": Status[6],
                         "id": 6
                     }
                 ],
@@ -330,8 +334,19 @@ def check_todolist(request):
         ret = {}
         test = True
         if test:
+            global Status
+            switch = {0: 0, 1: 1, 2: 2}
+            status = request.GET["status"]
+            if status not in switch:
+                ret["flag"] = False
+                ret["error_msg"] = "Wrong status!"
+                return JsonResponse(ret)
+            Status[request.GET.get("id")] = status
             ret["flag"] = True
             return JsonResponse(ret)
+
+
+
         if not Todolist.objects.filter(todolist_id = request.GET.get("id")).exists():
             ret["flag"] = False
             ret["error_msg"] = "Todolist id doen'st exist!"
