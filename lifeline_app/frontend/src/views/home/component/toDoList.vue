@@ -308,8 +308,8 @@ export default {
         method: "get",
         url: "/check_todolist/",
         params: {
-          data_check: id,
-          data_status: !std,
+          id: id,
+          status: 1-std,
           type: "log",
         },
       })
