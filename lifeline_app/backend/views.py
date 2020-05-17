@@ -238,22 +238,22 @@ def get_Weeklist(request):
                 "flag": True,
                 "WeekList": [
                     {
-                        "name": "Algorithm Assignment 3",
-                        "time": "2020.5.9 10:30",
+                        "name": "Algorithm Assignment 4",
+                        "time": "2020.5.15 10:30",
                         "description": "Complete 15-2.3,17.1",
                         "status": 2,
                         "id": 4
                     },
                     {
-                        "name": "Software Engineer homework",
-                        "time": "2020.5.9 18:30",
+                        "name": "Software Engineer homework 4",
+                        "time": "2020.5.16 18:30",
                         "description": "Implement the demo website.",
                         "status": 1,
                         "id": 5
                     },
                     {
                         "name": "Watch a movie",
-                        "time": "2020.5.9 24:00",
+                        "time": "2020.5.19 24:00",
                         "description": "",
                         "status": 0,
                         "id": 6

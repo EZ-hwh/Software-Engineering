@@ -42,7 +42,6 @@
 
                         <div class="col-lg-3">
                             <ToDoList/>
-                            <ToDoListWeek/>
                         </div>
                         
                         
