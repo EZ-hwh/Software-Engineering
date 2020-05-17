@@ -11,6 +11,7 @@ urlpatterns = [
     url('get_Weeklist', views.get_Weeklist),
     url('getcode', views.getcode),
     url('checkcode', views.checkcode),
+    url('check_todolist', views.check_todolist),
     url('home', views.home),
     url('register', views.register_account, ),
     url('login', views.login_account, ),

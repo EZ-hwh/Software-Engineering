@@ -153,7 +153,7 @@ var calendar1 = function(l) {
         slotDuration: "00:15:00",
         minTime: "08:00:00",
         maxTime: "19:00:00",
-        defaultView: "month",
+        defaultView: "agendaWeek",
         handleWindowResize: !0,
         height: l(window).height() - 200,
         header: {
