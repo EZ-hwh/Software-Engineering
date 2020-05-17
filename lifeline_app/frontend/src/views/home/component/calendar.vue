@@ -124,6 +124,7 @@ import 'jquery-ui/ui/widgets/draggable'
 import 'jquery-ui/ui/widgets/droppable'
 import 'jquery-ui/ui/widgets/resizable'
 import "../../../assets/libs/jquery-ui/jquery-ui.min.js";
+
 import "../../../assets/libs/fullcalendar/fullcalendar.min.js";
 import {
   calendar1,

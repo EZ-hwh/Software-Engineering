@@ -311,7 +311,7 @@ def getcode(request):
         register.checksum = random.randint(1000, 9999)
         print(register.email, register.checksum)
         register.save()
-        # ret["checksum"] = register.checksum
+        ret["checksum"] = register.checksum
         ret["flag"] = True
         return JsonResponse(ret)
 

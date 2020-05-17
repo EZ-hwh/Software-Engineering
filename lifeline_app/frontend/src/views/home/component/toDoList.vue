@@ -29,12 +29,12 @@
           <div class="checkbox-wrapper float-left">
             <div class="checkbox checkbox-success checkbox-single">
               <input
-                @click="check_todolist(ddl['id'], ddl['status'])"
+                @click="checkbox(ddl['id'], ddl['status'])"
                 type="checkbox"
                 :id="'singleCheckbox' + ddl['id']"
                 value="option2"
                 :checked="ddl['status'] == 1 ? 'checked' : ''"
-                :disabled="ddl['status'] == 2 ? 'disabled' : ''"
+                :disabled="ddl['status'] == 2 ? 'disabled' : false"
                 aria-label="Single checkbox Two"
               />
               <label></label>

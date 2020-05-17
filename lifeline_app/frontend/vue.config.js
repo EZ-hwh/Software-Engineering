@@ -13,7 +13,7 @@ module.exports = {
   pwa: {},
   pages: {
     index: {
-      entry: "src/views/home/main.js",
+      entry: "src/views/first/main.js",
       template: "public/index.html",
       chunks: ["chunk-vendors", "chunk-common", "index"],
     },
