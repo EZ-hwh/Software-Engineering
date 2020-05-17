@@ -94,21 +94,25 @@
                     name: this.$parent.name,
                     type: 'lessons'
                 };
-                this.$ajax.get('/', params).then(res => {
-                    var obj = JSON.parse(JSON.stringify());
-                    console.log(JSON.stringify(jsonObj));
-                    this.data.number = obj.length;
-                    this.data.page = obj.length;
-                    for (var i = 0; i < obj.length; i++) {
-                        this.data.items.append(jsonobj[i]); //前端接收json加入list
+                this.$ajax.get('/get_semester/', params).then(response => {
+                    console.log(response.data.course_table);
+                    console.log(response.data.course_table.length);
+                    // var obj = JSON.parse(JSON.stringify(response));
+                    // console.log(JSON.stringify(obj));
+                    this.data.number = response.data.course_table.length;
+                    this.data.page = response.data.course_table.length;
+                    //TODO：这个部分还有bug 这里console打不出来 但我还不知道咋回事...
+                    for (let i = 0; i < this.number; i++) {
+                        console.log(response.data.course_table[i]);
+                        this.data.items.append(response.data.course_table[i]); //前端接收json加入list
                     }
                 }).catch(error => {
-                    console.log(error.response.data.code)
+                    console.log("something wrong");
                 });
             }
         },
         created: function(){
-            // this.lessons()
+            this.lessons()
             console.log(this.page, this.items)
         },
         mounted:function () {
