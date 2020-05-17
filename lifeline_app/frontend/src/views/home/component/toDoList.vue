@@ -340,7 +340,8 @@ export default {
         .then((response) => {
           if (response.data.flag === true) {
             console.log("add ddl");
-            update_todaylist();
+            this.update_todaylist();
+            this.update_weeklist();
           } else {
             console.log(response.data.error_msg);
           }
