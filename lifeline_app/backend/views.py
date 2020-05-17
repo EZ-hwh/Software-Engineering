@@ -7,6 +7,7 @@ import json
 import random
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
+from .data import *
 
 # Create your views here.
 
@@ -348,4 +349,13 @@ def check_todolist(request):
             return JsonResponse(ret)
         Todo.status = status
         ret["flag"] = True
+        return JsonResponse(ret)
+
+@csrf_exempt
+def get_semester(request):
+    if not request.session.get('login', None):
+        return redirect('/login_page/')
+    test = True
+    if test:
+        ret = get_course_sample_data()
         return JsonResponse(ret)
