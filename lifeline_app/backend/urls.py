@@ -5,6 +5,8 @@ import re
 
 app_name = 'backend'
 urlpatterns = [
+    url('add_ddl', views.add_ddl),
+    url('get_semester', views.get_semester),
     url('get_schedule', views.get_schedule),
     url('get_Todaylist', views.get_Todaylist),
     url('get_Weeklist', views.get_Weeklist),

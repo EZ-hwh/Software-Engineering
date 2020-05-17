@@ -3,7 +3,6 @@
     import Layout from '../../components/template/TopBarLayout/main'
     import Calendar from './component/calendar.vue'
     import ToDoList from './component/toDoList.vue'
-    import ToDoListWeek from './component/toDoListWeek.vue'
     import $ from "jquery"
 
     export default {
@@ -11,7 +10,7 @@
             title: 'LifeLine',
             meta: [{name: 'description', content: appConfig.description}],
         },
-        components: {Layout, Calendar, ToDoList, ToDoListWeek},
+        components: {Layout, Calendar, ToDoList},
     }
 </script>
 
