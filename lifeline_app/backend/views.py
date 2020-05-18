@@ -203,17 +203,17 @@ def get_Todaylist(request):
         return redirect('/login_page/')
     if request.method == 'GET':
         ret = []
-        print("kaishi")
+        # print("kaishi")
         test = True
         if test:
-            print("abc")
+            # print("abc")
             global Data
             ret = {
                 "flag": True,
                 "TodayList": Data
             }
 
-            print(ret)
+            # print(ret)
             return JsonResponse(ret)
         user = Account.objects.get(email = request.session['email'])
         todolist = user.todolist_set.all()
@@ -235,7 +235,7 @@ def get_Weeklist(request):
         return redirect('/login_page/')
     if request.method == 'GET':
         ret = []
-        print("kaishiWeek")
+        # print("kaishiWeek")
         test = True
         if test:
             global Data
@@ -316,10 +316,10 @@ def check_todolist(request):
             switch = {0: 0, 1: 1, 2: 2}
             status = int(request.GET["status"])
             id = int(request.GET["id"])
-            print(id, status)
-            print(switch[status])
+            # print(id, status)
+            # print(switch[status])
             if status not in switch:
-                print("notin")
+                # print("notin")
                 ret["flag"] = False
                 ret["error_msg"] = "Wrong status!"
                 return JsonResponse(ret)

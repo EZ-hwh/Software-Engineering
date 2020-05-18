@@ -12,9 +12,14 @@
         </a>
         <div class="dropdown-menu dropdown-menu-right">
           <!-- item-->
-          <a href="javascript:void(0);" @click="complete(0)" class="dropdown-item">Complete All</a>
+          <div @click="complete(0)">
+            <a href="javascript:void(0);" class="dropdown-item">Complete All</a>
+          </div>
+
           <!-- item-->
-          <a href="javascript:void(0);" @click="undo(0)" class="dropdown-item">Undo All</a>
+          <div @click="undo(0)">
+            <a href="javascript:void(0);" class="dropdown-item">Undo All</a>
+          </div>
         </div>
       </div>
 
@@ -167,9 +172,14 @@
         </a>
         <div class="dropdown-menu dropdown-menu-right">
           <!-- item-->
-          <a href="javascript:void(0);" @click="complete(1)" class="dropdown-item">Complete All</a>
+          <div @click="complete(1)">
+            <a href="javascript:void(0);" class="dropdown-item">Complete All</a>
+          </div>
+
           <!-- item-->
-          <a href="javascript:void(0);" @click="undo(1)" class="dropdown-item">Undo All</a>
+          <div @click="undo(1)">
+            <a href="javascript:void(0);" class="dropdown-item">Undo All</a>
+          </div>
         </div>
       </div>
 
@@ -256,7 +266,7 @@ export default {
       WeekList: null,
       ddlname: null,
       ddltime: null,
-      ddldesciption: null,
+      ddldescription: null,
     };
   },
   methods: {
@@ -265,13 +275,12 @@ export default {
         method: "get",
         url: "/get_Todaylist/",
         params: {
-          // 后端应该保存了现在登陆的人？
           type: "log",
         },
       })
         .then((response) => {
           if (response.data.flag === true) {
-            console.log("get info");
+            // console.log("get info");
             this.TodayList = response.data.TodayList;
             console.log(response.data.TodayList[1]);
           } else {
@@ -292,7 +301,7 @@ export default {
       })
         .then((response) => {
           if (response.data.flag === true) {
-            console.log("get info week");
+            // console.log("get info week");
             this.WeekList = response.data.WeekList;
             // console.log(response.data.WeekList[1]);
           } else {
@@ -309,13 +318,12 @@ export default {
         url: "/check_todolist/",
         params: {
           id: id,
-          status: 1-std,
+          status: std == 0 ? 1 : 0,
           type: "log",
         },
       })
         .then((response) => {
           if (response.data.flag === true) {
-            console.log("check");
             this.update_todaylist();
             this.update_weeklist();
           } else {
@@ -331,9 +339,9 @@ export default {
         method: "post",
         url: "/add_ddl/",
         params: {
-          name: ddlname,
-          time: ddltime,
-          description: ddldesciption,
+          name: this.ddlname,
+          time: this.ddltime,
+          description: this.ddldescription,
           type: "log",
         },
       })
@@ -342,6 +350,9 @@ export default {
             console.log("add ddl");
             this.update_todaylist();
             this.update_weeklist();
+            this.ddlname="";
+            this.ddltime="";
+            this.ddldescription="";
           } else {
             console.log(response.data.error_msg);
           }
@@ -350,26 +361,26 @@ export default {
           console.log(error);
         });
     },
-    complete: function(todo){
+    complete: function(todo) {
+      console.log("complete all");
       var temp;
-      if(todo==0)
-        temp = this.TodayList;
-      else 
-        temp = this.WeekList;
-      for(ddl in temp)
-        if(ddl["status"]==0)
-          this.checkbox(ddl["id"], ddl["status"]);
+      if (todo == 0) temp = this.TodayList;
+      else temp = this.WeekList;
+      for (var i = 0; i < temp.length; i++) {
+        var ddl = temp[i];
+        if (ddl["status"] == 0) this.checkbox(ddl["id"], ddl["status"]);
+      }
     },
-    undo: function(undo){
+    undo: function(undo) {
+      console.log("undo all");
       var temp;
-      if(undo==0)
-        temp = this.TodayList;
-      else 
-        temp = this.WeekList;
-      for(ddl in temp)
-        if(ddl["status"]==1)
-          this.checkbox(ddl["id"], ddl["status"]);
-    }
+      if (undo == 0) temp = this.TodayList;
+      else temp = this.WeekList;
+      for (var i = 0; i < temp.length; i++) {
+        var ddl = temp[i];
+        if (ddl["status"] == 1) this.checkbox(ddl["id"], ddl["status"]);
+      }
+    },
   },
   created: function() {
     this.update_todaylist();
