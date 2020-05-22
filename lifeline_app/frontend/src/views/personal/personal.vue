@@ -185,10 +185,18 @@
         chooseImg (imgUrl) {
           localStorage.setItem('avatar', imgUrl)
           this.userImg = localStorage.getItem('avatar')
+          this.$ajax({
+            method: "post",
+            url: "/picture/",
+            params: {
+              pic:this.userImg
+            },
+          })
+            .catch(function(error) {
+              console.log(error);
+            });
+
           this.showChooseAvatar = false
-
-
-
 
 
         },
@@ -201,9 +209,16 @@
             this.elearning_stats=false;
             this.elearning_password='';
             this.elearning_username='';
-
-
-
+            this.$ajax({
+              method: "get",
+              url: "/elearning_del_register/"
+            })
+              .then((response) => {
+                this.elearning_stats=response.data.flag;
+                })
+              .catch(function(error) {
+                console.log(error);
+              });
 
             this.$Message.success('退出elearning');
           },
@@ -221,11 +236,21 @@
         try_register()
         {
 
+          this.$ajax({
+            method: "post",
+            url: "/elearning_register/",
+            params: {
+                username:this.elearning_username ,
+                password:this.elearning_password
+            },
+          })
+            .then((response) => {
+              this.elearning_stats=response.data.flag;
+            })
+            .catch(function(error) {
+              console.log(error);
+            });
 
-
-
-
-          this.elearning_stats=true
           if(this.elearning_stats== true){
             this.modal_loading = false;
             this.modal2 = false;
@@ -246,6 +271,22 @@
               this.$Message.error('修改失败!');
             }
           })
+          this.$ajax({
+            method: "post",
+            url: "/information/",
+            params: {
+              name:this.formValidate.name ,
+              addr:this.formValidate.address,
+              mail:this.formValidate.mail,
+              phone:this.formValidate.phone,
+              desc:this.formValidate.desc
+            },
+          })
+            .catch(function(error) {
+              console.log(error);
+            });
+
+
         },
         handleReset (name) {
           this.$refs[name].resetFields();
