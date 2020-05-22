@@ -62,18 +62,10 @@
 
 *本板块有待完善，在新建立 issue 后，请及时将其内容更新到 in-progress板块并保持对问题状态的更新，对于已经 close 的 issue，请及时移除并将完成的功能更新至 feature 板块*
 
+### 增加todolist，check交互
+【[**issue**](https://github.com/EZ-hwh/Software-Engineering/issues/59)】对于主页todolist, 希望能够修改其状态，即完成/未完成等。
 
-### 完善文档
-
-【[**issue**](https://github.com/EZ-hwh/Software-Engineering/issues/35)】从主页的readme.md维护一个树状的文档，希望有如下功能：
-
-1. 用户可以下载本项目后成功运行
-2. 介绍Feature，项目完成情况
-3. 公布正在进行的工作
-4. 一个良好的开发文档，具有引导新加入开发组的成员快速融入团队进行开发的功能，同时帮助现有members梳理整个开发过程。
-
-**问题状态**：需要帮助，完成urls信息。
-
+**问题状态**：已起草数据接口并实现样例交互。
 
 ### 前端总体设计美化
 
@@ -83,17 +75,6 @@
 2. 调整登陆注册/课程主页组件的颜色
 
 **问题状态**：进行中
-
-
-### 课程页面数据接口
-
-【[**issue**](https://github.com/EZ-hwh/Software-Engineering/issues/42)】课程页面传参接口，包括：
-
-1. mainpage页面，显示课程名称和描述
-2. document页面，显示课程的文件
-3. homework页面，显示课程作业
-
-**问题状态**：起草了接口，需要讨论。
 
 
 ## Development Documents
