@@ -54,8 +54,13 @@
               <span class="badge badge-danger float-right">{{
                 ddl["time"]
               }}</span>
-              <h5 class="mt-0">
-                <a href="" class="text-dark">{{ ddl["name"] }}</a>
+              <h5 class="mt-0" @click="goto_class(ddl['id'])">
+                <div v-if="ddl['name'].length > 27">
+                  <a href="" class="text-dark">{{ ddl["name"] + "..." }}</a>
+                </div>
+                <div v-else>
+                  <a href="" class="text-dark">{{ ddl["name"] }}</a>
+                </div>
               </h5>
 
               <ul class="list-inline">
@@ -64,18 +69,58 @@
                 <li class="list-inline-item">
                   <a
                     href=""
-                    data-toggle="tooltip"
-                    data-placement="top"
-                    title=""
-                    data-original-title="5 Tasks"
+                    data-toggle="modal"
+                    :data-target="'#ddlinfo' + ddl['id']"
                   >
                     <i class="mdi mdi-format-align-left"></i>
                   </a>
                 </li>
-                <li class="list-inline-item">
+                <li
+                  v-if="ddl['description'].length > 30"
+                  class="list-inline-item"
+                >
+                  {{ ddl["description"].substring(0, 30) + "..." }}
+                </li>
+                <li v-else class="list-inline-item">
                   {{ ddl["description"] }}
                 </li>
               </ul>
+            </div>
+          </div>
+
+          <!-- modal for information -->
+          <div class="modal fade none-border" :id="'ddlinfo' + ddl['id']">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title mt-0">
+                    <strong>DDL information </strong>
+                  </h4>
+                  <button
+                    type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-hidden="true"
+                  >
+                    &times;
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <h4>{{ ddl["name"] }}</h4>
+                  <p>{{ ddl["time"] }}</p>
+                  <h4>Description</h4>
+                  <p>{{ ddl["description"] }}</p>
+                </div>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-light waves-effect"
+                    data-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </li>
@@ -214,8 +259,13 @@
               <span class="badge badge-warning float-right">{{
                 ddl["time"]
               }}</span>
-              <h5 class="mt-0">
-                <a href="" class="text-dark">{{ ddl["name"] }}</a>
+              <h5 class="mt-0" @click="goto_class(ddl['id'])">
+                <div v-if="ddl['name'].length > 27">
+                  <a href="" class="text-dark">{{ ddl["name"] + "..." }}</a>
+                </div>
+                <div v-else>
+                  <a href="" class="text-dark">{{ ddl["name"] }}</a>
+                </div>
               </h5>
 
               <ul class="list-inline">
@@ -224,18 +274,55 @@
                 <li class="list-inline-item">
                   <a
                     href=""
-                    data-toggle="tooltip"
-                    data-placement="top"
-                    title=""
-                    data-original-title="5 Tasks"
+                    data-toggle="modal"
+                    :data-target="'#weekddlinfo' + ddl['id']"
                   >
                     <i class="mdi mdi-format-align-left"></i>
                   </a>
                 </li>
-                <li class="list-inline-item">
-                  {{ ddl["description"] }}
-                </li>
+                  <li v-if="ddl['description'].length > 30" class="list-inline-item">
+                    {{ ddl["description"].substring(0, 30) + "..." }}
+                  </li>
+                  <li v-else class="list-inline-item">
+                    {{ ddl["description"] }}
+                  </li>
               </ul>
+            </div>
+          </div>
+
+          <!-- modal for information -->
+          <div class="modal fade none-border" :id="'weekddlinfo' + ddl['id']">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title mt-0">
+                    <strong>DDL information </strong>
+                  </h4>
+                  <button
+                    type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-hidden="true"
+                  >
+                    &times;
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <h4>{{ ddl["name"] }}</h4>
+                  <p>{{ ddl["time"] }}</p>
+                  <h4>Description</h4>
+                  <p>{{ ddl["description"] }}</p>
+                </div>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-light waves-effect"
+                    data-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </li>
@@ -267,6 +354,13 @@ export default {
       ddlname: null,
       ddltime: null,
       ddldescription: null,
+      ddl_todisplay: {
+        name: null,
+        time: null,
+        description: null,
+        id: null,
+        status: null,
+      },
     };
   },
   methods: {
@@ -350,9 +444,9 @@ export default {
             console.log("add ddl");
             this.update_todaylist();
             this.update_weeklist();
-            this.ddlname="";
-            this.ddltime="";
-            this.ddldescription="";
+            this.ddlname = "";
+            this.ddltime = "";
+            this.ddldescription = "";
           } else {
             console.log(response.data.error_msg);
           }
@@ -380,6 +474,10 @@ export default {
         var ddl = temp[i];
         if (ddl["status"] == 1) this.checkbox(ddl["id"], ddl["status"]);
       }
+    },
+    goto_class: function(id) {
+      console.log("goto class");
+      window.location.href = "/course/" + id;
     },
   },
   created: function() {
