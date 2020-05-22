@@ -204,8 +204,7 @@ def get_Todaylist(request):
     if request.method == 'GET':
         ret = []
         # print("kaishi")
-        test = True
-        if test:
+        if DEBUG:
             # print("abc")
             global Data
             ret = {
@@ -236,8 +235,7 @@ def get_Weeklist(request):
     if request.method == 'GET':
         ret = []
         # print("kaishiWeek")
-        test = True
-        if test:
+        if DEBUG:
             global Data
             ret = {
                 "flag": True,
@@ -310,8 +308,7 @@ def check_todolist(request):
         return redirect('/login_page/')
     if request.method == 'GET':
         ret = {}
-        test = True
-        if test:
+        if DEBUG:
             global Data
             switch = {0: 0, 1: 1, 2: 2}
             status = int(request.GET["status"])
@@ -352,8 +349,7 @@ def add_ddl(request):
     if not request.session.get('login', None):
         return redirect('/login_page/')
     if request.method == 'POST':
-        test = True
-        if test:
+        if DEBUG:
             global Data
             new_ddl = {}
             new_ddl["name"] = request.GET["name"]
@@ -373,7 +369,6 @@ def get_semester(request):
     if not request.session.get('login', None):
         return redirect('/login_page/')
     if request.method == 'GET':
-        test = True
-        if test:
+        if DEBUG:
             ret = get_course_sample_data()
             return JsonResponse(ret)
