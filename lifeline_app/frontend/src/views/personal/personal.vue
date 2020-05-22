@@ -1,22 +1,35 @@
 <template>
+
+
   <div class="text-center card-box">
 
-    <div>
-      <img src="../../assets/images/user/user-10.jpg" class="rounded-circle avatar-xl img-thumbnail mb-2" alt="profile-image">
+    <div class="circle" @click="showChooseImg">
+      <img :src="userImg">
+    </div>
 
+    <div class="default-img animated" v-show="showChooseAvatar">
+      <ul>
+        <li v-for="item in imgList" :key="item.id">
+          <img :src="item.imgUrl" alt="" width="100px" @click="chooseImg(item.imgUrl)">
+        </li>
+      </ul>
+    </div>
+
+    <div>
       <p class="text-muted font-13 mb-4">
         {{formValidate.desc}}
       </p>
 
-      <div class="text-left">
+      <div class="">
         <p class="text-muted font-15"><strong>用户名 :</strong> <span class="ml-2">{{formValidate.name}}</span></p>
-
+        <p><br></p>
         <p class="text-muted font-15"><strong>联系方式 :</strong><span class="ml-2">{{formValidate.phone}}</span></p>
-
+        <p><br></p>
         <p class="text-muted font-15"><strong>Email :</strong> <span class="ml-2">{{formValidate.mail}}</span></p>
-
+        <p><br></p>
         <p class="text-muted font-15"><strong>地址 :</strong> <span class="ml-2">{{formValidate.address}}</span></p>
-
+        <p><br></p>
+        <p><br></p>
 
       </div>
       <button type="button" @click="modal1=true,formValidate2=JSON.parse(JSON.stringify(formValidate))" class="btn btn-primary btn-rounded waves-effect waves-light">修改个人信息</button>
@@ -84,6 +97,46 @@
         name: "personal",
         data () {
         return {
+          userImg:'/static/img/user0.png',
+          showChooseAvatar: false,
+          imgList:[
+            {
+              'id':1,
+              imgUrl:'/static/img/user0.png'
+            },
+            {
+              'id':2,
+              imgUrl:'/static/img/user1.png'
+            },
+            {
+              'id':3,
+              imgUrl:'/static/img/user2.png'
+            },
+            {
+              'id':4,
+              imgUrl:'/static/img/user3.png'
+            },
+            {
+              'id':5,
+              imgUrl:'/static/img/user4.png'
+            },
+            {
+              'id':6,
+              imgUrl:'/static/img/user5.png'
+            },
+            {
+              'id':7,
+              imgUrl:'/static/img/user6.png'
+            },
+            {
+              'id':8,
+              imgUrl:'/static/img/user7.png'
+            },
+            {
+              'id':9,
+              imgUrl:'/static/img/user8.png'
+            }
+          ],
           elearning_username:'',
           elearning_password:'',
           elearning_stats:false,
@@ -129,6 +182,20 @@
 
               },
       methods: {
+        chooseImg (imgUrl) {
+          localStorage.setItem('avatar', imgUrl)
+          this.userImg = localStorage.getItem('avatar')
+          this.showChooseAvatar = false
+
+
+
+
+
+        },
+        showChooseImg () {
+          this.showChooseAvatar = true
+        }
+        ,
           del_register()
           {
             this.elearning_stats=false;
@@ -171,12 +238,6 @@
         },
         handleSubmit (name) {
 
-
-
-
-
-
-
           this.$refs[name].validate((valid) => {
             if (valid) {
               this.formValidate=this.formValidate2
@@ -193,12 +254,6 @@
         }
 
     }
-</script>
+</script scope>
 
-<style lang="scss">
-    // Allow element/type selectors, because this is global CSS.
-    // stylelint-disable selector-max-type, selector-class-pattern
-
-    // Design variables and utilities from src/TopBarDesign.
-    @import '../../assets/css/TopBarDesign';
 </style>

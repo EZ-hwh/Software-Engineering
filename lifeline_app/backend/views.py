@@ -173,44 +173,54 @@ def get_schedule(request):
         ret['schedule'] = scheduler_list
         return JsonResponse(ret)
 
+Data = [
+    {
+    "name": "Algorithm Assignment 3",
+    "time": "2020.5.9 10:30",
+    "description": "Complete 15-2.3,17.1",
+    "status": 0,
+    "id": 1
+    },
+    {
+        "name": "Software Engineer homework",
+        "time": "2020.5.9 18:30",
+        "description": "Implement the demo website.",
+        "status": 1,
+        "id": 2
+    },
+    {
+        "name": "Watch a movie",
+        "time": "2020.5.9 24:00",
+        "description": "",
+        "status": 2,
+        "id": 3
+    },
+    {
+        "name": "DSP homwork3",
+        "time": "2020.5.9 24:00",
+        "description": "this is a long long long long descripion.for test for test for test.",
+        "status": 0,
+        "id": 4
+    }
+]
+
 @csrf_exempt
 def get_Todaylist(request):
     if not request.session.get('login', None):
         return redirect('/login_page/')
     if request.method == 'GET':
         ret = []
-        print("kaishi")
+        # print("kaishi")
         test = True
         if test:
-            print("abc")
+            # print("abc")
+            global Data
             ret = {
                 "flag": True,
-                "TodayList": [
-                    {
-                        "name": "Algorithm Assignment 3",
-                        "time": "2020.5.9 10:30",
-                        "description": "Complete 15-2.3,17.1",
-                        "status": 0,
-                        "id": 1
-                    },
-                    {
-                        "name": "Software Engineer homework",
-                        "time": "2020.5.9 18:30",
-                        "description": "Implement the demo website.",
-                        "status": 1,
-                        "id": 2
-                    },
-                    {
-                        "name": "Watch a movie",
-                        "time": "2020.5.9 24:00",
-                        "description": "",
-                        "status": 2,
-                        "id": 3
-                    }
-                ],
+                "TodayList": Data
             }
 
-            print(ret)
+            # print(ret)
             return JsonResponse(ret)
         user = Account.objects.get(email = request.session['email'])
         todolist = user.todolist_set.all()
@@ -232,34 +242,13 @@ def get_Weeklist(request):
         return redirect('/login_page/')
     if request.method == 'GET':
         ret = []
-        print("kaishiWeek")
+        # print("kaishiWeek")
         test = True
         if test:
+            global Data
             ret = {
                 "flag": True,
-                "WeekList": [
-                    {
-                        "name": "Algorithm Assignment 3",
-                        "time": "2020.5.9 10:30",
-                        "description": "Complete 15-2.3,17.1",
-                        "status": 2,
-                        "id": 4
-                    },
-                    {
-                        "name": "Software Engineer homework",
-                        "time": "2020.5.9 18:30",
-                        "description": "Implement the demo website.",
-                        "status": 1,
-                        "id": 5
-                    },
-                    {
-                        "name": "Watch a movie",
-                        "time": "2020.5.9 24:00",
-                        "description": "",
-                        "status": 0,
-                        "id": 6
-                    }
-                ],
+                "WeekList": Data
             }
             return JsonResponse(ret)
         user = Account.objects.get(email=request.session['email'])
@@ -312,7 +301,7 @@ def getcode(request):
         register.checksum = random.randint(1000, 9999)
         print(register.email, register.checksum)
         register.save()
-        # ret["checksum"] = register.checksum
+        ret["checksum"] = register.checksum
         ret["flag"] = True
         return JsonResponse(ret)
 
@@ -330,6 +319,20 @@ def check_todolist(request):
         ret = {}
         test = True
         if test:
+            global Data
+            switch = {0: 0, 1: 1, 2: 2}
+            status = int(request.GET["status"])
+            id = int(request.GET["id"])
+            # print(id, status)
+            # print(switch[status])
+            if status not in switch:
+                # print("notin")
+                ret["flag"] = False
+                ret["error_msg"] = "Wrong status!"
+                return JsonResponse(ret)
+            for i in range(len(Data)):
+                if Data[i]["id"] == id:
+                    Data[i]["status"] = status
             ret["flag"] = True
             return JsonResponse(ret)
         if not Todolist.objects.filter(todolist_id = request.GET.get("id")).exists():
@@ -352,10 +355,32 @@ def check_todolist(request):
         return JsonResponse(ret)
 
 @csrf_exempt
+def add_ddl(request):
+    if not request.session.get('login', None):
+        return redirect('/login_page/')
+    if request.method == 'GET':
+        test = True
+        if test:
+            global Data
+            new_ddl = {}
+            new_ddl["name"] = request.GET["name"]
+            new_ddl["time"] = request.GET["time"]
+            new_ddl["description"] = request.GET["description"]
+            new_ddl["id"] = len(Data) + 1
+            new_ddl["status"] = 0
+            Data.append(new_ddl)
+            print(Data)
+            ret = {}
+            ret["flag"] = True
+            return JsonResponse(ret)
+
+
+@csrf_exempt
 def get_semester(request):
     if not request.session.get('login', None):
         return redirect('/login_page/')
-    test = True
-    if test:
-        ret = get_course_sample_data()
-        return JsonResponse(ret)
+    if request.method == 'GET':
+        test = True
+        if test:
+            ret = get_course_sample_data()
+            return JsonResponse(ret)
