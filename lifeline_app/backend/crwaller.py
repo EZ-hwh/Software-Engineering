@@ -90,49 +90,67 @@ def get_course_mainpage(session,course_id):
     headers = {
         'User-Agent' : "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36"
     }
-    print("https://elearning.fudan.edu.cn"+course_url)
-    html = session.get("https://elearning.fudan.edu.cn"+course_url,headers=headers).text
+    html = session.get("https://elearning.fudan.edu.cn/courses/"+course_id,headers=headers).text
     soup = BeautifulSoup(html,'lxml')
     #print(soup)
+    title = soup.find("li",id="crumb_course_"+course_id).find("span").get_text()
+    print(title)
     description = soup.find_all('script')[3].get_text()
     d = json.loads(description[description.rfind('ENV')+6:description.rfind(';')])
+    #print(d)
     try:
         d1 = d['WIKI_PAGE']
-        return d1['title'],d1['body']
+        return title,d1['body']
     except:
-        return "",""
+        return title,""
     
     #print(description[description.rfind('ENV')+6:description.rfind(';')])
     #print(d1['title'])
     #print(d1['body'])
 
-def get_document(session,url):
+def get_document(session,diction):
     #　设置头部
     headers = {
     'User-Agent' : "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36"
     }
-    #url = url+'/files'
-    html = session.get(url = url,headers=headers).text
-    d = json.loads(html[html.rfind("{"):html.rfind("}")+1])
-    print(d["files_url"])
-    print(d["folders_url"])
-    
-    #获取该目录下的文件表格
-    html = session.get(url=d["files_url"],headers=headers).text
+    # html = session.get(url = url,headers=headers).text
+    # #print(url)
+    # ret = []
+    # if html == "while(1);[]":
+    #     return ret 
+
+    # html = html.replace("null","None").replace("false","False").replace("true","True")
+    # files = eval(html[9:])
+    # if isinstance(files,dict):
+    #     files = [files]
+    # print(files)
+    #print(d["files_url"])
+    #print(d["folders_url"])
+    ret = []
+    html = session.get(url=diction["folders_url"],headers=headers).text
+    #print(html)
     html = html.replace("null","None").replace("false","False").replace("true","True")
-    print(html)
+    files = eval(html[9:])
+    #循环读取文件夹
+    for f in files:
+        folder = {"title":f["name"],"expand":True,"urls":""}
+        print(f["folders_url"])
+        folder["children"] = []
+        folder["children"] = get_document(session,f)
+        ret.append(folder)
+
+    #获取该目录下的文件表格
+    html = session.get(url=diction["files_url"],headers=headers).text
+    html = html.replace("null","None").replace("false","False").replace("true","True")
+    #print(html)
     files = eval(html[9:]) #将文件变成list，每个元素都是一个文件信息的字典
-    '''
-    下面都是每个字典包含的主要的键值
-    文件路径: url
-    编号: id
-    文件修改创建日期: created_at
-    更新时间: updated_at
-    显示名字: display_name 
-    '''
-    print(files) 
-    return files
-    #print(url)
+    for f in files:
+        #t = session.get(url=f['url'],headers=headers).text
+        #print(t)
+        #print(f["display_name"])
+        file = {"title":f["display_name"],"expand":False,"urls":f['url'],"children":[]}
+        ret.append(file)
+    return ret
 
 def get_homework(session,url):
     #　设置头部
@@ -143,6 +161,7 @@ def get_homework(session,url):
     html = session.get(url = url,headers=headers).text
     html = html.replace("null","None").replace("false","False").replace("true","True")
     #print(html)
+    #print(url)
     homeworks = eval(html[9:])[0]["assignments"]
     dones = []
     not_dones = []
@@ -151,17 +170,24 @@ def get_homework(session,url):
         homework_url = item["html_url"]
         html = session.get(url=homework_url,headers=headers).text
         soup = BeautifulSoup(html,"lxml")
-        a["content"] = soup.find("div",class_="description user_content student-version")
+        a["title"] = item["name"]
+        a["content"] = soup.find("div",class_="description user_content student-version").get_text()
+        a["description"]=""
         #print(description)
-        a["name"] = item["name"]
-        a["time"] = item["due_at"]
+        a["ddl"] = item["due_at"]
         a["score"] = item["points_possible"]
-        
         #下面用于提交作业后信息的采集
-        dones.append(a)
+        if soup.find("div",class_="details"):
+            a["comment"]=soup.find("div",class_="comments module").get_text()
+            a['grade']=soup.find("div",class_="module").get_text()
+            a['finish']=True
+            a["submission"]=soup.find("div",class_="details").find_all("div")[3]
+            dones.append(a)
+        else:
+            not_dones.append(a)
         #if item['has_submitted_submissions']:
         #    a[]
-    return dones
+    return dones,not_dones
 
 def get_course(session):
     """
@@ -252,21 +278,46 @@ def get_scheduler_feedback(session1,session2):
     return res
 
 #登录并获得登录的会话
-username = "" #填写个人账号
-password = ""
+username = "17307130155" #填写个人账号
+password = "Wenhao142226"
 session1 = login_elearning(username,password)
 session2 = login_jwfw(username,password)
 
-def get_course_homework_feedback(session1,session2):
-    #还未开始
-    return
+def get_course_homework_feedback(session1,session2,id):
+    name,_ = get_course_mainpage(session1,id)
+    dones,not_dones = get_homework(session1,url="https://elearning.fudan.edu.cn/api/v1/courses/"+id+"/assignment_groups?exclude_response_fields%5B%5D=description&exclude_response_fields%5B%5D=rubric&include%5B%5D=assignments&include%5B%5D=discussion_topic&override_assignment_dates=true&per_page=50")
+    ret = {}
+    ret["name"] = name
+    ret["done"] = dones
+    ret["not_done"] = not_dones
+    print(ret)
+    return ret
 
-def get_course_detail_feedback(session1,session2):
+def get_course_detail_feedback(session1,session2,id):
+    name,_ = get_course_mainpage(session1,id)
+    url = "https://elearning.fudan.edu.cn/api/v1/courses/"+id+"/folders/root"
+    headers = {
+    'User-Agent' : "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36"
+    }
+    html = session1.get(url = url,headers=headers).text
+    #print(url)
+    ret = {}
+    ret["name"] = name
+    ret["docs"] = []
+    if html == "while(1);[]":
+        return ret 
+
+    html = html.replace("null","None").replace("false","False").replace("true","True")
+    files = eval(html[9:])
+    print(files)
+    ret["docs"] = get_document(session1,files)
     #还未开始
-    return 
+    print(ret)
+    return ret
 
 def get_courseinfo_feedback(session1,session2,id):
-    return get_course_mainpage(session1,"/course/"+id)
+    title, description = get_course_mainpage(session1,id)
+    return {"name":title,"description":description}
 
 def test():
     a = []
@@ -307,7 +358,8 @@ def test():
     ans.append({"lesson":e})
     ans.append({"lesson":f})
     print(ans)
-
+#get_course_detail_feedback(session1,session2,"22474")
+get_course_homework_feedback(session1,session2,"22322")
 #get_scheduler_feedback(session1,session2)
 #url = "https://elearning.fudan.edu.cn/courses/22474"
 #title, body = get_course_mainpage(session,url)
