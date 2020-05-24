@@ -128,7 +128,7 @@ def personal(request):
     if not request.session.get('login', None):
         return redirect('/login')
     if request.method == 'GET':
-        return render(request, 'personal.html')
+        return render(request, 'personal.htmpersonl')
 
 
 @csrf_exempt
@@ -205,7 +205,7 @@ Data = [
 ]
 
 @csrf_exempt
-def get_Todaylist(request):
+def get_Todaylist(request): #Todo 连接数据库
     if not request.session.get('login', None):
         return redirect('/login_page/')
     if request.method == 'GET':
@@ -236,7 +236,7 @@ def get_Todaylist(request):
         return JsonResponse(ret)
 
 @csrf_exempt
-def get_Weeklist(request):
+def get_Weeklist(request): #Todo 连接数据库
     if not request.session.get('login', None):
         return redirect('/login_page/')
     if request.method == 'GET':
@@ -310,7 +310,7 @@ def logout(request):  # 登出,此方案过于简单，需改进
     return render(request,'index.html')
 
 @csrf_exempt
-def check_todolist(request):
+def check_todolist(request): #Todo 连接数据库
     if not request.session.get('login', None):
         return redirect('/login_page/')
     if request.method == 'GET':
@@ -352,7 +352,7 @@ def check_todolist(request):
         return JsonResponse(ret)
 
 @csrf_exempt
-def add_ddl(request):
+def add_ddl(request): #Todo 连接数据库
     if not request.session.get('login', None):
         return redirect('/login_page/')
     if request.method == 'POST':
@@ -378,4 +378,32 @@ def get_semester(request):
     if request.method == 'GET':
         if DEBUG:
             ret = get_course_sample_data()
+            return JsonResponse(ret)
+
+
+@csrf_exempt
+def get_courseinfo(request):
+    if not request.session.get('login', None):
+        return redirect('/login_page/')
+    if request.method == 'GET':
+        if DEBUG:
+            ret = get_mainpage_sample_data()
+            return JsonResponse(ret)
+
+@csrf_exempt
+def get_course_detail(request):
+    if not request.session.get('login', None):
+        return redirect('/login_page/')
+    if request.method == 'GET':
+        if DEBUG:
+            ret = get_document_sample_data()
+            return JsonResponse(ret)
+
+@csrf_exempt
+def get_course_homework(request):
+    if not request.session.get('login', None):
+        return redirect('/login_page/')
+    if request.method == 'GET':
+        if DEBUG:
+            ret = get_homework_sample_data()
             return JsonResponse(ret)
