@@ -291,9 +291,32 @@
         handleReset (name) {
           this.$refs[name].resetFields();
         },
+        create_data()
+        {
+
+          this.$ajax({
+            method: "post",
+            url: "/personal_create/",
+          })
+                  .then((response) => {
+                    this.elearning_stats=response.data.flag;
+                    this.formValidate.name=response.data.name;
+                    this.formValidate.address=response.data.addr;
+                    this.formValidate.mail=response.data.mail;
+                    this.formValidate.phone=response.data.phone;
+                    this.formValidate.desc=response.data.desc;
+                    this.userImg=repsonse.data.userImg;
+                  })
+                  .catch(function(error) {
+                    console.log(error);
+                  });
 
         }
+        }
 
+      created: function() {
+        this.create_data();
+      },
     }
 </script scope>
 
