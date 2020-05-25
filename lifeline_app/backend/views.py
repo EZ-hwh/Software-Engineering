@@ -407,3 +407,42 @@ def get_course_homework(request):
         if DEBUG:
             ret = get_homework_sample_data()
             return JsonResponse(ret)
+
+@csrf_exempt
+def elearning_register(request):
+    if not request.session.get('login', None):
+        return redirect('/login_page/')
+    if request.method == 'POST':
+        name = request.GET["name"]
+        password = request.GET["password"]
+        user = Account.objects.get(email = request.session["email"])
+        user.elearning_name = name
+        user.elearning_password = password
+        user.elearning_login = True
+        ret = {"flag": True}
+        return JsonResponse(ret)
+
+@csrf_exempt
+def elearning_del_register(request):
+    if not request.session.get('login', None):
+        return redirect('/login_page/')
+    if request.method == 'GET':
+        user = Account.objects.get(email = request.session["email"])
+        user.elearning_name = ""
+        user.elearning_password = ""
+        user.elearning_login = False
+        ret = {"flag": True}
+        return JsonResponse(ret)
+
+@csrf_exempt
+def information(request):
+    if not request.session.get('login', None):
+        return redirect('/login_page/')
+    if request.method == 'POST':
+
+@csrf_exempt
+def information(request):
+    if not request.session.get('login', None):
+        return redirect('/login_page/')
+    if request.method == 'POST':
+        user = Account.objects.get(email = request.session["email"])
