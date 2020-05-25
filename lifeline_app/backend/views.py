@@ -374,6 +374,24 @@ def add_ddl(request):
             ret["flag"] = True
             return JsonResponse(ret)
 
+@csrf_exempt
+def del_ddl(request):
+    if not request.session.get('login', None):
+        return redirect('/login_page/')
+    if request.method == 'GET':
+        test = True
+        if test:
+            global Data
+            del_id = int(request.GET["id"])
+            # 这里直接遍历了一遍
+            for i in range(len(Data)):
+                if Data[i]["id"] == del_id:
+                    del Data[i]
+                    break
+            ret = {"flag":True}
+            return JsonResponse(ret)
+
+
 
 @csrf_exempt
 def get_semester(request):
