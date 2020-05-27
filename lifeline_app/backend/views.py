@@ -32,6 +32,7 @@ def register_account(request):
         print(request)
         name = request.GET.get('name')
         pwd = request.GET.get("pass")
+        email = request.GET.get('email')
         # pwd_check = request.GET.get("pass_again")
         ret = {"flag": False, "error_msg": None}
         # if (pwd != pwd_check):
@@ -41,10 +42,10 @@ def register_account(request):
             ret["error_msg"] = "same user has been registered"
         else:
             ret["flag"] = True
-            user = User.objects.create_user(username=name, password=pwd)
+            user = User.objects.create_user(username=name, password=pwd, email=email)
             request.session['login'] = True  # 注册后自动登陆
-            request.session['email'] = user.email
-            request.session['name'] = user.username
+            request.session['email'] = email
+            request.session['name'] = name
             account = Account.objects.create(user=user, nickname="None")
         return HttpResponse(json.dumps(ret), content_type="application/json")
     '''
@@ -441,8 +442,11 @@ def information(request):
     if request.method == 'POST':
 
 @csrf_exempt
-def information(request):
+def picture(request):
     if not request.session.get('login', None):
         return redirect('/login_page/')
     if request.method == 'POST':
         user = Account.objects.get(email = request.session["email"])
+        user.picture = request.GET["pic"]
+        ret = {"flag": True}
+        return JsonResponse(ret)
