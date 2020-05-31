@@ -54,7 +54,7 @@ def register_account(request):
         else:
             ret["flag"] = True
             user = User.objects.create_user(username=name, password=pwd, email=email)
-            login(redirect, user)
+            login(request, user)
             account = Account.objects.create(user=user, nickname="None")
         return HttpResponse(json.dumps(ret), content_type="application/json")
     '''
@@ -131,7 +131,7 @@ def personal(request):
     if not request.user.is_authenticated:
         return redirect('/login')
     if request.method == 'GET':
-        return render(request, 'personal.htmpersonl')
+        return render(request, 'personal.html')
 
 
 @csrf_exempt
@@ -395,6 +395,7 @@ def check_todolist(request):
             ret["error_msg"] = "Wrong status!"
             return JsonResponse(ret)
         Todo.status = status
+        Todo.save()
         ret["flag"] = True
         return JsonResponse(ret)
 
@@ -419,11 +420,11 @@ def add_ddl(request):
             return JsonResponse(ret)
         """
         account = Account.objects.get(user = request.user)
-        todolist = Todolist.objects.create()
+        todolist = Todolist(name=request.GET["name"])
         todolist.account = account
-        todolist.name = request.GET["name"]
         todolist.deadline_time = request.GET["time"]
         todolist.description = request.GET["description"]
+        todolist.save()
         ret = {}
         ret["flag"] = True
         return JsonResponse(ret)
@@ -489,6 +490,7 @@ def elearning_register(request):
     if not request.user.is_authenticated:
         return redirect('/login_page/')
     if request.method == 'POST':
+        print("elearning!")
         name = request.GET["name"]
         password = request.GET["password"]
         account = Account.objects.get(user = request.user)
@@ -521,6 +523,7 @@ def information(request):
         account.addr = request.GET["addr"]
         account.phone = request.GET["phone"]
         account.description = request.GET["mail"]
+        account.save()
         ret = {"flag":True}
         return JsonResponse(ret)
         
@@ -532,6 +535,7 @@ def picture(request):
     if request.method == 'POST':
         account = Account.objects.get(user = request.user)
         account.picture = request.GET["pic"]
+        account.save()
         ret = {"flag": True}
         return JsonResponse(ret)
         
