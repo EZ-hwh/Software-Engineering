@@ -312,7 +312,7 @@
                   });
 
         }
-        }
+        },
 
       created: function() {
         this.create_data();

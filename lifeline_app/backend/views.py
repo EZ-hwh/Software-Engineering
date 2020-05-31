@@ -156,6 +156,7 @@ def get_schedule(request):
         return JsonResponse(ret)
         ret = {}
         test = True
+        now = datetime.datetime.now()
         if test == True:
             course_list = [
                 {
@@ -165,18 +166,18 @@ def get_schedule(request):
                 },
                 { 
                     "title": "See John Deo", 
-                    "start": t, 
-                    "end": t, 
+                    "start": now, 
+                    "end": now, 
                     "className": "bg-success" 
                 },
                 {
                     "title": "Meet John Deo",
-                    "start": new Date($.now() + 168e6),
+                    "start": now + 168e6,
                     "className": "bg-info",
                 },
                 {
                     "title": "Buy a Theme",
-                    "start": new Date($.now() + 338e6),
+                    "start": now + 338e6,
                     "className": "bg-primary",
                 },
             ]
@@ -242,7 +243,6 @@ def get_Todaylist(request): #Todo 连接数据库
         return redirect('/login_page/')
     if request.method == 'GET':
         ret = []
-        # print("kaishi")
         """
         if DEBUG:
             # print("abc")
