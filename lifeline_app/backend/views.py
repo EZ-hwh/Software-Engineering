@@ -149,6 +149,32 @@ def get_schedule(request):
         return redirect('/login_page/')
     if request.method == 'GET':
         ret = {}
+        test = True
+        if test == True:
+            course_list = [
+                {
+                    "title": "Hey!",
+                    "start": "",
+                    "className": "bg-purple",
+                },
+                { 
+                    "title": "See John Deo", 
+                    "start": t, 
+                    "end": t, 
+                    "className": "bg-success" 
+                },
+                {
+                    "title": "Meet John Deo",
+                    "start": new Date($.now() + 168e6),
+                    "className": "bg-info",
+                },
+                {
+                    "title": "Buy a Theme",
+                    "start": new Date($.now() + 338e6),
+                    "className": "bg-primary",
+                },
+            ]
+            pass
 
         user = Account.objects.get(email=request.session['email'])
         courses = [x.course for x in user.takeclass_set.all()]
