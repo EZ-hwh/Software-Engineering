@@ -12,8 +12,13 @@ class Account(models.Model):
     email = models.EmailField(null=True) # 邮箱是否能为空？
     gender = models.CharField(max_length=2,null=True) # 键值只有三种取值：M,F,N
     nickname = models.CharField(max_length=50) # 用户自己修改的昵称
-    privilege = models.IntegerField(default=1) # 账户等级，初步打算老师和学生账户,老师是0，学生是1
-    photo = models.ImageField(default="",upload_to="",null=True) # 默认无照片的路径，以及上传图片的路径
+    #privilege = models.IntegerField(default=1) # 账户等级，初步打算老师和学生账户,老师是0，学生是1
+    elearning_name = models.CharField(max_length=15,null=True)
+    elearning_password = models.CharField(max_length=20,null=True)
+    elearning_login = models.BooleanField(default=False)
+    phone = models.CharField(max_length=50)
+    addr = models.CharField(max_length=50)
+    picture = models.CharField(max_length=50, default="/static/img/user0.png")
 
 class Course(models.Model):
     course_id = models.AutoField(primary_key=True)

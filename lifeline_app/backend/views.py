@@ -32,6 +32,7 @@ def register_account(request):
         print(request)
         name = request.GET.get('name')
         pwd = request.GET.get("pass")
+        email = request.GET.get('email')
         # pwd_check = request.GET.get("pass_again")
         ret = {"flag": False, "error_msg": None}
         # if (pwd != pwd_check):
@@ -41,10 +42,10 @@ def register_account(request):
             ret["error_msg"] = "same user has been registered"
         else:
             ret["flag"] = True
-            user = User.objects.create_user(username=name, password=pwd)
+            user = User.objects.create_user(username=name, password=pwd, email=email)
             request.session['login'] = True  # 注册后自动登陆
-            request.session['email'] = user.email
-            request.session['name'] = user.username
+            request.session['email'] = email
+            request.session['name'] = name
             account = Account.objects.create(user=user, nickname="None")
         return HttpResponse(json.dumps(ret), content_type="application/json")
     '''
@@ -128,7 +129,7 @@ def personal(request):
     if not request.session.get('login', None):
         return redirect('/login')
     if request.method == 'GET':
-        return render(request, 'personal.html')
+        return render(request, 'personal.htmpersonl')
 
 
 @csrf_exempt
@@ -231,14 +232,13 @@ Data = [
 ]
 
 @csrf_exempt
-def get_Todaylist(request):
+def get_Todaylist(request): #Todo 连接数据库
     if not request.session.get('login', None):
         return redirect('/login_page/')
     if request.method == 'GET':
         ret = []
         # print("kaishi")
-        test = True
-        if test:
+        if DEBUG:
             # print("abc")
             global Data
             ret = {
@@ -263,14 +263,13 @@ def get_Todaylist(request):
         return JsonResponse(ret)
 
 @csrf_exempt
-def get_Weeklist(request):
+def get_Weeklist(request): #Todo 连接数据库
     if not request.session.get('login', None):
         return redirect('/login_page/')
     if request.method == 'GET':
         ret = []
         # print("kaishiWeek")
-        test = True
-        if test:
+        if DEBUG:
             global Data
             ret = {
                 "flag": True,
@@ -338,13 +337,12 @@ def logout(request):  # 登出,此方案过于简单，需改进
     return render(request,'index.html')
 
 @csrf_exempt
-def check_todolist(request):
+def check_todolist(request): #Todo 连接数据库
     if not request.session.get('login', None):
         return redirect('/login_page/')
     if request.method == 'GET':
         ret = {}
-        test = True
-        if test:
+        if DEBUG:
             global Data
             switch = {0: 0, 1: 1, 2: 2}
             status = int(request.GET["status"])
@@ -381,12 +379,11 @@ def check_todolist(request):
         return JsonResponse(ret)
 
 @csrf_exempt
-def add_ddl(request):
+def add_ddl(request): #Todo 连接数据库
     if not request.session.get('login', None):
         return redirect('/login_page/')
-    if request.method == 'GET':
-        test = True
-        if test:
+    if request.method == 'POST':
+        if DEBUG:
             global Data
             new_ddl = {}
             new_ddl["name"] = request.GET["name"]
@@ -424,7 +421,76 @@ def get_semester(request):
     if not request.session.get('login', None):
         return redirect('/login_page/')
     if request.method == 'GET':
-        test = True
-        if test:
+        if DEBUG:
             ret = get_course_sample_data()
             return JsonResponse(ret)
+
+
+@csrf_exempt
+def get_courseinfo(request):
+    if not request.session.get('login', None):
+        return redirect('/login_page/')
+    if request.method == 'GET':
+        if DEBUG:
+            ret = get_mainpage_sample_data()
+            return JsonResponse(ret)
+
+@csrf_exempt
+def get_course_detail(request):
+    if not request.session.get('login', None):
+        return redirect('/login_page/')
+    if request.method == 'GET':
+        if DEBUG:
+            ret = get_document_sample_data()
+            return JsonResponse(ret)
+
+@csrf_exempt
+def get_course_homework(request):
+    if not request.session.get('login', None):
+        return redirect('/login_page/')
+    if request.method == 'GET':
+        if DEBUG:
+            ret = get_homework_sample_data()
+            return JsonResponse(ret)
+
+@csrf_exempt
+def elearning_register(request):
+    if not request.session.get('login', None):
+        return redirect('/login_page/')
+    if request.method == 'POST':
+        name = request.GET["name"]
+        password = request.GET["password"]
+        user = Account.objects.get(email = request.session["email"])
+        user.elearning_name = name
+        user.elearning_password = password
+        user.elearning_login = True
+        ret = {"flag": True}
+        return JsonResponse(ret)
+
+@csrf_exempt
+def elearning_del_register(request):
+    if not request.session.get('login', None):
+        return redirect('/login_page/')
+    if request.method == 'GET':
+        user = Account.objects.get(email = request.session["email"])
+        user.elearning_name = ""
+        user.elearning_password = ""
+        user.elearning_login = False
+        ret = {"flag": True}
+        return JsonResponse(ret)
+
+@csrf_exempt
+def information(request):
+    if not request.session.get('login', None):
+        return redirect('/login_page/')
+    if request.method == 'POST':
+
+@csrf_exempt
+def picture(request):
+    if not request.session.get('login', None):
+        return redirect('/login_page/')
+    if request.method == 'POST':
+        user = Account.objects.get(email = request.session["email"])
+        user.picture = request.GET["pic"]
+        ret = {"flag": True}
+        return JsonResponse(ret)

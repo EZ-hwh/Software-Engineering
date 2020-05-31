@@ -531,7 +531,7 @@ export default {
     },
     add_ddl: function() {
       this.$ajax({
-        method: "get",
+        method: "post",
         url: "/add_ddl/",
         params: {
           name: this.ddlname,
