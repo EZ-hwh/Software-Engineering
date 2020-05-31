@@ -102,39 +102,39 @@
           imgList:[
             {
               'id':1,
-              imgUrl:'/static/img/user0.png'
+              imgUrl:'../../../static/img/user0.png'
             },
             {
               'id':2,
-              imgUrl:'/static/img/user1.png'
+              imgUrl:'../../../static/img/user1.png'
             },
             {
               'id':3,
-              imgUrl:'/static/img/user2.png'
+              imgUrl:'../../../static/img/user2.png'
             },
             {
               'id':4,
-              imgUrl:'/static/img/user3.png'
+              imgUrl:'../../../static/img/user3.png'
             },
             {
               'id':5,
-              imgUrl:'/static/img/user4.png'
+              imgUrl:'../../../static/img/user4.png'
             },
             {
               'id':6,
-              imgUrl:'/static/img/user5.png'
+              imgUrl:'../../../static/img/user5.png'
             },
             {
               'id':7,
-              imgUrl:'/static/img/user6.png'
+              imgUrl:'../../../static/img/user6.png'
             },
             {
               'id':8,
-              imgUrl:'/static/img/user7.png'
+              imgUrl:'../../../static/img/user7.png'
             },
             {
               'id':9,
-              imgUrl:'/static/img/user8.png'
+              imgUrl:'../../../static/img/user8.png'
             }
           ],
           elearning_username:'',
@@ -182,7 +182,7 @@
 
               },
       methods: {
-        chooseImg (imgUrl) {
+        chooseImg: function(imgUrl) {
           localStorage.setItem('avatar', imgUrl)
           this.userImg = localStorage.getItem('avatar')
           this.$ajax({
@@ -200,12 +200,10 @@
 
 
         },
-        showChooseImg () {
+        showChooseImg: function() {
           this.showChooseAvatar = true
-        }
-        ,
-          del_register()
-          {
+        },
+        del_register: function(){
             this.elearning_stats=false;
             this.elearning_password='';
             this.elearning_username='';
@@ -221,20 +219,18 @@
               });
 
             this.$Message.success('退出elearning');
-          },
-          change_del(){
+        },
+        change_del: function(){
             this.modal_loading = false;
             this.modal1 = false;
             this.$Message.success('结束修改');
-          },
-        register_del()
-        {
+        },
+        register_del: function(){
           this.modal_loading = false;
           this.modal2 = false;
           this.$Message.success('返回个人信息界面');
         },
-        try_register()
-        {
+        try_register: function(){
 
           this.$ajax({
             method: "post",
@@ -261,7 +257,7 @@
             this.$Message.success('登录失败，请重新登录');
           }
         },
-        handleSubmit (name) {
+        handleSubmit: function(name) {
 
           this.$refs[name].validate((valid) => {
             if (valid) {
@@ -288,13 +284,11 @@
 
 
         },
-        handleReset (name) {
+        handleReset: function(name) {
           this.$refs[name].resetFields();
         },
-        create_data()
-        {
-
-          this.$ajax({
+        create_data: function(){
+            this.$ajax({
             method: "post",
             url: "/personal_create/",
           })
@@ -312,12 +306,14 @@
                   });
 
         }
-        },
+      },
 
       created: function() {
         this.create_data();
       },
     }
-</script scope>
+</script>
 
+<style>
+@import url("../../assets/css/bootstrap.min.css");
 </style>

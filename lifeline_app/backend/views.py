@@ -487,9 +487,11 @@ def get_course_homework(request):
 
 @csrf_exempt
 def elearning_register(request):
+    print("elearning register!")
     if not request.user.is_authenticated:
+        print("elearning failed!")
         return redirect('/login_page/')
-    if request.method == 'POST':
+    if request.method == 'GET':
         print("elearning!")
         name = request.GET["name"]
         password = request.GET["password"]
