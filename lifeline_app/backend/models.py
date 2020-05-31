@@ -16,8 +16,9 @@ class Account(models.Model):
     elearning_name = models.CharField(max_length=15,null=True)
     elearning_password = models.CharField(max_length=20,null=True)
     elearning_login = models.BooleanField(default=False)
-    phone = models.CharField(max_length=50)
-    addr = models.CharField(max_length=50)
+    phone = models.CharField(max_length=50, null=True)
+    addr = models.CharField(max_length=50, null=True)
+    description = models.TextField(null=True)
     picture = models.CharField(max_length=50, default="/static/img/user0.png")
 
 class Course(models.Model):
