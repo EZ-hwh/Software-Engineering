@@ -29,6 +29,8 @@ def login_uis(request): # 帮绑定了elearning的用户登陆uis
 
 @csrf_exempt
 def first(request):
+    if request.user.is_authenticated:
+        return redirect('/home')
     if request.method == "GET":
         return render(request, 'index.html')
 
