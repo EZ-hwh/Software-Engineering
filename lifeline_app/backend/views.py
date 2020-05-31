@@ -232,19 +232,21 @@ def get_Todaylist(request): #Todo 连接数据库
         user = Account.objects.get(user = request.user)
         now = datetime.datetime.now()
         tomorrow = now + datetime.timedelta(days=1)
+        temp = user.todolist_set.all()
         todolist = user.todolist_set.filter(deadline_time__range = (now, tomorrow))
         todolist.order_by('deadline_time')
 
         for todo in todolist:
             now = {}
             now["name"] = todo.name
-            now["time"] = todo.deadline_time
+            time = todo.deadline_time
+            now["time"] = time.strftime("%Y-%m-%d %H:%M")
             now["description"] = todo.description
             now["status"] = todo.status
             now["id"] = todo.todolist_id
             ret.append(now)
-
         ret = {"TodayList": ret}
+        ret["flag"] = True
         return JsonResponse(ret)
 
 @csrf_exempt
@@ -272,13 +274,16 @@ def get_Weeklist(request): #Todo 连接数据库
         for todo in todolist:
             now = {}
             now["name"] = todo.name
-            now["time"] = todo.deadline_time
+            time = todo.deadline_time
+            now["time"] = time.strftime("%Y-%m-%d %H:%M")
             now["description"] = todo.description
             now["status"] = todo.status
+            print(todo.todolist_id)
             now["id"] = todo.todolist_id
             ret.append(now)
 
         ret = {"WeekList": ret}
+        ret["flag"] = True
         return JsonResponse(ret)
 
 
@@ -353,18 +358,24 @@ def check_todolist(request):
             return JsonResponse(ret)
         """
 
+        id = request.GET.get("id")
+        print(id)
         if not Todolist.objects.filter(todolist_id = request.GET.get("id")).exists():
+            print("Error!")
             ret["flag"] = False
             ret["error_msg"] = "Todolist id doen'st exist!"
             return JsonResponse(ret)
         Todo = Todolist.objects.get(todolist_id = request.GET.get("id"))
-        if Todo.account.email != request.session["email"]:
+        if Todo.account.user != request.user:
+            print("Error!")
             ret["flag"] = False
             ret["error_msg"] = "Your account doesn't own this todolist!"
             return JsonResponse(ret)
-        switch = {0: 0, 1: 1, 2: 2}
+        switch = {"0": 0, "1": 1, "2": 2}
         status = request.GET["status"]
+        print(status)
         if status not in switch:
+            print("Error!")
             ret["flag"] = False
             ret["error_msg"] = "Wrong status!"
             return JsonResponse(ret)
@@ -396,7 +407,8 @@ def add_ddl(request):
         account = Account.objects.get(user = request.user)
         todolist = Todolist(name=request.GET["name"])
         todolist.account = account
-        todolist.deadline_time = request.GET["time"]
+        time = datetime.datetime.strptime(request.GET["time"], "%Y-%m-%d %H:%M")
+        todolist.deadline_time = time
         todolist.description = request.GET["description"]
         todolist.save()
         ret = {}

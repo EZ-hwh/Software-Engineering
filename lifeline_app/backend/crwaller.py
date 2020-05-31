@@ -280,8 +280,8 @@ def get_scheduler_feedback(session1,session2):
 #登录并获得登录的会话
 username = "17307130155" #填写个人账号
 password = "Wenhao142226"
-session1 = login_elearning(username,password)
-session2 = login_jwfw(username,password)
+#session1 = login_elearning(username,password)
+#session2 = login_jwfw(username,password)
 
 def get_course_homework_feedback(session1,session2,id):
     name,_ = get_course_mainpage(session1,id)
@@ -359,7 +359,7 @@ def test():
     ans.append({"lesson":f})
     print(ans)
 #get_course_detail_feedback(session1,session2,"22474")
-get_course_homework_feedback(session1,session2,"22322")
+#get_course_homework_feedback(session1,session2,"22322")
 #get_scheduler_feedback(session1,session2)
 #url = "https://elearning.fudan.edu.cn/courses/22474"
 #title, body = get_course_mainpage(session,url)
