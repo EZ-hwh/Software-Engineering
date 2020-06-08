@@ -277,6 +277,7 @@ def get_Todaylist(request): #Todo 连接数据库
             ret.append(now)
         ret = {"TodayList": ret}
         ret["flag"] = True
+        print(ret)
         return JsonResponse(ret)
 
 @csrf_exempt
@@ -509,7 +510,7 @@ def elearning_register(request):
         return redirect('/login_page/')
     if request.method == 'GET':
         print("elearning!")
-        name = request.GET["name"]
+        name = request.GET["username"]
         password = request.GET["password"]
         account = Account.objects.get(user = request.user)
         account.elearning_name = name
@@ -520,6 +521,7 @@ def elearning_register(request):
 
 @csrf_exempt
 def elearning_del_register(request):
+    print("Elearning delete register!")
     if not request.user.is_authenticated:
         return redirect('/login_page/')
     if request.method == 'GET':
@@ -573,4 +575,5 @@ def personal_create(request):
         ret["phone"] = account.phone
         ret["desc"] = account.description
         ret["userImg"] = account.picture
+        print(ret)
         return JsonResponse(ret)

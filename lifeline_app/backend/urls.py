@@ -18,18 +18,20 @@ urlpatterns = [
     url('checkcode', views.checkcode),
     url('check_todolist', views.check_todolist),
     url('home', views.home),
+    url('elearning_del_register', views.elearning_del_register),
+    url('elearning_register', views.elearning_register),
     url('register', views.register_account),
     url('login', views.login_account, ),
     url('getcode', views.getcode),
     url('checkcode', views.checkcode),
+    url('personal_create', views.personal_create),
     url('personal', views.personal),
     url('lesson', views.lesson),
     url('course', views.course),
     url('logout', views.logout_account),
     url('information', views.information),
-    url('elearning_del_register', views.elearning_del_register),
-    url('elearning_register', views.elearning_register),
+    
     url('picture', views.picture),
-    url('personal_create', views.personal_create),
+    
     url('', views.first),
 ]
