@@ -196,7 +196,6 @@ import {
   calendar2,
 } from "../../../assets/js/pages/fullcalendar.init.js";
 
-
 export default {
   components: {},
   data() {
@@ -214,7 +213,7 @@ export default {
     calendar2();
   },
   methods: {
-    get_schedule: function(){
+    get_schedule: function() {
       this.$ajax({
         method: "get",
         url: "/get_schedule/",

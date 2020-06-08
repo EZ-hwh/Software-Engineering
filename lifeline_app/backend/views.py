@@ -111,7 +111,7 @@ def login_account(request):
 
 @csrf_exempt
 def home(request):
-    print("home begin work")
+    # print("home begin work")
     if not request.user.is_authenticated:
         return redirect('/login')
     if request.method == 'GET':  # 这里用于向前端传输数据用于渲染主页
@@ -129,7 +129,7 @@ def lesson(request):
 
 @csrf_exempt
 def personal(request):
-    print("personal begin work")
+    # print("personal begin work")
     if not request.user.is_authenticated:
         return redirect('/login')
     if request.method == 'GET':
@@ -560,7 +560,7 @@ def personal_create(request):
     print("Personal start working.")
     if not request.user.is_authenticated:
         return redirect('/login_page/')
-    if request.method == 'POST':
+    if request.method == 'GET':
         print("Personal create!")
         account = Account.objects.get(user = request.user)
         ret = {}
