@@ -31,5 +31,5 @@ urlpatterns = [
     url('elearning_register', views.elearning_register),
     url('picture', views.picture),
     url('personal_create', views.personal_create),
-    url('', views.first, ),
+    url('', views.first),
 ]

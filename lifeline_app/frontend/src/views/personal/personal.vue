@@ -375,10 +375,7 @@ export default {
     create_data: function() {
       this.$ajax({
         method: "get",
-        url: "/personal_create/",
-        params: {
-          type: "log",
-        },
+        url: "/personal_create",
       })
         .then((response) => {
           console.log("Get created data!");
@@ -399,9 +396,6 @@ export default {
           console.log(error);
         });
     },
-  },
-  mounted: function(){
-    this.create_data();
   },
   created: function() {
     this.create_data();
