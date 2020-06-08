@@ -1,5 +1,5 @@
-from django.shortcuts import render,redirect,get_object_or_404
-from django.http import Http404,HttpResponse
+from django.shortcuts import render, redirect, get_object_or_404
+from django.http import Http404, HttpResponse
 from django.http.response import JsonResponse
 from .models import *
 from django.views.decorators.csrf import csrf_exempt
@@ -17,16 +17,23 @@ DEBUG = True  # 进行调试，用于输出调试
 ACCOUNT_ID_RANGE = 100000000
 
 
-def login_uis(request): # 帮绑定了elearning的用户登陆uis
+def login_uis(request):  # 帮绑定了elearning的用户登陆uis
     account = Account.objects.get(user=request.user)
     print("Trying to login uis.")
+    print(account.elearning_login)
     if account.elearning_login:
         if not request.session["elearning_login"]:
             print("Backend: elearning login.")
-            request.session["elearning_session"], request.session["elearning_login"] = login_elearning(account.elearning_name, account.elearning_password)
+            request.session["elearning_session"], request.session["elearning_login"] = login_elearning(
+                account.elearning_name, account.elearning_password)
         if not request.session["jwfw_login"]:
             print("Backend: jwfw login.")
-            request.session["jwfw_session"],request.session["jwfw_login"] = login_jwfw(account.elearning_name, account.elearning_password)
+            request.session["jwfw_session"], request.session["jwfw_login"] = login_jwfw(account.elearning_name,
+                                                                                        account.elearning_password)
+        return True
+    else:
+        return False
+
 
 @csrf_exempt
 def first(request):
@@ -45,13 +52,9 @@ def register_account(request):
         return render(request, "register.html")
     if request.method == "POST":
         name = request.GET.get('name')
-        nick = request.GET.get('name')
         pwd = request.GET.get("pass")
         email = request.GET.get('email')
-        # pwd_check = request.GET.get("pass_again")
         ret = {"flag": False, "error_msg": None}
-        # if (pwd != pwd_check):
-        #    ret['error_msg']="两次输入的密码不同"
         same_name_user = User.objects.filter(username=name)
         if same_name_user:
             ret["error_msg"] = "same user has been registered"
@@ -59,7 +62,9 @@ def register_account(request):
             ret["flag"] = True
             user = User.objects.create_user(username=name, password=pwd, email=email)
             login(request, user)
-            account = Account.objects.create(user=user, nickname="None")
+            request.session["elearning_login"] = False
+            request.session["jwfw_login"] = False
+            account = Account.objects.create(user=user, nickname=name, email=email)
         return HttpResponse(json.dumps(ret), content_type="application/json")
     '''
         try:
@@ -89,7 +94,6 @@ def login_account(request):
     print("Login begin work")
     if request.user.is_authenticated:  # 会话
         return redirect('/home')
-        return HttpResponse("请勿重复登陆")  # 最好有个提示
     if request.method == "GET":
         return render(request, "login.html")
     if request.method == "POST":
@@ -101,6 +105,8 @@ def login_account(request):
         if user is not None:
             # 如果验证成功就让登录
             login(request, user)
+            request.session["elearning_login"] = False
+            request.session["jwfw_login"] = False
             ret["flag"] = True
             print("登陆成功")
         else:
@@ -116,6 +122,8 @@ def home(request):
     # print("home begin work")
     if not request.user.is_authenticated:
         return redirect('/login')
+    if not login_uis(request):
+        return redirect('/personal')
     if request.method == 'GET':  # 这里用于向前端传输数据用于渲染主页
         return render(request, 'home.html')
 
@@ -125,6 +133,8 @@ def lesson(request):
     print("lesson begin work")
     if not request.user.is_authenticated:
         return redirect('/login')
+    if not login_uis(request):
+        return redirect('/personal')
     if request.method == 'GET':
         return render(request, 'lessons.html')
 
@@ -145,10 +155,13 @@ def course(request):
     print(request.method)
     if not request.user.is_authenticated:
         return redirect('/login')
+    if not login_uis(request):
+        return redirect('/personal')
     if request.method == 'GET':
         print("it work")
         # return render(request,'lessons.html')
         return render(request, 'SingleCourse.html')
+
 
 @csrf_exempt
 def get_schedule(request):
@@ -157,6 +170,7 @@ def get_schedule(request):
     if request.method == 'GET':
         login_uis(request)
         ret = get_scheduler_feedback(request.session["elearning_session"], request.session["jwfw_session"])
+        ret["flag"] = True
         return JsonResponse(ret)
         ret = {}
         test = True
@@ -168,11 +182,11 @@ def get_schedule(request):
                     "start": "",
                     "className": "bg-purple",
                 },
-                { 
-                    "title": "See John Deo", 
-                    "start": now, 
-                    "end": now, 
-                    "className": "bg-success" 
+                {
+                    "title": "See John Deo",
+                    "start": now,
+                    "end": now,
+                    "className": "bg-success"
                 },
                 {
                     "title": "Meet John Deo",
@@ -187,7 +201,7 @@ def get_schedule(request):
             ]
             pass
 
-        user = Account.objects.get(user = request.user)
+        user = Account.objects.get(user=request.user)
         courses = [x.course for x in user.takeclass_set.all()]
         course_list = []
         for course in courses:
@@ -209,6 +223,7 @@ def get_schedule(request):
         ret['course'] = course_list
         ret['schedule'] = scheduler_list
         return JsonResponse(ret)
+
 
 Data = [
     {
@@ -241,15 +256,15 @@ Data = [
     }
 ]
 
+
 @csrf_exempt
-def get_Todaylist(request): #Todo 连接数据库
+def get_Todaylist(request):  # Todo 连接数据库
     if not request.user.is_authenticated:
         return redirect('/login_page/')
     if request.method == 'GET':
         ret = []
         print("Getting todaylist!")
         login_uis(request)
-
         """
         if DEBUG:
             # print("abc")
@@ -263,11 +278,11 @@ def get_Todaylist(request): #Todo 连接数据库
             return JsonResponse(ret)
         """
         print(request.user)
-        user = Account.objects.get(user = request.user)
+        user = Account.objects.get(user=request.user)
         now = datetime.datetime.now()
         tomorrow = now + datetime.timedelta(days=1)
         temp = user.todolist_set.all()
-        todolist = user.todolist_set.filter(deadline_time__range = (now, tomorrow))
+        todolist = user.todolist_set.filter(deadline_time__range=(now, tomorrow))
         todolist.order_by('deadline_time')
 
         for todo in todolist:
@@ -284,11 +299,13 @@ def get_Todaylist(request): #Todo 连接数据库
         print(ret)
         return JsonResponse(ret)
 
+
 @csrf_exempt
-def get_Weeklist(request): #Todo 连接数据库
+def get_Weeklist(request):  # Todo 连接数据库
     if not request.user.is_authenticated:
         return redirect('/login_page/')
     if request.method == 'GET':
+        login_uis(request)
         ret = []
         # print("kaishiWeek")
         """
@@ -300,10 +317,10 @@ def get_Weeklist(request): #Todo 连接数据库
             }
             return JsonResponse(ret)
         """
-        user = Account.objects.get(user = request.user)
+        user = Account.objects.get(user=request.user)
         now = datetime.datetime.now()
         nextweek = now + datetime.timedelta(days=1)
-        todolist = user.todolist_set.filter(deadline_time__range = (now, nextweek))
+        todolist = user.todolist_set.filter(deadline_time__range=(now, nextweek))
         todolist.order_by('deadline_time')
 
         for todo in todolist:
@@ -327,7 +344,7 @@ def checkcode(request):
     if request.method == 'POST':
         ret = {}
         try:
-            register = Register.objects.get(email = request.GET.get("email"))
+            register = Register.objects.get(email=request.GET.get("email"))
             if request.GET.get("code") == register.checksum:
                 ret["flag"] = True
             else:
@@ -338,21 +355,22 @@ def checkcode(request):
             ret["error_msg"] = "请您请求验证码！"
         return JsonResponse(ret)
 
+
 @csrf_exempt
 def getcode(request):
     if request.method == 'POST':
         print("getcode begin!!!")
         email = request.GET.get("email")
         ret = {}
-        if Account.objects.filter(email = email).exists():
+        if Account.objects.filter(email=email).exists():
             ret["flag"] = False
             ret["error_msg"] = "邮箱已注册！"
             return JsonResponse(ret)
         try:
-            register = Register.objects.get(email = email)
+            register = Register.objects.get(email=email)
             print("try")
         except:
-            register = Register(email = email)
+            register = Register(email=email)
             print("except")
         register.checksum = random.randint(1000, 9999)
         print(register.email, register.checksum)
@@ -365,7 +383,8 @@ def getcode(request):
 @csrf_exempt
 def logout_account(request):
     logout(request)
-    return render(request,'index.html')
+    return render(request, 'index.html')
+
 
 @csrf_exempt
 def check_todolist(request):
@@ -395,12 +414,12 @@ def check_todolist(request):
 
         id = request.GET.get("id")
         print(id)
-        if not Todolist.objects.filter(todolist_id = request.GET.get("id")).exists():
+        if not Todolist.objects.filter(todolist_id=request.GET.get("id")).exists():
             print("Error!")
             ret["flag"] = False
             ret["error_msg"] = "Todolist id doen'st exist!"
             return JsonResponse(ret)
-        Todo = Todolist.objects.get(todolist_id = request.GET.get("id"))
+        Todo = Todolist.objects.get(todolist_id=request.GET.get("id"))
         if Todo.account.user != request.user:
             print("Error!")
             ret["flag"] = False
@@ -418,6 +437,7 @@ def check_todolist(request):
         Todo.save()
         ret["flag"] = True
         return JsonResponse(ret)
+
 
 @csrf_exempt
 def add_ddl(request):
@@ -439,7 +459,7 @@ def add_ddl(request):
             ret["flag"] = True
             return JsonResponse(ret)
         """
-        account = Account.objects.get(user = request.user)
+        account = Account.objects.get(user=request.user)
         todolist = Todolist(name=request.GET["name"])
         todolist.account = account
         time = datetime.datetime.strptime(request.GET["time"], "%Y-%m-%d %H:%M")
@@ -449,6 +469,7 @@ def add_ddl(request):
         ret = {}
         ret["flag"] = True
         return JsonResponse(ret)
+
 
 @csrf_exempt
 def del_ddl(request):
@@ -464,9 +485,8 @@ def del_ddl(request):
                 if Data[i]["id"] == del_id:
                     del Data[i]
                     break
-            ret = {"flag":True}
+            ret = {"flag": True}
             return JsonResponse(ret)
-
 
 
 @csrf_exempt
@@ -485,8 +505,10 @@ def get_courseinfo(request):
         return redirect('/login_page/')
     if request.method == 'GET':
         login_uis(request)
-        ret = get_courseinfo_feedback(request.session["elearning_session"], request.session["jwfw_session"], request.GET["course_id"])
+        ret = get_courseinfo_feedback(request.session["elearning_session"], request.session["jwfw_session"],
+                                      request.GET["course_id"])
         return JsonResponse(ret)
+
 
 @csrf_exempt
 def get_course_detail(request):
@@ -494,8 +516,10 @@ def get_course_detail(request):
         return redirect('/login_page/')
     if request.method == 'GET':
         login_uis(request)
-        ret = get_course_detail_feedback(request.session["elearning_session"], request.session["jwfw_session"], request.GET["course_id"])
+        ret = get_course_detail_feedback(request.session["elearning_session"], request.session["jwfw_session"],
+                                         request.GET["course_id"])
         return JsonResponse(ret)
+
 
 @csrf_exempt
 def get_course_homework(request):
@@ -503,8 +527,10 @@ def get_course_homework(request):
         return redirect('/login_page/')
     if request.method == 'GET':
         login_uis(request)
-        ret = get_course_homework_feedback(request.session["elearning_session"], request.session["jwfw_session"], request.GET["course_id"])
+        ret = get_course_homework_feedback(request.session["elearning_session"], request.session["jwfw_session"],
+                                           request.GET["course_id"])
         return JsonResponse(ret)
+
 
 @csrf_exempt
 def elearning_register(request):
@@ -516,18 +542,19 @@ def elearning_register(request):
         print("elearning!")
         name = request.GET["username"]
         password = request.GET["password"]
-        session, flag = login_elearning(name,password)
-        account = Account.objects.get(user = request.user)
+        session, flag = login_elearning(name, password)
+        account = Account.objects.get(user=request.user)
         if flag == False:
-            ret = {"flag": False, "status" :account.elearning_login}
+            ret = {"flag": False, "status": account.elearning_login}
             return JsonResponse(ret)
         account.elearning_name = name
         account.elearning_password = password
         account.elearning_login = True
         # print(account)
         account.save()
-        ret = {"flag": True, "status":account.elearning_login}
+        ret = {"flag": True, "status": account.elearning_login}
         return JsonResponse(ret)
+
 
 @csrf_exempt
 def elearning_del_register(request):
@@ -535,41 +562,43 @@ def elearning_del_register(request):
     if not request.user.is_authenticated:
         return redirect('/login_page/')
     if request.method == 'GET':
-        account = Account.objects.get(user = request.user)
+        account = Account.objects.get(user=request.user)
         account.elearning_name = ""
         account.elearning_password = ""
         account.elearning_login = False
         account.save()
-        ret = {"flag": True, "status":account.elearning_login}
+        ret = {"flag": True, "status": account.elearning_login}
         return JsonResponse(ret)
+
 
 @csrf_exempt
 def information(request):
     if not request.user.is_authenticated:
         return redirect('/login_page/')
     if request.method == 'POST':
-        account = Account.objects.get(user = request.user)
+        account = Account.objects.get(user=request.user)
         account.email = request.GET["mail"]
         account.nickname = request.GET["name"]
         account.addr = request.GET["addr"]
         account.phone = request.GET["phone"]
         account.description = request.GET["desc"]
         account.save()
-        ret = {"flag":True}
+        ret = {"flag": True}
         return JsonResponse(ret)
-        
+
 
 @csrf_exempt
 def picture(request):
     if not request.user.is_authenticated:
         return redirect('/login_page/')
     if request.method == 'POST':
-        account = Account.objects.get(user = request.user)
+        account = Account.objects.get(user=request.user)
         account.picture = request.GET["pic"]
         account.save()
         ret = {"flag": True}
         return JsonResponse(ret)
-        
+
+
 @csrf_exempt
 def personal_create(request):
     print("Personal start working.")
@@ -578,9 +607,9 @@ def personal_create(request):
     if request.method == 'GET':
         print("Personal create!")
         print(request.user)
-        account = Account.objects.get(user = request.user)
-        print(account.elearning_name,account.elearning_password,account.elearning_login )
-        
+        account = Account.objects.get(user=request.user)
+        print(account.elearning_name, account.elearning_password, account.elearning_login)
+
         ret = {}
         ret["flag"] = True
         ret["status"] = account.elearning_login
