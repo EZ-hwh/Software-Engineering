@@ -23,12 +23,10 @@ def login_uis(request): # 帮绑定了elearning的用户登陆uis
     if account.elearning_login:
         if not request.session["elearning_login"]:
             print("Backend: elearning login.")
-            request.session["elearning_session"] = login_elearning(account.elearning_name, account.elearning_password)
-            request.session["elearning_login"] = True
+            request.session["elearning_session"], request.session["elearning_login"] = login_elearning(account.elearning_name, account.elearning_password)
         if not request.session["jwfw_login"]:
             print("Backend: jwfw login.")
-            request.session["jwfw_session"] = login_jwfw(account.elearning_name, account.elearning_password)
-            request.session["jwfw_login"] = True
+            request.session["jwfw_session"],request.session["jwfw_login"] = login_jwfw(account.elearning_name, account.elearning_password)
 
 @csrf_exempt
 def first(request):

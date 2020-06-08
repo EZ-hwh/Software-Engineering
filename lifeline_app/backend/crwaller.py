@@ -83,9 +83,11 @@ def login_jwfw(username,password):
     print(response.url)
     response=session.get(url="http://jwfw.fudan.edu.cn/eams/login.action",headers=headers)
     print(response.url)
+    flag = False
     if response.url=='https://jwfw.fudan.edu.cn/eams/home.action':
         print('登录成功！')
-    return session
+        flag = True
+    return session, flag
 
 def get_course_mainpage(session,course_id):
     """
