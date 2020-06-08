@@ -74,12 +74,19 @@
                   >
                     <i class="mdi mdi-format-align-left"></i>
                   </a>
+                  <a
+                    href=""
+                    data-toggle="modal"
+                    :data-target="'#delete' + ddl['id']"
+                  >
+                    <i class="mdi mdi-delete-sweep-outline"></i>
+                  </a>
                 </li>
                 <li
-                  v-if="ddl['description'].length > 30"
+                  v-if="ddl['description'].length > 27"
                   class="list-inline-item"
                 >
-                  {{ ddl["description"].substring(0, 30) + "..." }}
+                  {{ ddl["description"].substring(0, 27) + "..." }}
                 </li>
                 <li v-else class="list-inline-item">
                   {{ ddl["description"] }}
@@ -118,6 +125,47 @@
                     data-dismiss="modal"
                   >
                     Close
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- modal for delete -->
+          <div class="modal fade none-border" :id="'delete' + ddl['id']">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title mt-0">
+                    <strong>{{ddl["name"]}} </strong>
+                  </h4>
+                  <button
+                    type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-hidden="true"
+                  >
+                    &times;
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <h4>Are you sure to delete this?</h4>
+                </div>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-light waves-effect"
+                    data-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                  <button
+                    @click="del_ddl(ddl['id'])"
+                    type="button"
+                    class="btn btn-danger waves-effect"
+                    data-dismiss="modal"
+                  >
+                    Delete
                   </button>
                 </div>
               </div>
@@ -279,13 +327,23 @@
                   >
                     <i class="mdi mdi-format-align-left"></i>
                   </a>
+                  <a
+                    href=""
+                    data-toggle="modal"
+                    :data-target="'#deleteweek' + ddl['id']"
+                  >
+                    <i class="mdi mdi-delete-sweep-outline"></i>
+                  </a>
                 </li>
-                  <li v-if="ddl['description'].length > 30" class="list-inline-item">
-                    {{ ddl["description"].substring(0, 30) + "..." }}
-                  </li>
-                  <li v-else class="list-inline-item">
-                    {{ ddl["description"] }}
-                  </li>
+                <li
+                  v-if="ddl['description'].length > 30"
+                  class="list-inline-item"
+                >
+                  {{ ddl["description"].substring(0, 30) + "..." }}
+                </li>
+                <li v-else class="list-inline-item">
+                  {{ ddl["description"] }}
+                </li>
               </ul>
             </div>
           </div>
@@ -325,6 +383,47 @@
               </div>
             </div>
           </div>
+
+          <!-- modal for delete -->
+          <div class="modal fade none-border" :id="'deleteweek' + ddl['id']">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title mt-0">
+                    <strong>{{ddl["name"]}} </strong>
+                  </h4>
+                  <button
+                    type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-hidden="true"
+                  >
+                    &times;
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <h4>Are you sure to delete this?</h4>
+                </div>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-light waves-effect"
+                    data-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                  <button
+                    @click="del_ddl(ddl['id'])"
+                    type="button"
+                    class="btn btn-danger waves-effect"
+                    data-dismiss="modal"
+                  >
+                    Delete
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
         </li>
       </ul>
 
@@ -344,6 +443,7 @@
 
 <script>
 // import data from "../../../datasample.json";
+import "../../../assets/libs/jquery-ui/jquery-ui.min.js";
 
 export default {
   components: {},
@@ -361,6 +461,7 @@ export default {
         id: null,
         status: null,
       },
+      del_id:null,
     };
   },
   methods: {
@@ -368,13 +469,10 @@ export default {
       this.$ajax({
         method: "get",
         url: "/get_Todaylist/",
-        params: {
-          type: "log",
-        },
       })
         .then((response) => {
           if (response.data.flag === true) {
-            // console.log("get info");
+            console.log("get info");
             this.TodayList = response.data.TodayList;
             console.log(response.data.TodayList[1]);
           } else {
@@ -430,7 +528,7 @@ export default {
     },
     add_ddl: function() {
       this.$ajax({
-        method: "get",
+        method: "post",
         url: "/add_ddl/",
         params: {
           name: this.ddlname,
@@ -447,6 +545,28 @@ export default {
             this.ddlname = "";
             this.ddltime = "";
             this.ddldescription = "";
+          } else {
+            console.log(response.data.error_msg);
+          }
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+    },
+    del_ddl: function(id) {
+      this.$ajax({
+        method: "get",
+        url: "/del_ddl/",
+        params: {
+          id:id,
+          type: "log",
+        },
+      })
+        .then((response) => {
+          if (response.data.flag === true) {
+            console.log("delete ddl");
+            this.update_todaylist();
+            this.update_weeklist();
           } else {
             console.log(response.data.error_msg);
           }
@@ -477,7 +597,7 @@ export default {
     },
     goto_class: function(id) {
       console.log("goto class");
-      window.location.href = "/course/" + id;
+      window.location.href = "/course"; //这里需要改成课程id
     },
   },
   created: function() {
@@ -486,3 +606,4 @@ export default {
   },
 };
 </script>
+

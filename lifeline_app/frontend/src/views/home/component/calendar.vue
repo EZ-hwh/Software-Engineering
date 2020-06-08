@@ -1,118 +1,183 @@
 <template>
   <!-- end col-->
   <div>
-  <div class="row">
-    <div class="col-lg-9">
-  <div class="card-box">
-    <div id="calendar"></div>
-  </div>
-    </div>
-  <div class="col-lg-3">
-  <div class="card-box">
-    <div class="widget">
-      <div class="widget-body">
-        <a
-          href="#"
-          data-toggle="modal"
-          data-target="#add-category"
-          class="btn btn-lg btn-success font-16 btn-block waves-effect waves-light"
-        >
-          <i class="fa fa-plus mr-1"></i> Create New
-        </a>
-        <div id="external-events" class="mt-3">
-          <p>Drag and drop your event or click in the calendar</p>
-          <div class="external-event bg-primary" data-class="bg-primary">
-            <i class="mdi mdi-checkbox-blank-circle mr-2 vertical-middle"></i
-            >New Theme Release
-          </div>
-          <div class="external-event bg-pink" data-class="bg-pink">
-            <i class="mdi mdi-checkbox-blank-circle mr-2 vertical-middle"></i>My
-            Event
-          </div>
-          <div class="external-event bg-warning" data-class="bg-warning">
-            <i class="mdi mdi-checkbox-blank-circle mr-2 vertical-middle"></i
-            >Meet manager
-          </div>
-          <div class="external-event bg-purple" data-class="bg-purple">
-            <i class="mdi mdi-checkbox-blank-circle mr-2 vertical-middle"></i
-            >Create New theme
-          </div>
-        </div>
-
-        <!-- checkbox -->
-        <div class="custom-control custom-checkbox mt-3">
-          <input
-            type="checkbox"
-            class="custom-control-input"
-            id="drop-remove"
-          />
-          <label class="custom-control-label" for="drop-remove"
-            >Remove after drop</label
-          >
+    <div class="row">
+      <div class="col-lg-9">
+        <div class="card-box">
+          <div id="calendar"></div>
         </div>
       </div>
-      <!-- BEGIN MODAL -->
-                        <div class="modal fade none-border" id="event-modal">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h4 class="modal-title mt-0"><strong>Add New Event</strong></h4>
-                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                    </div>
-                                    <div class="modal-body"></div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-light waves-effect" data-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-success save-event waves-effect waves-light">Create event</button>
-                                        <button type="button" class="btn btn-danger delete-event waves-effect waves-light" data-dismiss="modal">Delete</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+      <div class="col-lg-3">
+        <div class="card-box">
+          <div class="widget">
+            <div class="widget-body">
+              <a
+                href="#"
+                data-toggle="modal"
+                data-target="#add-category"
+                class="btn btn-lg btn-success font-16 btn-block waves-effect waves-light"
+              >
+                <i class="fa fa-plus mr-1"></i> Create New
+              </a>
+              <div id="external-events" class="mt-3">
+                <p>Drag and drop your event or click in the calendar</p>
+                <div class="external-event bg-primary" data-class="bg-primary">
+                  <i
+                    class="mdi mdi-checkbox-blank-circle mr-2 vertical-middle"
+                  ></i
+                  >New Theme Release
+                </div>
+                <div class="external-event bg-pink" data-class="bg-pink">
+                  <i
+                    class="mdi mdi-checkbox-blank-circle mr-2 vertical-middle"
+                  ></i
+                  >My Event
+                </div>
+                <div class="external-event bg-warning" data-class="bg-warning">
+                  <i
+                    class="mdi mdi-checkbox-blank-circle mr-2 vertical-middle"
+                  ></i
+                  >Meet manager
+                </div>
+                <div class="external-event bg-purple" data-class="bg-purple">
+                  <i
+                    class="mdi mdi-checkbox-blank-circle mr-2 vertical-middle"
+                  ></i
+                  >Create New theme
+                </div>
+              </div>
 
-                        <!-- Modal Add Category -->
-                        <div class="modal fade none-border" id="add-category">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h4 class="modal-title mt-0"><strong>Add a category </strong></h4>
-                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <form role="form">
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <label class="control-label">Category Name</label>
-                                                    <input class="form-control form-white" placeholder="Enter name" type="text" name="category-name"/>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <label class="control-label">Choose Category Color</label>
-                                                    <select class="form-control form-white" data-placeholder="Choose a color..." name="category-color">
-                                                        <option value="success">Success</option>
-                                                        <option value="danger">Danger</option>
-                                                        <option value="info">Info</option>
-                                                        <option value="pink">Pink</option>
-                                                        <option value="primary">Primary</option>
-                                                        <option value="warning">Warning</option>
-                                                        <option value="inverse">Inverse</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-light waves-effect" data-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-danger waves-effect waves-light save-category" data-dismiss="modal">Save</button>
-                                    </div>
-                                </div>
-                            </div>
+              <!-- checkbox -->
+              <div class="custom-control custom-checkbox mt-3">
+                <input
+                  type="checkbox"
+                  class="custom-control-input"
+                  id="drop-remove"
+                />
+                <label class="custom-control-label" for="drop-remove"
+                  >Remove after drop</label
+                >
+              </div>
+            </div>
+            <!-- BEGIN MODAL -->
+            <div class="modal fade none-border" id="event-modal">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h4 class="modal-title mt-0">
+                      <strong>Add New Event</strong>
+                    </h4>
+                    <button
+                      type="button"
+                      class="close"
+                      data-dismiss="modal"
+                      aria-hidden="true"
+                    >
+                      &times;
+                    </button>
+                  </div>
+                  <div class="modal-body"></div>
+                  <div class="modal-footer">
+                    <button
+                      type="button"
+                      class="btn btn-light waves-effect"
+                      data-dismiss="modal"
+                    >
+                      Close
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-success save-event waves-effect waves-light"
+                    >
+                      Create event
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-danger delete-event waves-effect waves-light"
+                      data-dismiss="modal"
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Modal Add Category -->
+            <div class="modal fade none-border" id="add-category">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h4 class="modal-title mt-0">
+                      <strong>Add a category </strong>
+                    </h4>
+                    <button
+                      type="button"
+                      class="close"
+                      data-dismiss="modal"
+                      aria-hidden="true"
+                    >
+                      &times;
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <form role="form">
+                      <div class="row">
+                        <div class="col-md-6">
+                          <label class="control-label">Category Name</label>
+                          <input
+                            class="form-control form-white"
+                            placeholder="Enter name"
+                            type="text"
+                            name="category-name"
+                          />
                         </div>
-                        <!-- END MODAL -->
-    
+                        <div class="col-md-6">
+                          <label class="control-label"
+                            >Choose Category Color</label
+                          >
+                          <select
+                            class="form-control form-white"
+                            data-placeholder="Choose a color..."
+                            name="category-color"
+                          >
+                            <option value="success">Success</option>
+                            <option value="danger">Danger</option>
+                            <option value="info">Info</option>
+                            <option value="pink">Pink</option>
+                            <option value="primary">Primary</option>
+                            <option value="warning">Warning</option>
+                            <option value="inverse">Inverse</option>
+                          </select>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                  <div class="modal-footer">
+                    <button
+                      type="button"
+                      class="btn btn-light waves-effect"
+                      data-dismiss="modal"
+                    >
+                      Close
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-danger waves-effect waves-light save-category"
+                      data-dismiss="modal"
+                    >
+                      Save
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- END MODAL -->
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
-  </div>
-  </div>
-  <!-- end col -->
+    <!-- end col -->
   </div>
 </template>
 
@@ -120,9 +185,9 @@
 import $ from "jquery";
 import "bootstrap";
 import "moment";
-import 'jquery-ui/ui/widgets/draggable'
-import 'jquery-ui/ui/widgets/droppable'
-import 'jquery-ui/ui/widgets/resizable'
+import "jquery-ui/ui/widgets/draggable";
+import "jquery-ui/ui/widgets/droppable";
+import "jquery-ui/ui/widgets/resizable";
 import "../../../assets/libs/jquery-ui/jquery-ui.min.js";
 
 import "../../../assets/libs/fullcalendar/fullcalendar.min.js";
@@ -131,135 +196,42 @@ import {
   calendar2,
 } from "../../../assets/js/pages/fullcalendar.init.js";
 
-var courseList = [
-  ["英语视听", "英语视听", "", "", "", "", "毛概", "毛概", "", "", "", "选修"],
-  [
-    "",
-    "",
-    "算法设计与分析",
-    "算法设计与分析",
-    "算法设计与分析",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-  ],
-  ["羽毛球", "羽毛球", "", "", "", "", "软件工程", "软件工程", "", "", "", ""],
-  ["", "", "", "", "模式识别", "模式识别", "", "", "", "", "", ""],
-  [
-    "",
-    "",
-    "计算机体系结构",
-    "计算机体系结构",
-    "",
-    "",
-    "",
-    "",
-    "数字信号处理",
-    "数字信号处理",
-    "",
-    "",
-  ],
-];
-var courseListOther = [
-  ["", "", "", "", "毛概@14208", "毛概@14208", "", "", "", "选修", "", ""],
-  [
-    "大学英语(Ⅳ)@10203",
-    "大学英语(Ⅳ)@10203",
-    "",
-    "",
-    "模拟电子技术基础@16204",
-    "模拟电子技术基础@16204",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-  ],
-  [
-    "",
-    "",
-    "信号与系统@11302",
-    "信号与系统@11302",
-    "",
-    "",
-    "电路、信号与系统实验",
-    "电路、信号与系统实验",
-    "",
-    "",
-    "",
-    "",
-  ],
-  [
-    "形势与政策(Ⅳ)@15208",
-    "形势与政策(Ⅳ)@15208",
-    "",
-    "",
-    "电装实习@11301",
-    "电装实习@11301",
-    "",
-    "",
-    "",
-    "大学体育",
-    "大学体育",
-    "",
-  ],
-  [
-    "大学体育(Ⅳ)",
-    "大学体育(Ⅳ)",
-    "",
-    "",
-    "数据结构与算法分析",
-    "数据结构与算法分析",
-    "",
-    "",
-    "信号与系统",
-    "信号与系统",
-    "",
-    "",
-  ],
-];
-var week =
-  window.innerWidth > 360
-    ? ["周一", "周二", "周三", "周四", "周五"]
-    : ["一", "二", "三", "四", "五"];
-var day = new Date().getDay();
-var courseType = [
-  [{ index: "1", name: "8:30" }, 1],
-  [{ index: "2", name: "9:30" }, 1],
-  [{ index: "3", name: "10:30" }, 1],
-  [{ index: "4", name: "11:30" }, 1],
-  [{ index: "5", name: "12:30" }, 1],
-  [{ index: "6", name: "14:30" }, 1],
-  [{ index: "7", name: "15:30" }, 1],
-  [{ index: "8", name: "16:30" }, 1],
-  [{ index: "9", name: "17:30" }, 1],
-  [{ index: "10", name: "18:30" }, 1],
-  [{ index: "11", name: "19:30" }, 1],
-  [{ index: "12", name: "20:30" }, 1],
-];
-
 export default {
   components: {},
   data() {
     return {
-      courseList: courseList,
-      week: week,
-      day: day,
-      courseType: courseType,
-      Timetable: null,
+      courseList: null,
     };
   },
   mounted: function() {
-    console.log($)
-    calendar1($);
+    var e = new Date();
+    var t = (e.getDate(), e.getMonth(), e.getFullYear(), new Date($.now()));
+    get_schedule();
+    // this.courseList = ;
+    console.log($);
+    calendar1($, this.courseList);
     calendar2();
   },
   methods: {
+    get_schedule: function() {
+      this.$ajax({
+        method: "get",
+        url: "/get_schedule/",
+      })
+        .then((response) => {
+          if (response.data.flag === true) {
+            console.log("get schedule");
+            this.courseList = response.data.courseList;
+            this.update_todaylist();
+            this.update_weeklist();
+          } else {
+            console.log(response.data.error_msg);
+          }
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+    },
   },
 };
 </script>
