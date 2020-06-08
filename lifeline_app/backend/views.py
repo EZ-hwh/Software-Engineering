@@ -557,9 +557,11 @@ def picture(request):
         
 @csrf_exempt
 def personal_create(request):
+    print("Personal start working.")
     if not request.user.is_authenticated:
         return redirect('/login_page/')
     if request.method == 'POST':
+        print("Personal create!")
         account = Account.objects.get(user = request.user)
         ret = {}
         ret["flag"] = account.elearning_login

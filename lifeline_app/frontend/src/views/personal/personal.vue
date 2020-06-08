@@ -97,44 +97,44 @@
         name: "personal",
         data () {
         return {
-          userImg:'/static/img/user0.png',
+          userImg:'/img/user0.png',
           showChooseAvatar: false,
           imgList:[
             {
               'id':1,
-              imgUrl:'../../../static/img/user0.png'
+              imgUrl:'/img/user0.png'
             },
             {
               'id':2,
-              imgUrl:'../../../static/img/user1.png'
+              imgUrl:'/img/user1.png'
             },
             {
               'id':3,
-              imgUrl:'../../../static/img/user2.png'
+              imgUrl:'/img/user2.png'
             },
             {
               'id':4,
-              imgUrl:'../../../static/img/user3.png'
+              imgUrl:'/img/user3.png'
             },
             {
               'id':5,
-              imgUrl:'../../../static/img/user4.png'
+              imgUrl:'/img/user4.png'
             },
             {
               'id':6,
-              imgUrl:'../../../static/img/user5.png'
+              imgUrl:'/img/user5.png'
             },
             {
               'id':7,
-              imgUrl:'../../../static/img/user6.png'
+              imgUrl:'/img/user6.png'
             },
             {
               'id':8,
-              imgUrl:'../../../static/img/user7.png'
+              imgUrl:'/img/user7.png'
             },
             {
               'id':9,
-              imgUrl:'../../../static/img/user8.png'
+              imgUrl:'/img/user8.png'
             }
           ],
           elearning_username:'',
@@ -233,7 +233,7 @@
         try_register: function(){
 
           this.$ajax({
-            method: "post",
+            method: "GET",
             url: "/elearning_register/",
             params: {
                 username:this.elearning_username ,
@@ -241,6 +241,7 @@
             },
           })
             .then((response) => {
+              console.log("Elearning success!")
               this.elearning_stats=response.data.flag;
             })
             .catch(function(error) {
@@ -289,10 +290,11 @@
         },
         create_data: function(){
             this.$ajax({
-            method: "post",
+            method: "GET",
             url: "/personal_create/",
           })
                   .then((response) => {
+                    console.log("Get created data!")
                     this.elearning_stats=response.data.flag;
                     this.formValidate.name=response.data.name;
                     this.formValidate.address=response.data.addr;

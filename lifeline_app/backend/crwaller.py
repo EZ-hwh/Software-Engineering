@@ -282,8 +282,8 @@ username = "17307130155" #填写个人账号
 password = "Wenhao142226"
 username = "17307130178"
 password = "Weilairiji627"
-session1 = login_elearning(username,password)
-session2 = login_jwfw(username,password)
+# session1 = login_elearning(username,password)
+# session2 = login_jwfw(username,password)
 
 def get_course_homework_feedback(session1,session2,id):
     name,_ = get_course_mainpage(session1,id)
