@@ -469,13 +469,10 @@ export default {
       this.$ajax({
         method: "get",
         url: "/get_Todaylist/",
-        params: {
-          type: "log",
-        },
       })
         .then((response) => {
           if (response.data.flag === true) {
-            // console.log("get info");
+            console.log("get info");
             this.TodayList = response.data.TodayList;
             console.log(response.data.TodayList[1]);
           } else {

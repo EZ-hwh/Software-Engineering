@@ -372,8 +372,9 @@ export default {
     handleReset: function(name) {
       this.$refs[name].resetFields();
     },
-    create_data: function() {
-      this.$ajax({
+  },
+  created: function() {
+    this.$ajax({
         method: "get",
         url: "/personal_create",
       })
@@ -395,10 +396,6 @@ export default {
         .catch(function(error) {
           console.log(error);
         });
-    },
-  },
-  created: function() {
-    this.create_data();
   },
 };
 </script>

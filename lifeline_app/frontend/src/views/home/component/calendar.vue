@@ -217,9 +217,6 @@ export default {
       this.$ajax({
         method: "get",
         url: "/get_schedule/",
-        params: {
-          type: "log",
-        },
       })
         .then((response) => {
           if (response.data.flag === true) {

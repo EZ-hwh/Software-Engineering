@@ -245,6 +245,7 @@ def get_Todaylist(request): #Todo 连接数据库
         return redirect('/login_page/')
     if request.method == 'GET':
         ret = []
+        print("Getting todaylist!")
         """
         if DEBUG:
             # print("abc")
@@ -257,6 +258,7 @@ def get_Todaylist(request): #Todo 连接数据库
             # print(ret)
             return JsonResponse(ret)
         """
+        print(request.user)
         user = Account.objects.get(user = request.user)
         now = datetime.datetime.now()
         tomorrow = now + datetime.timedelta(days=1)
