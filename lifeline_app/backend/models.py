@@ -63,7 +63,7 @@ class Todolist(models.Model):
     description = models.TextField(null=True)
     deadline_time = models.DateTimeField()
     homework = models.ForeignKey(Homework,on_delete=models.CASCADE,null=True)
-    scheduler = models.ForeignKey(Scheduler,on_delete=models.CASCADE)
+    scheduler = models.ForeignKey(Scheduler,on_delete=models.CASCADE,null=True)
     status = models.IntegerField(default=0) # 0代表未完成，1代表已完成，2代表过期
 
 class Register(models.Model):
