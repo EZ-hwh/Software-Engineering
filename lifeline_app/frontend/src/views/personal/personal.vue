@@ -215,7 +215,7 @@ export default {
       modal1: false,
       modal2: false,
       formValidate: {
-        name: "小白",
+        name: "",
         mail: "12345678901@fudan.edu.cn",
         phone: "123131312311",
         address: "高科苑1-1",
@@ -294,21 +294,22 @@ export default {
       this.showChooseAvatar = true;
     },
     del_register: function() {
-      this.elearning_stats = false;
-      this.elearning_password = "";
-      this.elearning_username = "";
       this.$ajax({
         method: "get",
         url: "/elearning_del_register/",
       })
         .then((response) => {
-          this.elearning_stats = response.data.flag;
+          if( response.data.flag == true){
+            this.elearning_stats = response.data.status;
+            this.$Message.success("退出elearning");
+            this.elearning_password = "";
+            this.elearning_username = "";
+            this.elearning_stats = false;
+          }
         })
         .catch(function(error) {
           console.log(error);
         });
-
-      this.$Message.success("退出elearning");
     },
     change_del: function() {
       this.modal_loading = false;
@@ -330,21 +331,23 @@ export default {
         },
       })
         .then((response) => {
-          console.log("Elearning success!");
-          this.elearning_stats = response.data.flag;
+          if (response.data.flag == true) {
+            console.log("Elearning success!");
+            this.elearning_stats = response.data.status;
+          }
+          else console.log("Elearning failed!");
+          if (this.elearning_stats == true) {
+              this.modal_loading = false;
+              this.modal2 = false;
+              this.$Message.success("登录成功");
+            } else {
+              console.log("fail");
+              this.$Message.warning("登录失败，请重新登录");
+            }
         })
         .catch(function(error) {
           console.log(error);
         });
-
-      if (this.elearning_stats == true) {
-        this.modal_loading = false;
-        this.modal2 = false;
-        this.$Message.success("登录成功");
-      } else {
-        console.log("fail");
-        this.$Message.success("登录失败，请重新登录");
-      }
     },
     handleSubmit: function(name) {
       this.$refs[name].validate((valid) => {
@@ -375,27 +378,28 @@ export default {
   },
   created: function() {
     this.$ajax({
-        method: "get",
-        url: "/personal_create",
+      method: "get",
+      url: "/personal_create",
+    })
+      .then((response) => {
+        console.log("Get created data!");
+        if (response.data.flag === true) {
+          console.log("Truely got data!");
+          this.elearning_stats = response.data.status;
+          this.formValidate.name = response.data.name;
+          this.formValidate.address = response.data.addr;
+          this.formValidate.mail = response.data.mail;
+          this.formValidate.phone = response.data.phone;
+          this.formValidate.desc = response.data.desc;
+          this.userImg = response.data.userImg;
+        } 
+        else {
+          console.log(response.data.error_msg);
+        }
       })
-        .then((response) => {
-          console.log("Get created data!");
-          if (response.data.flag === true) {
-            console.log("Truely got data!");
-            this.elearning_stats = response.data.flag;
-            this.formValidate.name = response.data.name;
-            this.formValidate.address = response.data.addr;
-            this.formValidate.mail = response.data.mail;
-            this.formValidate.phone = response.data.phone;
-            this.formValidate.desc = response.data.desc;
-            this.userImg = response.data.userImg;
-          } else {
-            console.log(response.data.error_msg);
-          }
-        })
-        .catch(function(error) {
-          console.log(error);
-        });
+      .catch(function(error) {
+        console.log(error);
+      });
   },
 };
 </script>

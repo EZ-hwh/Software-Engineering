@@ -6,6 +6,9 @@ import http.cookiejar as cookielib
 import json
 import re
 
+
+
+
 def login_elearning(username,password):
     """
     登录并返回已经登录的会话
@@ -39,9 +42,11 @@ def login_elearning(username,password):
     #登录
     response=session.post(login_url,headers=headers,data=login_data)
     print(response.url)
+    flag = False
     if response.url=='https://elearning.fudan.edu.cn/dash?login_success=1':
         print('登录成功！')
-    return session
+        flag = True
+    return session, flag
 
 def login_jwfw(username,password):
     """

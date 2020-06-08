@@ -19,11 +19,14 @@ ACCOUNT_ID_RANGE = 100000000
 
 def login_uis(request): # 帮绑定了elearning的用户登陆uis
     account = Account.objects.get(user=request.user)
+    print("Trying to login uis.")
     if account.elearning_login:
         if not request.session["elearning_login"]:
+            print("Backend: elearning login.")
             request.session["elearning_session"] = login_elearning(account.elearning_name, account.elearning_password)
             request.session["elearning_login"] = True
         if not request.session["jwfw_login"]:
+            print("Backend: jwfw login.")
             request.session["jwfw_session"] = login_jwfw(account.elearning_name, account.elearning_password)
             request.session["jwfw_login"] = True
 
@@ -44,6 +47,7 @@ def register_account(request):
         return render(request, "register.html")
     if request.method == "POST":
         name = request.GET.get('name')
+        nick = request.GET.get('name')
         pwd = request.GET.get("pass")
         email = request.GET.get('email')
         # pwd_check = request.GET.get("pass_again")
@@ -246,6 +250,8 @@ def get_Todaylist(request): #Todo 连接数据库
     if request.method == 'GET':
         ret = []
         print("Getting todaylist!")
+        login_uis(request)
+
         """
         if DEBUG:
             # print("abc")
@@ -512,11 +518,17 @@ def elearning_register(request):
         print("elearning!")
         name = request.GET["username"]
         password = request.GET["password"]
+        session, flag = login_elearning(name,password)
         account = Account.objects.get(user = request.user)
+        if flag == False:
+            ret = {"flag": False, "status" :account.elearning_login}
+            return JsonResponse(ret)
         account.elearning_name = name
         account.elearning_password = password
         account.elearning_login = True
-        ret = {"flag": True}
+        # print(account)
+        account.save()
+        ret = {"flag": True, "status":account.elearning_login}
         return JsonResponse(ret)
 
 @csrf_exempt
@@ -529,7 +541,8 @@ def elearning_del_register(request):
         account.elearning_name = ""
         account.elearning_password = ""
         account.elearning_login = False
-        ret = {"flag": True}
+        account.save()
+        ret = {"flag": True, "status":account.elearning_login}
         return JsonResponse(ret)
 
 @csrf_exempt
@@ -566,9 +579,15 @@ def personal_create(request):
         return redirect('/login_page/')
     if request.method == 'GET':
         print("Personal create!")
+        print(request.user)
         account = Account.objects.get(user = request.user)
+        print(account.elearning_name,account.elearning_password,account.elearning_login )
+        
         ret = {}
-        ret["flag"] = account.elearning_login
+        ret["flag"] = True
+        ret["status"] = account.elearning_login
+        if not account.nickname:
+            account.nickname = request.user
         ret["name"] = account.nickname
         ret["addr"] = account.addr
         ret["mail"] = account.user.email
