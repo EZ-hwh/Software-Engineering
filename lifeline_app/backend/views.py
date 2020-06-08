@@ -549,11 +549,11 @@ def information(request):
         return redirect('/login_page/')
     if request.method == 'POST':
         account = Account.objects.get(user = request.user)
-        account.user.email = request.GET["mail"]
+        account.email = request.GET["mail"]
         account.nickname = request.GET["name"]
         account.addr = request.GET["addr"]
         account.phone = request.GET["phone"]
-        account.description = request.GET["mail"]
+        account.description = request.GET["desc"]
         account.save()
         ret = {"flag":True}
         return JsonResponse(ret)
@@ -588,7 +588,7 @@ def personal_create(request):
             account.nickname = request.user
         ret["name"] = account.nickname
         ret["addr"] = account.addr
-        ret["mail"] = account.user.email
+        ret["mail"] = account.email
         ret["phone"] = account.phone
         ret["desc"] = account.description
         ret["userImg"] = account.picture
