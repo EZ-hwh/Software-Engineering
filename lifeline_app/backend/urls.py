@@ -30,8 +30,6 @@ urlpatterns = [
     url('course', views.course),
     url('logout', views.logout_account),
     url('information', views.information),
-    
     url('picture', views.picture),
-    
     url('', views.first),
 ]
