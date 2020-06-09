@@ -20,7 +20,7 @@ ACCOUNT_ID_RANGE = 100000000
 def login_uis(request):  # 帮绑定了elearning的用户登陆uis
     account = Account.objects.get(user=request.user)
     print("Trying to login uis.")
-    print(account.elearning_login)
+    # print(account.elearning_login)
     if account.elearning_login:
         if not request.session["elearning_login"]:
             print("Backend: elearning login.")
@@ -170,9 +170,12 @@ def get_schedule(request):
     if request.method == 'GET':
         login_uis(request)
         scheduler = get_scheduler_feedback(request.session["elearning_session"], request.session["jwfw_session"])
+        ret = {}
         ret['course'] = scheduler
         ret["flag"] = True
         return JsonResponse(ret)
+        # 此处需要存入数据库，后端存入
+        
         ret = {}
         test = True
         now = datetime.datetime.now()
@@ -202,27 +205,7 @@ def get_schedule(request):
             ]
             pass
 
-        user = Account.objects.get(user=request.user)
-        courses = [x.course for x in user.takeclass_set.all()]
-        course_list = []
-        for course in courses:
-            info = {}
-            info['name'] = course.course_name
-            info['description'] = course.description
-            info['time'] = [x.course_time for x in course.time_set.all()]
-            course_list.append(info)
-
-        schedulers = user.scheduler_set.all()
-        scheduler_list = []
-        for scheduler in scheduler_list:
-            info = {}
-            info['title'] = scheduler.title
-            info['message'] = scheduler.message
-            info['time'] = [x.course_time for x in scheduler.time_set.all()]
-            scheduler_list.append(info)
-
-        ret['course'] = course_list
-        ret['schedule'] = scheduler_list
+        
         return JsonResponse(ret)
 
 

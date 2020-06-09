@@ -5,8 +5,9 @@ from bs4 import BeautifulSoup
 import http.cookiejar as cookielib
 import json
 import re
-
-
+import time
+import datetime
+import random
 
 
 def login_elearning(username,password):
@@ -44,8 +45,10 @@ def login_elearning(username,password):
     print(response.url)
     flag = False
     if response.url=='https://elearning.fudan.edu.cn/dash?login_success=1':
-        print('登录成功！')
+        print('Elearning 登录成功！')
         flag = True
+    else:
+        print('Elearning 登录失败！')
     return session, flag
 
 def login_jwfw(username,password):
@@ -85,8 +88,10 @@ def login_jwfw(username,password):
     print(response.url)
     flag = False
     if response.url=='https://jwfw.fudan.edu.cn/eams/home.action':
-        print('登录成功！')
+        print('JWFW登录成功！')
         flag = True
+    else:
+        print("JWFW登陆失败！")
     return session, flag
 
 def get_course_mainpage(session,course_id):
@@ -203,6 +208,7 @@ def get_course(session):
     """
         获取用户所有的课程
     """
+    print("后端获取用户所有的课程")
     headers = {
         'User-Agent' : "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36"
     }
@@ -230,6 +236,7 @@ def get_course(session):
     return(all_course)
 
 def get_coursedesk(session): #读取课程表
+    print("后端获取用户所有的课程表")
     headers = {
         'User-Agent' : "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36"
     }
@@ -267,11 +274,43 @@ def get_coursedesk(session): #读取课程表
     #print(timezones)    
     return timezones
 
+def change_classtime2date(course):
+    start_time = [(8,0),(8,55),(9,55),(10,50),(11,45),(13,30),(14,25),(15,25),(16,20),(17,15),(18,30),(19,25),(20,25)]
+    end_time = [(8,45),(9,40),(10,40),(11,35),(12,30),(14,15),(15,10),(16,10),(17,5),(18,0),(19,15),(20,10),(21,10)]
+    count = len(course)
+    current_time = datetime.date.today()
+    current_weekday = current_time.weekday() # 周x
+    current_monday = current_time - datetime.timedelta(days=current_weekday)
+    # print(current_monday)
+    course_list = []
+    for key in course.keys():
+        times = course[key]
+        times = list(set(times))
+        for i in range(7):
+            day = current_monday + datetime.timedelta(days=i)
+            time = list(filter(lambda x: int(x.split("-")[0])==i, times))
+            # print(time)
+            if time == []:
+                continue
+            time.sort()
+            # print(time)
+            time = [int(t.split("-")[1]) for t in time]
+            s = start_time[time[0]]
+            e = end_time[time[-1]]
+            start = datetime.datetime.combine(day,datetime.time(s[0],s[1])).strftime("%Y-%m-%d %H:%M:%S")
+            end = datetime.datetime.combine(day,datetime.time(e[0],e[1])).strftime("%Y-%m-%d %H:%M:%S")
+            course_list.append([key, start, end])            
+    print(course_list)
+    return course_list
+    
+
+
 def get_scheduler_feedback(session1,session2):
     course1 = get_course(session1)
     # print("course1", course1)
     course2 = get_coursedesk(session2)
-    print("course2", course2)
+    course_list = change_classtime2date(course2)
+    # print("course2", course2)
     # 样例数据
     # course_list = [
     #             {
@@ -286,23 +325,31 @@ def get_scheduler_feedback(session1,session2):
     #                 "className": "bg-success"
     #             }]
     res = []
-    for key in course2.keys():
+    choices = ["bg-success","bg-purple","bg-info","bg-primary"]
+    for course in course_list:
         r = {}
-        r["title"]=key
-        print(key)
-        # for item in course1:
-        #     if key in item["name"]:
-        #         if item["id"]:
-        #             print(item["name"],item["id"])
-        #             _, r["description"] = get_course_mainpage(session1,item["id"])
-        #         else:
-        #             r["description"] = ""
-        #         break
-        r["start"] = course2[key][0]
-        r["end"] = course2[key][1]
-        r["className"] = "bg-success"
+        r["title"] = course[0]
+        r["start"] = course[1]
+        r["end"] = course[2]
+        r["className"] = choices[random.randint(0,len(choices)-1)]
         res.append(r)
-    # print(res)
+    # for key in course2.keys():
+    #     r = {}
+    #     r["title"]=key
+    #     print(key)
+    #     # for item in course1:
+    #     #     if key in item["name"]:
+    #     #         if item["id"]:
+    #     #             print(item["name"],item["id"])
+    #     #             _, r["description"] = get_course_mainpage(session1,item["id"])
+    #     #         else:
+    #     #             r["description"] = ""
+    #     #         break
+    #     r["start"] = course2[key][0]
+    #     r["end"] = course2[key][1]
+    #     r["className"] = "bg-success"
+    #     res.append(r)
+    print(res)
     return res
 
 #登录并获得登录的会话
