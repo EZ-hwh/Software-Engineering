@@ -169,7 +169,8 @@ def get_schedule(request):
         return redirect('/login_page/')
     if request.method == 'GET':
         login_uis(request)
-        ret = get_scheduler_feedback(request.session["elearning_session"], request.session["jwfw_session"])
+        scheduler = get_scheduler_feedback(request.session["elearning_session"], request.session["jwfw_session"])
+        ret['course'] = scheduler
         ret["flag"] = True
         return JsonResponse(ret)
         ret = {}

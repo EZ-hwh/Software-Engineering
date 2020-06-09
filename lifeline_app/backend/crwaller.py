@@ -97,9 +97,12 @@ def get_course_mainpage(session,course_id):
     headers = {
         'User-Agent' : "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36"
     }
-    html = session.get("https://elearning.fudan.edu.cn/courses/"+course_id,headers=headers).text
+    html = session.get("https://elearning.fudan.edu.cn"+course_id,headers=headers).text
+    print("https://elearning.fudan.edu.cn"+course_id)
+    course_id = course_id.split("/")[2]
     soup = BeautifulSoup(html,'lxml')
-    #print(soup)
+    # print(soup)
+    # print("crumb_course_"+course_id)
     title = soup.find("li",id="crumb_course_"+course_id).find("span").get_text()
     print(title)
     description = soup.find_all('script')[3].get_text()
@@ -235,7 +238,7 @@ def get_coursedesk(session): #读取课程表
     pos = re.search('bg.form.addInput',html).span()[1]
     p = re.search(u"\d+",html[pos:]).span()
     s,e = p[0],p[1]
-    print(p)
+    # print(p)
     post_data={
         "ignoreHead": 1,
         "setting.kind": "std",
@@ -266,22 +269,40 @@ def get_coursedesk(session): #读取课程表
 
 def get_scheduler_feedback(session1,session2):
     course1 = get_course(session1)
+    # print("course1", course1)
     course2 = get_coursedesk(session2)
+    print("course2", course2)
+    # 样例数据
+    # course_list = [
+    #             {
+    #                 "title": "Hey!",
+    #                 "start": "",
+    #                 "className": "bg-purple",
+    #             },
+    #             {
+    #                 "title": "See John Deo",
+    #                 "start": now,
+    #                 "end": now,
+    #                 "className": "bg-success"
+    #             }]
     res = []
     for key in course2.keys():
         r = {}
-        r["name"]=key
+        r["title"]=key
         print(key)
-        for item in course1:
-            if key in item["name"]:
-                if item["id"]:
-                    _, r["description"] = get_course_mainpage(session1,item["id"])
-                else:
-                    r["description"] = ""
-                break
-        r["time"]=course2[key]
+        # for item in course1:
+        #     if key in item["name"]:
+        #         if item["id"]:
+        #             print(item["name"],item["id"])
+        #             _, r["description"] = get_course_mainpage(session1,item["id"])
+        #         else:
+        #             r["description"] = ""
+        #         break
+        r["start"] = course2[key][0]
+        r["end"] = course2[key][1]
+        r["className"] = "bg-success"
         res.append(r)
-    print(res)
+    # print(res)
     return res
 
 #登录并获得登录的会话
