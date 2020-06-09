@@ -3,36 +3,36 @@
          viewBox="0 0 1600 600"
          class='lesson_book' id="bookIcon">
         <g v-for="lesson in lessons">
-            <g id=book onclick="go_to_lesson(lesson.id)">
+            <g id=book @click="go_to_lesson(lesson.id)">
                 <g id=cover>
                     <rect id=cover :fill="getColor(lesson.index)" :x="getX(lesson.index)" :y="getY(lesson.index)"
                           width="80" :height="getHeight(lesson.index)" rx="5.0"
-                          onclick="window.top.location.href='/course'"></rect>
+                          @click="go_to_lesson(lesson.id)"></rect>
                 </g>
                 <g id=title>
                     <text class="text text-1" font-family="Montserrat-ExtraBold" :x="getTextX(lesson.index) + 10"
                           :y="getTextY(lesson.index)- 10"
                           :transform="'rotate(90, ' + getTextX(lesson.index) + ','+ getTextY(lesson.index)+ ')'"
                           style="letter-spacing:10px;" dominant-baseline="middle" rotate="-90" font-size="30px"
-                          onclick="window.top.location.href='/course';">{{lesson.name}}
+                          @click="go_to_lesson(lesson.id)">{{lesson.name}}
                     </text>
                     <text class="text text-2" font-family="Montserrat-ExtraBold" :x="getTextX(lesson.index) + 10"
                           :y="getTextY(lesson.index)- 10"
                           :transform="'rotate(90, ' + getTextX(lesson.index) + ','+ getTextY(lesson.index)+ ')'"
                           style="letter-spacing:10px;" dominant-baseline="middle" rotate="-90" font-size="30px"
-                          onclick="window.top.location.href='/course';">{{lesson.name}}
+                          @click="go_to_lesson(lesson.id)">{{lesson.name}}
                     </text>
                     <text class="text text-3" font-family="Montserrat-ExtraBold" :x="getTextX(lesson.index) + 10"
                           :y="getTextY(lesson.index)- 10"
                           :transform="'rotate(90, ' + getTextX(lesson.index) + ','+ getTextY(lesson.index)+ ')'"
                           style="letter-spacing:10px;" dominant-baseline="middle" rotate="-90" font-size="30px"
-                          onclick="window.top.location.href='/course';">{{lesson.name}}
+                          @click="go_to_lesson(lesson.id)">{{lesson.name}}
                     </text>
                     <text class="text text-4" font-family="Montserrat-ExtraBold" :x="getTextX(lesson.index) + 10"
                           :y="getTextY(lesson.index)- 10"
                           :transform="'rotate(90, ' + getTextX(lesson.index) + ','+ getTextY(lesson.index)+ ')'"
                           style="letter-spacing:10px;" dominant-baseline="middle" rotate="-90" font-size="30px"
-                          onclick="window.top.location.href='/course';">{{lesson.name}}
+                          @click="go_to_lesson(lesson.id)">{{lesson.name}}
                     </text>
 
                 </g>
@@ -63,11 +63,15 @@
         },
         methods: {
             go_to_lesson: function (id) {
-                var params = {
-                    course_id: id
-                }
-                this.$ajax.get('/course/',params).then(response => {
-                    console.log(response.data);
+                this.$ajax({
+                    method: 'post',
+                    url: '/course/',
+                    params: {
+                        course_id :id,
+                    }
+                }).then(response => {
+                    if(response.data.flag === true)
+                        window.location.href = "2Course";
                 }).catch(function (error) {
                     console.log(error);
                 });
@@ -81,7 +85,6 @@
                     return Number(600 - 40 * this.number + 80 * index);
                 }
             },
-
             getTextX: function (index) {
                 // console.log(this.number);
                 // console.log(this.index);
@@ -181,7 +184,8 @@
         },
 
         created: function () {
-            console.log(this.lessons + this.number);
+            console.log(this.lessons);
+            console.log(this.number);
         },
         mounted: function () {
             console.log(this.lessons + this.number);

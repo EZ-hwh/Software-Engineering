@@ -157,12 +157,17 @@ def course(request):
         return redirect('/login')
     if not login_uis(request):
         return redirect('/personal')
-    if request.method == 'GET':
+    if request.method == 'POST':
         course_id = request.GET.get("course_id")
         print(course_id)
         request.session["course_id"] = course_id
-        return render(request, 'SingleCourse.html')
+        print(request.session['course_id'])
+        ret = {'flag': True}
+        return HttpResponse(json.dumps(ret))
 
+@csrf_exempt
+def ToCourse(request):
+    return render(request, 'SingleCourse.html')
 
 @csrf_exempt
 def get_schedule(request):
