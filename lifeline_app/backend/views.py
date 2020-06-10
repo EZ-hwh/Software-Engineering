@@ -479,7 +479,7 @@ def get_semester(request):
         return redirect('/login_page/')
     if request.method == 'GET':
         if DEBUG:
-            ret = get_course_sample_data()
+            ret = get_lesson_feedback(request.session["elearning_session"], request.session["jwfw_session"])
             return JsonResponse(ret)
 
 
