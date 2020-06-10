@@ -3,14 +3,14 @@
     import Layout from '../../components/template/TopBarLayout/main'
     import Calendar from './component/calendar.vue'
     import ToDoList from './component/toDoList.vue'
-    import ToDoListWeek from './component/toDoListWeek.vue'
+    import $ from "jquery"
 
     export default {
         page: {
             title: 'LifeLine',
             meta: [{name: 'description', content: appConfig.description}],
         },
-        components: {Layout, Calendar, ToDoList, ToDoListWeek},
+        components: {Layout, Calendar, ToDoList},
     }
 </script>
 
@@ -41,20 +41,13 @@
 
                         <div class="col-lg-3">
                             <ToDoList/>
-                            <ToDoListWeek/>
                         </div>
+                        
+                        
 
                         <!-- end col-->
-                        <div class="col-lg-8">
-                            <div class="card-box">
-                                <Calendar/>
-                            </div>
-
-                            <!-- <div class="card-box">
-                              <div id="calendar"></div>
-                            </div> -->
-                        </div>
-                        <div class="col-lg-1">
+                        <div class="col-lg-9">
+                            <Calendar/>
                         </div>
                         <!-- end col -->
                     </div>
