@@ -242,13 +242,31 @@ Data = [
 
 
 @csrf_exempt
+def add_ddl_elearning(request):
+    print("%%%%%%%%%%")
+    data = get_ddl_feedback(request.session["elearning_session"], request.session["jwfw_session"])
+    print("@@@@@@@@@@")
+    data = data["todo"]
+    print("ddl_data")
+    print(data)
+    account = Account.objects.get(user=request.user)
+    for ddl in data:
+        if not Todolist.objects.filter(account=account, name = data["title"]).exists():
+            time = datetime.datetime.strptime(data["ddl"], "%Y-%m-%dT%H:%M:%SZ")
+            Todolist.objects.create(name = data["title"], description = data["content"], deadline_time = time)
+
+@csrf_exempt
 def get_Todaylist(request):  # Todo 连接数据库
     if not request.user.is_authenticated:
         return redirect('/login_page/')
     if request.method == 'GET':
         ret = []
         print("Getting todaylist!")
+        print("--------")
         login_uis(request)
+        print("********")
+        add_ddl_elearning(request)
+        print("########")
         """
         if DEBUG:
             # print("abc")
@@ -290,6 +308,7 @@ def get_Weeklist(request):  # Todo 连接数据库
         return redirect('/login_page/')
     if request.method == 'GET':
         login_uis(request)
+        add_ddl_elearning(request)
         ret = []
         # print("kaishiWeek")
         """

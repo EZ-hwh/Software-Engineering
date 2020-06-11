@@ -1,0 +1,5 @@
+
+*.sqlite3
+*.pyc
+*.pyc
+lifeline_app/frontend/package-lock.json
