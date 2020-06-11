@@ -72,30 +72,17 @@
                 window.location.href = "/home";
                 // 回到课程主页
             },
-            go_to_lesson: function () {
-                window.location.href = "/course";
-                // var params ={
-                //     curriculum: name, //未来最好改成传课程id
-                //     name:this.$parent.name,
-                //     type:'jplesson'
-                // };
-                // this.$router.go(''); //重定向到课程子页面
-            },
         },
         created: function () {
             var params = {
                 name: this.$parent.name,
-                id: this.number,
                 type: 'lessons'
             };
             this.$ajax.get('/get_semester/', params).then(response => {
                 console.log(response.data);
                 console.log(Object.keys(response.data).length);
-                // var obj = JSON.parse(JSON.stringify(response));
-                // console.log(JSON.stringify(obj));
                 this.number = Object.keys(response.data).length;
                 this.page = Object.keys(response.data).length;
-                //TODO：这个部分还有bug 这里console打不出来 但我还不知道咋回事...
                 for (let term in response.data) {
                     console.log(response.data[term]);
                     this.items.push(response.data[term]); //前端接收json加入list
