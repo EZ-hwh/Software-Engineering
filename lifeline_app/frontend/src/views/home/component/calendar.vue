@@ -34,7 +34,7 @@ export default {
       courseList: null,
     };
   },
-  mounted: function() {
+  created: function() {
     console.log("now working")
     this.get_schedule();
     // this.courseList = ;

@@ -1,9 +1,10 @@
 <template>
     <div id="document">
         <h3>{{course.name}}</h3>
-        <Tree :data="course.docs" ref="tree" show-checkbox @on-select-change="click_download($event)" @on-check-change="select_box($event)">
+        <Tree :data="course.docs" ref="tree" show-checkbox @on-select-change="click_download($event)"
+              @on-check-change="select_box($event)">
         </Tree>
-        <Button icon="ios-download-outline"  @click="getalldownload">下载</Button>
+        <Button icon="ios-download-outline" @click="getalldownload">下载</Button>
     </div>
 </template>
 
@@ -13,7 +14,7 @@
         methods:
             {
 
-                click_download(data){
+                click_download(data) {
                     console.log('downloading...')
 
                     console.log(data[0].title)
@@ -30,10 +31,10 @@
                     document.body.appendChild(link)
                     link.click()
                 },
-                select_box(data){
-                    console.log("tree.data",this.$refs.tree.data);
+                select_box(data) {
+                    console.log("tree.data", this.$refs.tree.data);
                     console.log('selecting...')
-                    this.select=this.$refs.tree.getCheckedNodes();
+                    this.select = this.$refs.tree.getCheckedNodes();
                     console.log(this.select)
 
                 },
@@ -49,15 +50,14 @@
                         iframe.remove();
                     }, 5 * 60 * 1000);
                 },
-                getalldownload(data)
-                {
+                getalldownload(data) {
                     console.log('downloading many in one time')
                     console.log(this.select)
-                    this.select.forEach(item =>{
-                                    console.log(item)
-                                   if(item.urls){
-                                       let urls = item.urls
-                                       this.downloadall(urls)
+                    this.select.forEach(item => {
+                        console.log(item)
+                        if (item.urls) {
+                            let urls = item.urls
+                            this.downloadall(urls)
 
 //                                       let link = document.createElement('a')
 //                                       link.style.display = 'none'
@@ -66,63 +66,26 @@
 //                                       document.body.appendChild(link)
 //                                       link.click()
 //                                       console.log(link)
-                                               }
-                                             })
+                        }
+                    })
 
 
                 }
             },
 
-        data () {
+        data() {
             return {
-                select:[],
-                course: {
-                    name: 'COMP130011.01 算法设计与分析 Algorithm Design and Analysis',
-                    docs:
-                        [
-                            {
-                                title: '课程要求',
-                                expand: true,
-                                children: [
-                                    {
-                                        title: '算法分析与设计第一课.pdf',
-                                        urls: 'https://elearning.fudan.edu.cn/files/298742/download?download_frd=1',
-                                    },
-                                    {
-                                        title: '算法分析与设计第二课.pdf',
-                                        urls: "https://elearning.fudan.edu.cn/files/342954/download?download_frd=1",
-                                    }
-                                ]
-                            },
-                            {
-                                title: '作业',
-                                expand: true,
-                                children: [
-                                    {
-                                        title: '算法分析与设计习题1',
-                                        urls: 'https://elearning.fudan.edu.cn/files/298744/download?download_frd=1',
-                                    },
-                                    {
-                                        title: '算法分析与设计习题2',
-                                        urls: "https://elearning.fudan.edu.cn/files/342955/download?download_frd=1",
-                                    }
-                                ]
-                            }
-
-                        ]
-                }
+                select: [],
+                course: {},
             }
+        },
+        created() {
+            this.$ajax.get('/get_course_detail')
+                .then(response => {
+                    console.log(response.data.course)
+                    this.course = response.data
+                })
         }
-
-
-        //        created() {
-//            this.$axios.get('/api/test')
-//            .then(response => {
-//                console.log(response.data.course)
-//                this.course=response.data
-//            })
-//        }
-
     }
 </script>
 
