@@ -21,15 +21,15 @@
       </div>
     </div>
 
-    <h4 class="header-title mt-0">Today</h4>
+    <h4 class="header-title mt-0">DDLs Ahead</h4>
 
     <p class="text-muted font-13">
-      PLEASE DO THEM TODAY!
+        Don't forget them!
     </p>
-    <div v-for="(value,index) in TodayList" :key="value">
+    <div v-for="value in WeekList" :key="value">
       <div class="checkbox checkbox-success">
-        <input :id="'checkbox'+index" type="checkbox" aria-label="Single checkbox One"/>
-        <label :for="'checkbox'+index">
+        <input id="checkbox3" type="checkbox" />
+        <label for="checkbox3">
           {{ value }}
         </label>
       </div>
@@ -44,7 +44,7 @@ export default {
   components: {},
   data() {
     return {
-      TodayList:data.TodayList,
+      WeekList:data.WeekList,
     }
   },
   methods: {},

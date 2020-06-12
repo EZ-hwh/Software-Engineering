@@ -7,7 +7,6 @@
             meta: [{name: 'description', content: appConfig.description}],
         },
     }
-
 </script>
 
 <template>
@@ -16,7 +15,7 @@
         Even when routes use the same component, treat them
         as distinct and create the component again.
         -->
-        <RouterView :key="$route.fullPath" />
+        <RouterView :key="$route.fullPath"/>
     </div>
 </template>
 

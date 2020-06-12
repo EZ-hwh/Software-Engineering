@@ -4,16 +4,16 @@
             <div id="header">
                 <h1>
                     <svg width="100%" height="100%">
-                        <text text-anchor="middle" x="50%" y="95%" class="text text-1">
+                        <text text-anchor="middle" x="50%" y="100%" class="text text-1">
                             LIFELINE
                         </text>
-                        <text text-anchor="middle" x="50%" y="95%" class="text text-2">
+                        <text text-anchor="middle" x="50%" y="100%" class="text text-2">
                             LIFELINE
                         </text>
-                        <text text-anchor="middle" x="50%" y="95%" class="text text-3">
+                        <text text-anchor="middle" x="50%" y="100%" class="text text-3">
                             LIFELINE
                         </text>
-                        <text text-anchor="middle" x="50%" y="95%" class="text text-4">
+                        <text text-anchor="middle" x="50%" y="100%" class="text text-4">
                             LIFELINE
                         </text>
                     </svg>

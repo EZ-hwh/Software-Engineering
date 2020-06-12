@@ -12,7 +12,7 @@
             }
         },
         created: () => {
-            document.body.classList.remove('authentication-bg');
+            document.body.classList.remove('authentication-bg')
         },
         methods: {
             toggleMenu() {
@@ -22,12 +22,6 @@
                 document.body.classList.toggle('right-bar-enabled')
             },
         },
-        computed: {
-            checkFooter: function () {
-                console.log(this.showFooter);
-                return this.showFooter !== "false";
-            }
-        }
     }
 </script>
 
@@ -35,6 +29,8 @@
     <div>
         <header id="topnav">
             <TopBar/>
+            <!-- 这里有一个 :user="user" 先注释掉了-->
+            <!-- <NavBar :is-menu-opened="isMenuOpened"/> -->
         </header>
 
 
