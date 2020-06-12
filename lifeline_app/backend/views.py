@@ -212,28 +212,28 @@ def get_schedule(request):
 Data = [
     {
         "name": "Algorithm Assignment 3",
-        "time": "2020.5.9 10:30",
+        "time": "2020-5-9 10:30",
         "description": "Complete 15-2.3,17.1",
         "status": 0,
         "id": 1
     },
     {
         "name": "Software Engineer homework",
-        "time": "2020.5.9 18:30",
+        "time": "2020-5-9 18:30",
         "description": "Implement the demo website.",
         "status": 1,
         "id": 2
     },
     {
         "name": "Watch a movie",
-        "time": "2020.5.9 24:00",
+        "time": "2020-5-9 24:00",
         "description": "",
         "status": 2,
         "id": 3
     },
     {
         "name": "DSP homwork3",
-        "time": "2020.5.9 24:00",
+        "time": "2020-5-9 24:00",
         "description": "this is a long long long long description.for test for test for test.",
         "status": 0,
         "id": 4
@@ -261,7 +261,7 @@ def get_Todaylist(request):  # Todo 连接数据库
             # print(ret)
             return JsonResponse(ret)
         """
-        print(request.user)
+        # print(request.user)
         user = Account.objects.get(user=request.user)
         now = datetime.datetime.now()
         tomorrow = now + datetime.timedelta(days=1)
