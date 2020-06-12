@@ -1,14 +1,14 @@
-import mainpage from "../component/mainpage";
-import homework from "../component/homework";
-import notice from "../component/notice";
-import document from "../component/document";
+import mainpage from "../../../components/mainpage";
+import homework from "../../../components/homework";
+import notice from "../../../components/notice";
+import document from "../../../components/document";
 
 export default [
   {
     path: "/",
     name: "home",
     redirect: '/mainpage',
-    component: () => lazyLoadView(import("../component/home")),
+    component: () => lazyLoadView(import("../../../components/home")),
     meta: {
       authRequired: true,
       title: "Dashboard"
@@ -26,13 +26,13 @@ function lazyLoadView(AsyncView) {
   const AsyncHandler = () => ({
     component: AsyncView,
     // A component to use while the component is loading.
-    loading: require("../../../components/template/_loading").default,
+    loading: require("../../../components/_loading").default,
     // Delay before showing the loading component.
     // Default: 200 (milliseconds).
     delay: 400,
     // A fallback component in case the timeout is exceeded
     // when loading the component.
-    error: require("../../../components/template/_timeout").default,
+    error: require("../../../components/_timeout").default,
     // Time before giving up trying to load the component.
     // Default: Infinity (milliseconds).
     timeout: 10000

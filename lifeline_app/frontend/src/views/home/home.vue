@@ -1,9 +1,9 @@
 <script>
     import appConfig from '../../app.config'
-    import Layout from '../../components/template/TopBarLayout/main'
-    import Calendar from './component/calendar.vue'
-    import ToDoList from './component/toDoList.vue'
-    import ToDoListWeek from './component/toDoListWeek.vue'
+    import Layout from './layouts/main'
+    import Calendar from '../../components/calendar.vue'
+    import ToDoList from '../../components/toDoList.vue'
+    import ToDoListWeek from '../../components/toDoListWeek.vue'
 
     export default {
         page: {
@@ -163,6 +163,6 @@
     // Allow element/type selectors, because this is global CSS.
     // stylelint-disable selector-max-type, selector-class-pattern
 
-    // Design variables and utilities from src/TopBarDesign.
-    @import '../../assets/css/TopBarDesign';
+    // Design variables and utilities from src/design.
+    @import 'design';
 </style>

@@ -6,7 +6,7 @@
             </header>
             <div v-show="check">
                 <p class="sec">
-                    {{ name_message }}<input v-model="name" placeholder="Your name?">
+                    {{ name_message }}<input v-model="name" placeholder="Your name?" @change="input">
                     <CustomButton source="grinningface" size="large" message="设置暗号=3="
                                   @click.native="next_page"></CustomButton>
                 </p>
@@ -19,8 +19,8 @@
                 <div class="sec2">
                     {{password_message}}
                     <div id="pass_input">
-                        <p><input v-model="password" placeholder="嘘~"></p>
-                        <p><input v-model="password_again" placeholder="再嘘~"></p>
+                        <p><input v-model="password" placeholder="嘘~" @change="input"></p>
+                        <p><input v-model="password_again" placeholder="再嘘~" @change="input"></p>
                     </div>
                     <CustomButton source="grinningface" size="large" message="!冲呀!"
                                   @click.native="Register"></CustomButton>
@@ -55,6 +55,7 @@
         },
         methods: {
             back_to_main: function () {
+                // TODO:获取index.html
                 window.location.href = "/";
                 // this.$router.go(-1);
             },
@@ -65,6 +66,7 @@
                 this.check = true;
             },
             Register: function () {
+                //    TODO: 注册传参数+获取home.html
                 this.$ajax({
                     method: 'post',
                     url: '/register/',
@@ -78,10 +80,12 @@
                         }
                 }).then(response => 
                     {
-                        if (response.data.flag == true){
+                        if (response.data.flag === true){
+                            console.log('Success register');
                             window.location.href = "/login";
                         }
                         else{
+                            console.log('Failed register')
                             console.log(response.data.error_msg);
                         }
                         //console.log("sbhwh");
@@ -101,6 +105,9 @@
                     }
                     )
             },
+            input: function () {
+                //TODO: 更新输入框长度+store数据存储
+            }
         },
         watch: {
             check: function (newCheck, oldCheck) {
@@ -177,6 +184,6 @@
     // Allow element/type selectors, because this is global CSS.
     // stylelint-disable selector-max-type, selector-class-pattern
 
-    // Design variables and utilities from src/TopBarDesign.
-    @import '../../assets/css/TopBarDesign';
+    // Design variables and utilities from src/design.
+    @import '../home/design';
 </style>

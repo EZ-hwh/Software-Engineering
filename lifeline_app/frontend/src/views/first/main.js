@@ -2,7 +2,6 @@ import Vue from "vue";
 import first from "./first";
 import axios from 'axios';
 import BootstrapVue from 'bootstrap-vue';
-import "../../assets/css/font.css"
 
 Vue.use(BootstrapVue)
 Vue.config.productionTip = false
