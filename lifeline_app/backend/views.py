@@ -324,10 +324,12 @@ def get_Weeklist(request):  # Todo 连接数据库
             return JsonResponse(ret)
         """
         user = Account.objects.get(user=request.user)
-        now = datetime.datetime.now()
-        nextweek = now + datetime.timedelta(days=7)
-        todolist = user.todolist_set.filter(deadline_time__range=(now, nextweek))
+        now = datetime.datetime.now() 
+        tomorrow = now + datetime.timedelta(days=1)
+        nextweek = now + datetime.timedelta(days=31)
+        todolist = user.todolist_set.filter(deadline_time__range=(tomorrow, nextweek))
         todolist.order_by('deadline_time')
+        # print("todolist",todolist)
 
         for todo in todolist:
             now = {}
