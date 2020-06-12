@@ -242,13 +242,34 @@ Data = [
 
 
 @csrf_exempt
+def add_ddl_elearning(request):
+    #print("%%%%%%%%%%")
+    data = get_ddl_feedback(request.session["elearning_session"], request.session["jwfw_session"])
+    #print("@@@@@@@@@@")
+    data = data["todo"]
+    print("ddl_data")
+    print(data)
+    account = Account.objects.get(user=request.user)
+    for ddl in data:
+        if not Todolist.objects.filter(account=account, name = ddl["title"]).exists():
+            time = datetime.datetime.strptime(ddl["ddl"], "%Y-%m-%dT%H:%M:%SZ")
+            Todolist.objects.create(account = account, name = ddl["title"], description = ddl["content"], deadline_time = time)
+    todolist = account.todolist_set.all()
+    print("time!!!!!!!!!!!!!")
+    print(todolist[3].deadline_time)
+
+@csrf_exempt
 def get_Todaylist(request):  # Todo 连接数据库
     if not request.user.is_authenticated:
         return redirect('/login_page/')
     if request.method == 'GET':
         ret = []
-        print("Getting todaylist!")
+        #print("Getting todaylist!")
+        #print("--------")
         login_uis(request)
+        #print("********")
+        add_ddl_elearning(request)
+        #print("########")
         """
         if DEBUG:
             # print("abc")
@@ -290,6 +311,7 @@ def get_Weeklist(request):  # Todo 连接数据库
         return redirect('/login_page/')
     if request.method == 'GET':
         login_uis(request)
+        add_ddl_elearning(request)
         ret = []
         # print("kaishiWeek")
         """
@@ -303,7 +325,7 @@ def get_Weeklist(request):  # Todo 连接数据库
         """
         user = Account.objects.get(user=request.user)
         now = datetime.datetime.now()
-        nextweek = now + datetime.timedelta(days=1)
+        nextweek = now + datetime.timedelta(days=7)
         todolist = user.todolist_set.filter(deadline_time__range=(now, nextweek))
         todolist.order_by('deadline_time')
 
@@ -320,6 +342,7 @@ def get_Weeklist(request):  # Todo 连接数据库
 
         ret = {"WeekList": ret}
         ret["flag"] = True
+        print(ret)
         return JsonResponse(ret)
 
 
@@ -479,7 +502,7 @@ def get_semester(request):
         return redirect('/login_page/')
     if request.method == 'GET':
         if DEBUG:
-            ret = get_course_sample_data()
+            ret = get_lesson_feedback(request.session["elearning_session"], request.session["jwfw_session"])
             return JsonResponse(ret)
 
 
