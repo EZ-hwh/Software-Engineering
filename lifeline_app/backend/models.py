@@ -19,7 +19,7 @@ class Account(models.Model):
     phone = models.CharField(max_length=50, null=True)
     addr = models.CharField(max_length=50, null=True)
     description = models.TextField(null=True)
-    picture = models.CharField(max_length=50, default="/static/img/user0.png")
+    picture = models.CharField(max_length=50, default='/static/img/user0.png')
 
 class Course(models.Model):
     course_id = models.AutoField(primary_key=True)
@@ -64,7 +64,7 @@ class Todolist(models.Model):
     deadline_time = models.DateTimeField()
     homework = models.ForeignKey(Homework,on_delete=models.CASCADE,null=True)
     scheduler = models.ForeignKey(Scheduler,on_delete=models.CASCADE,null=True)
-    status = models.IntegerField(default=0) # 0代表未完成，1代表已完成，2代表过期
+    status = models.IntegerField(default=0) # 0代表未完成，1代表已完成，2代表过期, 3代表删除
 
 class Register(models.Model):
     email = models.EmailField(primary_key=True) #验证邮箱

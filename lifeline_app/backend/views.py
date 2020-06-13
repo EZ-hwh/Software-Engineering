@@ -20,7 +20,7 @@ ACCOUNT_ID_RANGE = 100000000
 def login_uis(request):  # 帮绑定了elearning的用户登陆uis
     account = Account.objects.get(user=request.user)
     print("Trying to login uis.")
-    print(account.elearning_login)
+    # print(account.elearning_login)
     if account.elearning_login:
         if not request.session["elearning_login"]:
             print("Backend: elearning login.")
@@ -81,7 +81,7 @@ def register_account(request):
             else:
 
                 HttpResponse(json.dumps)
-                
+
         if DEBUG:
             print(account)
         return HttpResponse(json.dumps(ret))
@@ -175,9 +175,13 @@ def get_schedule(request):
         return redirect('/login_page/')
     if request.method == 'GET':
         login_uis(request)
-        ret = get_scheduler_feedback(request.session["elearning_session"], request.session["jwfw_session"])
+        scheduler = get_scheduler_feedback(request.session["elearning_session"], request.session["jwfw_session"])
+        ret = {}
+        ret['course'] = scheduler
         ret["flag"] = True
         return JsonResponse(ret)
+        # 此处需要存入数据库，后端存入
+
         ret = {}
         test = True
         now = datetime.datetime.now()
@@ -207,55 +211,34 @@ def get_schedule(request):
             ]
             pass
 
-        user = Account.objects.get(user=request.user)
-        courses = [x.course for x in user.takeclass_set.all()]
-        course_list = []
-        for course in courses:
-            info = {}
-            info['name'] = course.course_name
-            info['description'] = course.description
-            info['time'] = [x.course_time for x in course.time_set.all()]
-            course_list.append(info)
-
-        schedulers = user.scheduler_set.all()
-        scheduler_list = []
-        for scheduler in scheduler_list:
-            info = {}
-            info['title'] = scheduler.title
-            info['message'] = scheduler.message
-            info['time'] = [x.course_time for x in scheduler.time_set.all()]
-            scheduler_list.append(info)
-
-        ret['course'] = course_list
-        ret['schedule'] = scheduler_list
         return JsonResponse(ret)
 
 
 Data = [
     {
         "name": "Algorithm Assignment 3",
-        "time": "2020.5.9 10:30",
+        "time": "2020-5-9 10:30",
         "description": "Complete 15-2.3,17.1",
         "status": 0,
         "id": 1
     },
     {
         "name": "Software Engineer homework",
-        "time": "2020.5.9 18:30",
+        "time": "2020-5-9 18:30",
         "description": "Implement the demo website.",
         "status": 1,
         "id": 2
     },
     {
         "name": "Watch a movie",
-        "time": "2020.5.9 24:00",
+        "time": "2020-5-9 24:00",
         "description": "",
         "status": 2,
         "id": 3
     },
     {
         "name": "DSP homwork3",
-        "time": "2020.5.9 24:00",
+        "time": "2020-5-9 24:00",
         "description": "this is a long long long long description.for test for test for test.",
         "status": 0,
         "id": 4
@@ -264,13 +247,35 @@ Data = [
 
 
 @csrf_exempt
+def add_ddl_elearning(request):
+    # print("%%%%%%%%%%")
+    data = get_ddl_feedback(request.session["elearning_session"], request.session["jwfw_session"])
+    # print("@@@@@@@@@@")
+    data = data["todo"]
+    print("ddl_data")
+    print(data)
+    account = Account.objects.get(user=request.user)
+    for ddl in data:
+        if not Todolist.objects.filter(account=account, name=ddl["title"]).exists():
+            time = datetime.datetime.strptime(ddl["ddl"], "%Y-%m-%dT%H:%M:%SZ")
+            Todolist.objects.create(account=account, name=ddl["title"], description=ddl["content"], deadline_time=time)
+    todolist = account.todolist_set.all()
+    print("time!!!!!!!!!!!!!")
+    print(todolist[3].deadline_time)
+
+
+@csrf_exempt
 def get_Todaylist(request):  # Todo 连接数据库
     if not request.user.is_authenticated:
         return redirect('/login_page/')
     if request.method == 'GET':
         ret = []
-        print("Getting todaylist!")
+        # print("Getting todaylist!")
+        # print("--------")
         login_uis(request)
+        # print("********")
+        add_ddl_elearning(request)
+        # print("########")
         """
         if DEBUG:
             # print("abc")
@@ -283,7 +288,7 @@ def get_Todaylist(request):  # Todo 连接数据库
             # print(ret)
             return JsonResponse(ret)
         """
-        print(request.user)
+        # print(request.user)
         user = Account.objects.get(user=request.user)
         now = datetime.datetime.now()
         tomorrow = now + datetime.timedelta(days=1)
@@ -312,6 +317,7 @@ def get_Weeklist(request):  # Todo 连接数据库
         return redirect('/login_page/')
     if request.method == 'GET':
         login_uis(request)
+        add_ddl_elearning(request)
         ret = []
         # print("kaishiWeek")
         """
@@ -325,9 +331,11 @@ def get_Weeklist(request):  # Todo 连接数据库
         """
         user = Account.objects.get(user=request.user)
         now = datetime.datetime.now()
-        nextweek = now + datetime.timedelta(days=1)
-        todolist = user.todolist_set.filter(deadline_time__range=(now, nextweek))
+        tomorrow = now + datetime.timedelta(days=1)
+        nextweek = now + datetime.timedelta(days=31)
+        todolist = user.todolist_set.filter(deadline_time__range=(tomorrow, nextweek))
         todolist.order_by('deadline_time')
+        # print("todolist",todolist)
 
         for todo in todolist:
             now = {}
@@ -342,7 +350,13 @@ def get_Weeklist(request):  # Todo 连接数据库
 
         ret = {"WeekList": ret}
         ret["flag"] = True
+        print(ret)
         return JsonResponse(ret)
+
+
+@csrf_exempt
+def ToCourse(request):
+    return render(request, 'SingleCourse.html')
 
 
 @csrf_exempt
@@ -501,7 +515,7 @@ def get_semester(request):
         return redirect('/login_page/')
     if request.method == 'GET':
         if DEBUG:
-            ret = get_course_sample_data()
+            ret = get_lesson_feedback(request.session["elearning_session"], request.session["jwfw_session"])
             return JsonResponse(ret)
 
 

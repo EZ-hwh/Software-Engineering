@@ -55,6 +55,9 @@
             >
                 修改个人信息
             </button>
+
+
+
             <button
                     v-if="!elearning_status"
                     type="button"
@@ -70,6 +73,14 @@
                     class="btn btn-primary btn-rounded waves-effect waves-light"
             >
                 退出elearning登录
+            </button>
+
+            <button
+                    type="button"
+                    @click="go_homepage"
+                    class="btn btn-primary btn-rounded waves-effect waves-light"
+            >
+                返回主页
             </button>
 
             <Modal v-model="modal1" width="360">
@@ -170,44 +181,44 @@
         name: "personal",
         data() {
             return {
-                userImg: "/static/img/user0.png",
+                userImg: require('../../assets/images/user/user0.png'),
                 showChooseAvatar: false,
                 imgList: [
                     {
                         id: 1,
-                        imgUrl: "/static/img/user0.png",
+                        imgUrl: require('../../assets/images/user/user0.png'),
                     },
                     {
                         id: 2,
-                        imgUrl: "/static/img/user1.png",
+                        imgUrl: require('../../assets/images/user/user1.png'),
                     },
                     {
                         id: 3,
-                        imgUrl: "/static/img/user2.png",
+                        imgUrl: require('../../assets/images/user/user2.png'),
                     },
                     {
                         id: 4,
-                        imgUrl: "/static/img/user3.png",
+                        imgUrl: require('../../assets/images/user/user3.png'),
                     },
                     {
                         id: 5,
-                        imgUrl: "/static/img/user4.png",
+                        imgUrl: require('../../assets/images/user/user4.png'),
                     },
                     {
                         id: 6,
-                        imgUrl: "/static/img/user5.png",
+                        imgUrl: require('../../assets/images/user/user5.png'),
                     },
                     {
                         id: 7,
-                        imgUrl: "/static/img/user6.png",
+                        imgUrl: require('../../assets/images/user/user6.png'),
                     },
                     {
                         id: 8,
-                        imgUrl: "/static/img/user7.png",
+                        imgUrl: require('../../assets/images/user/user7.png'),
                     },
                     {
                         id: 9,
-                        imgUrl: "/static/img/user8.png",
+                        imgUrl: require('../../assets/images/user/user8.png'),
                     },
                 ],
                 elearning_username: "",
@@ -375,6 +386,9 @@
             },
             handleReset: function (name) {
                 this.$refs[name].resetFields();
+            },
+            go_homepage:function () {
+                window.location.href = "/home";
             },
         },
         created: function () {
