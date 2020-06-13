@@ -300,6 +300,8 @@ def get_Todaylist(request):  # Todo 连接数据库
         todolist.order_by('deadline_time')
 
         for todo in todolist:
+            if todo.status == 3:
+                continue
             now = {}
             now["name"] = todo.name
             time = todo.deadline_time
@@ -334,12 +336,14 @@ def get_Weeklist(request):  # Todo 连接数据库
         user = Account.objects.get(user=request.user)
         now = datetime.datetime.now() 
         tomorrow = now + datetime.timedelta(days=1)
-        nextweek = now + datetime.timedelta(days=31)
-        todolist = user.todolist_set.filter(deadline_time__range=(tomorrow, nextweek))
+        nextmonth = now + datetime.timedelta(days=31)
+        todolist = user.todolist_set.filter(deadline_time__range=(tomorrow, nextmonth))
         todolist.order_by('deadline_time')
         # print("todolist",todolist)
 
         for todo in todolist:
+            if todo.status == 3:
+                continue
             now = {}
             now["name"] = todo.name
             time = todo.deadline_time
@@ -348,6 +352,7 @@ def get_Weeklist(request):  # Todo 连接数据库
             now["status"] = todo.status
             print(todo.todolist_id)
             now["id"] = todo.todolist_id
+            print(now["id"])
             ret.append(now)
 
         ret = {"WeekList": ret}
@@ -489,20 +494,18 @@ def add_ddl(request):
 
 @csrf_exempt
 def del_ddl(request):
-    if not request.session.get('login', None):
+    if not request.user.is_authenticated:
         return redirect('/login_page/')
     if request.method == 'GET':
-        test = True
-        if test:
-            global Data
-            del_id = int(request.GET["id"])
-            # 这里直接遍历了一遍
-            for i in range(len(Data)):
-                if Data[i]["id"] == del_id:
-                    del Data[i]
-                    break
-            ret = {"flag": True}
-            return JsonResponse(ret)
+        print("del_ddl work")
+        id = int(request.GET["id"])
+        account = Account.objects.get(user = request.user)
+        todolist = Todolist.objects.get(todolist_id = id, account = account)
+        todolist.status = 3
+        print(todolist.name)
+        todolist.save()
+        ret = {"flag": True}
+        return JsonResponse(ret)
 
 
 @csrf_exempt
