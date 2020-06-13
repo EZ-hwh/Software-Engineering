@@ -116,9 +116,9 @@ def get_course_mainpage(session,course_id):
     title = soup.find("li",id="crumb_course_"+course_id).find("span").get_text()
     print(title)
     description = soup.find_all('script')[3].get_text()
-    d = json.loads(description[description.rfind('ENV')+6:description.rfind(';')])
-    #print(d)
     try:
+        d = json.loads(description[description.rfind('ENV')+6:description.rfind(';')])
+    #print(d)
         d1 = d['WIKI_PAGE']
         return title,d1['body']
     except:
