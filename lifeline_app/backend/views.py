@@ -3,6 +3,7 @@ from django.http import Http404, HttpResponse
 from django.http.response import JsonResponse
 from .models import *
 from django.views.decorators.csrf import csrf_exempt
+
 import json
 import random
 import datetime
@@ -15,24 +16,30 @@ from .crwaller import *
 
 DEBUG = True  # 进行调试，用于输出调试
 ACCOUNT_ID_RANGE = 100000000
+ELEARNING_LOGIN = False
+JWFW_LOGIN = False
 
 
+@csrf_exempt
 def login_uis(request):  # 帮绑定了elearning的用户登陆uis
+    ELEARNING_LOGIN = globals()
+    JWFW_LOGIN =  globals()
     account = Account.objects.get(user=request.user)
     print("Trying to login uis.")
-    # print(account.elearning_login)
-    if account.elearning_login:
-        if not request.session["elearning_login"]:
+    print(ELEARNING_LOGIN, JWFW_LOGIN)
+    if account.elearning_login and not ELEARNING_LOGIN:
+        if not ELEARNING_LOGIN:
             print("Backend: elearning login.")
-            request.session["elearning_session"], request.session["elearning_login"] = login_elearning(
+            request.session["elearning_session"], ELEARNING_LOGIN = login_elearning(
                 account.elearning_name, account.elearning_password)
-        if not request.session["jwfw_login"]:
+        if not JWFW_LOGIN:
             print("Backend: jwfw login.")
-            request.session["jwfw_session"], request.session["jwfw_login"] = login_jwfw(account.elearning_name,
+            request.session["jwfw_session"], JWFW_LOGIN = login_jwfw(account.elearning_name,
                                                                                         account.elearning_password)
-        return True
-    else:
-        return False
+    #     return True
+    # else:
+    #     return False
+    return ELEARNING_LOGIN
 
 
 @csrf_exempt
@@ -45,6 +52,8 @@ def first(request):
 
 @csrf_exempt
 def register_account(request):
+    ELEARNING_LOGIN = globals()
+    JWFW_LOGIN = globals()
     print("Register begin work")
     if request.user.is_authenticated:
         return HttpResponse("Already logged in.")
@@ -62,8 +71,8 @@ def register_account(request):
             ret["flag"] = True
             user = User.objects.create_user(username=name, password=pwd, email=email)
             login(request, user)
-            request.session["elearning_login"] = False
-            request.session["jwfw_login"] = False
+            ELEARNING_LOGIN = False
+            JWFW_LOGIN = False
             account = Account.objects.create(user=user, nickname=name, email=email)
         return HttpResponse(json.dumps(ret), content_type="application/json")
     '''
