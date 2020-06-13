@@ -19,7 +19,7 @@ class Account(models.Model):
     phone = models.CharField(max_length=50, null=True)
     addr = models.CharField(max_length=50, null=True)
     description = models.TextField(null=True)
-    picture = models.CharField(max_length=50, default="/static/img/user0.png")
+    picture = models.CharField(max_length=50, default='/static/img/user0.png')
 
 class Course(models.Model):
     course_id = models.AutoField(primary_key=True)

@@ -20,10 +20,10 @@ ACCOUNT_ID_RANGE = 100000000
 def login_uis(request):  # 帮绑定了elearning的用户登陆uis
     account = Account.objects.get(user=request.user)
     print("Trying to login uis.")
-    print(account.elearning_login)
+    print('Account:', account.elearning_login)
     if account.elearning_login:
         # try:
-        if not request.session.has_key("elearning_login") or not request.session["elearning_login"]:
+        if not request.session["elearning_login"]:
             print("Backend: elearning login.")
             request.session["elearning_session"], request.session["elearning_login"] = login_elearning(
                 account.elearning_name, account.elearning_password)
@@ -31,7 +31,7 @@ def login_uis(request):  # 帮绑定了elearning的用户登陆uis
         #     request.session["elearning_session"], request.session["elearning_login"] = login_elearning(
         #         account.elearning_name, account.elearning_password)
 
-        if not request.session.has_key("jwfw_login") or not request.session["jwfw_login"]:
+        if not request.session["jwfw_login"]:
             print("Backend: jwfw login.")
             request.session["jwfw_session"], request.session["jwfw_login"] = login_jwfw(account.elearning_name,
                                                                                         account.elearning_password)
@@ -183,9 +183,12 @@ def get_schedule(request):
         return redirect('/login_page/')
     if request.method == 'GET':
         login_uis(request)
-        ret = get_scheduler_feedback(request.session["elearning_session"], request.session["jwfw_session"])
+        ret = dict()
+        # print('jwfw', request.session.has_key("jwfw_session"))
+        ret['courseList']= get_scheduler_feedback(request.session["elearning_session"], request.session["jwfw_session"])
         ret["flag"] = True
         return JsonResponse(ret)
+        print('zhe sha wan yi')
         ret = {}
         test = True
         now = datetime.datetime.now()
