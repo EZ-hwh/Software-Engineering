@@ -22,20 +22,18 @@ JWFW_LOGIN = False
 
 @csrf_exempt
 def login_uis(request):  # 帮绑定了elearning的用户登陆uis
-    ELEARNING_LOGIN = globals()
-    JWFW_LOGIN =  globals()
+    global ELEARNING_LOGIN
+    global JWFW_LOGIN
     account = Account.objects.get(user=request.user)
     print("Trying to login uis.")
-    print(ELEARNING_LOGIN, JWFW_LOGIN)
-    if account.elearning_login and not ELEARNING_LOGIN:
+    # print(ELEARNING_LOGIN, JWFW_LOGIN)
+    if account.elearning_login:
         if not ELEARNING_LOGIN:
             print("Backend: elearning login.")
-            request.session["elearning_session"], ELEARNING_LOGIN = login_elearning(
-                account.elearning_name, account.elearning_password)
+            request.session["elearning_session"], ELEARNING_LOGIN = login_elearning(account.elearning_name, account.elearning_password)
         if not JWFW_LOGIN:
             print("Backend: jwfw login.")
-            request.session["jwfw_session"], JWFW_LOGIN = login_jwfw(account.elearning_name,
-                                                                                        account.elearning_password)
+            request.session["jwfw_session"], JWFW_LOGIN = login_jwfw(account.elearning_name,account.elearning_password)
     #     return True
     # else:
     #     return False
@@ -52,8 +50,8 @@ def first(request):
 
 @csrf_exempt
 def register_account(request):
-    ELEARNING_LOGIN = globals()
-    JWFW_LOGIN = globals()
+    global ELEARNING_LOGIN
+    global JWFW_LOGIN
     print("Register begin work")
     if request.user.is_authenticated:
         return HttpResponse("Already logged in.")
@@ -405,7 +403,11 @@ def getcode(request):
 
 @csrf_exempt
 def logout_account(request):
+    global ELEARNING_LOGIN
+    global JWFW_LOGIN
     logout(request)
+    ELEARNING_LOGIN = False
+    JWFW_LOGIN = False
     return render(request, 'index.html')
 
 
