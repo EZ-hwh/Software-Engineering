@@ -164,10 +164,18 @@ def course(request):
         return redirect('/login')
     if not login_uis(request):
         return redirect('/personal')
-    if request.method == 'GET':
-        print("it work")
-        # return render(request,'lessons.html')
-        return render(request, 'SingleCourse.html')
+    if request.method == 'POST':
+        course_id = request.GET.get("course_id")
+        print(course_id)
+        request.session["course_id"] = course_id
+        print(request.session['course_id'])
+        ret = {'flag': True}
+        return HttpResponse(json.dumps(ret))
+    # if
+    #     print("it work")
+    #     # return render(request,'lessons.html')
+    #     return render(request, 'SingleCourse.html')
+
 
 
 @csrf_exempt
@@ -531,7 +539,8 @@ def get_courseinfo(request):
     if request.method == 'GET':
         login_uis(request)
         ret = get_courseinfo_feedback(request.session["elearning_session"], request.session["jwfw_session"],
-                                      request.GET["course_id"])
+                                      request.session["course_id"])
+        print(ret)
         return JsonResponse(ret)
 
 
@@ -542,7 +551,7 @@ def get_course_detail(request):
     if request.method == 'GET':
         login_uis(request)
         ret = get_course_detail_feedback(request.session["elearning_session"], request.session["jwfw_session"],
-                                         request.GET["course_id"])
+                                         request.session["course_id"])
         return JsonResponse(ret)
 
 
@@ -553,7 +562,8 @@ def get_course_homework(request):
     if request.method == 'GET':
         login_uis(request)
         ret = get_course_homework_feedback(request.session["elearning_session"], request.session["jwfw_session"],
-                                           request.GET["course_id"])
+                                           request.session["course_id"])
+        print(ret)
         return JsonResponse(ret)
 
 
