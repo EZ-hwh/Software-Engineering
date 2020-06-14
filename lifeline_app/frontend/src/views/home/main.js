@@ -5,6 +5,8 @@ import Vue from "vue";
 import home from "./home";
 import axios from 'axios';
 import BootstrapVue from 'bootstrap-vue';
+import $ from "jquery";
+import 'bootstrap';
 
 Vue.use(BootstrapVue)
 Vue.config.productionTip = false
