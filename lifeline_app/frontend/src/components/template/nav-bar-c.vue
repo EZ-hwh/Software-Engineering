@@ -18,14 +18,17 @@
         },
         data() {
             return {
-                userImg: require("../../assets/images/user/user0.png"),
+                userImg: null,
                 HomeImg: require("../../assets/images/button/house-building.png"),
                 LessonsImg: require("../../assets/images/button/books.png")
             }
         },
-        // computed: {
-        //   ...authComputed,
-        // },
+        computed: {
+            getImage: function () {
+                console.log(this.UserImg);
+                return this.UserImg;
+            },
+        },
         methods: {
             toggleMenu() {
                 this.$parent.toggleMenu()
@@ -43,6 +46,15 @@
                 window.location.href = "/home"
             }
         },
+        beforeCreate: function () {
+            this.$ajax.get('/get_IDpic').then(
+                response => {
+                    console.log(response.data.ImgUrl);
+                    this.UserImg = response.data.ImgUrl;
+                }).catch(function (error) {
+                console.log(error);
+            });
+        }
     }
 </script>
 
@@ -58,7 +70,7 @@
             >
                 <template slot="button-content">
                     <div class="nav-user mr-0 waves-effect waves-light">
-                        <img :src="userImg" class="circle"/>
+                        <img :src="getImage" class="circle"/>
                     </div>
                 </template>
 

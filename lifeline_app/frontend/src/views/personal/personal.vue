@@ -5,8 +5,8 @@
         </div>
 
         <div class="default-img animated" v-show="showChooseAvatar">
-            <ul>
-                <li v-for="item in imgList" :key="item.id">
+            <ul style="display: flex;margin:0 auto">
+                <li v-for="item in imgList" :key="item.id" style="margin: auto">
                     <img
                             :src="item.imgUrl"
                             alt=""

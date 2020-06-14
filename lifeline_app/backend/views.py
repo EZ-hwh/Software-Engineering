@@ -627,11 +627,22 @@ def picture(request):
         return redirect('/login_page/')
     if request.method == 'POST':
         account = Account.objects.get(user=request.user)
+        print(request.GET["pic"])
         account.picture = request.GET["pic"]
         account.save()
         ret = {"flag": True}
         return JsonResponse(ret)
 
+@csrf_exempt
+def get_idpicture(request):
+    if not request.user.is_authenticated:
+        return redirect('/login_page/')
+    if request.method == 'GET':
+        print("return pic")
+        account = Account.objects.get(user=request.user)
+        print(account.picture)
+        ret = {"ImgUrl": account.picture}
+        return JsonResponse(ret)
 
 @csrf_exempt
 def personal_create(request):

@@ -132,7 +132,7 @@ var calendar1 = function(l, courseList) {
         t = (e.getDate(), e.getMonth(), e.getFullYear(), new Date(l.now())),
         n = courseList,
         a = this;
-      print(n);
+      // print(n);
       console.log(n);
       (a.$calendarObj = a.$calendar.fullCalendar({
         slotDuration: "00:20:00",

@@ -5,6 +5,7 @@ import re
 
 app_name = 'backend'
 urlpatterns = [
+    url('get_IDpic',views.get_idpicture),
     url('get_courseinfo', views.get_courseinfo),
     url('get_course_detail', views.get_course_detail),
     url('get_course_homework', views.get_course_homework),
