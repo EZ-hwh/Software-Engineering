@@ -41,7 +41,7 @@ class APITestCase(BaseAPITestCase):
     def login(self, user):
         """登录用户，用于通过权限校验"""
         user.backend = settings.AUTHENTICATION_BACKENDS[0]
-        request = self.make_request()
+        request = self.make_request(user)
         login(request, user)
         request.user = user
         self.save_session()
@@ -67,8 +67,24 @@ class APITestCase(BaseAPITestCase):
 class MyAppTestsLogged(APITestCase):
     def setUp(self):
         super(MyAppTestsLogged, self).setUp()
-        self.user = User.objects.create_user(username='ystt', password="Yushutian26", email="897358819@qq.com") # 创建测试用例用户
-        self.login(self.user) # 模拟登录状态
+        self.user = User.objects.create_user(username='ystt', password="Yushutian26",
+                                             email="897358819@qq.com")  # 创建测试用例用户
+        self.login(self.user)  # 模拟登录状态
+
+    def test_Data_Logged(self):
+        response = self.client.get('/get_semester')
+        print(response.content)
+        self.assertEqual(response.status_code, 200)
+
+    def test_RegUIS_Wrong(self):
+        response = self.client.get('/elearning_register', data={'username': "17307130244", 'password': "123456"})
+        print(response.content)
+        self.assertEqual(response.content, b'{"flag": false, "status": false}')
+
+    def test_RegUIS_Right(self):
+        response = self.client.get('/elearning_register', data={'username': "17307130244", 'password': "yushutian@26"})
+        print(response.content)
+        self.assertEqual(response.content, b'{"flag": true, "status": true}')
 
     def test_Course_LoggedNoUIS(self):
         response = self.client.post('/course', data={'course_id': "/course/23223"})
@@ -95,6 +111,16 @@ class MyAppTests(APITestCase):
     def setUp(self):
         super(MyAppTests, self).setUp()
         self.user = User.objects.create_user(username='ystt', password="Yushutian26")
+
+    def test_Data_NotLogged(self):
+        response = self.client.get('/get_semester')
+        print(response.content)
+        self.assertEqual(response.content, b'')
+
+    def test_RegUIS_NotLogged(self):
+        response = self.client.get('/elearning_register', data={'username': "17307130244", 'password': "123456"})
+        print(response.content)
+        self.assertEqual(response.content, b'')
 
     def test_Course_NotLogged(self):
         response = self.client.post('/course', data={'course_id': "/course/23223"})

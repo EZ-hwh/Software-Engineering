@@ -664,14 +664,14 @@ def elearning_register(request):
         session, flag = login_elearning(name, password)
         account = Account.objects.get(user=request.user)
         if flag == False:
-            ret = {"flag": False, "status": account.elearning_login}
+            ret = {"flag": False, "status": False}
             return JsonResponse(ret)
         account.elearning_name = name
         account.elearning_password = password
         account.elearning_login = True
-        # print(account)
+        print(account)
         account.save()
-        ret = {"flag": True, "status": account.elearning_login}
+        ret = {"flag": True, "status": True}
         return JsonResponse(ret)
 
 
