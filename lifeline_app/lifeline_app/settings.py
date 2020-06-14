@@ -152,3 +152,11 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
+
+#email settings
+EMAIL_USE_SSL = True
+EMAIL_HOST = 'smtp.126.com'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = 'lifeline_app@126.com'
+EMAIL_HOST_PASSWORD = 'UJWSZIXONMVZSUAG'
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER

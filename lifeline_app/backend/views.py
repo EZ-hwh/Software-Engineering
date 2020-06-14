@@ -11,6 +11,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from .data import *
 from .crwaller import *
+from .email import *
 
 # Create your views here.
 
@@ -119,6 +120,8 @@ def login_account(request):
         else:
             ret["error_msg"] = "Wrong name or password"
             print("登陆错误")
+        # else:
+        #    ret["error_msg"] = "验证码错误"
         return HttpResponse(json.dumps(ret))
 
 
@@ -174,6 +177,7 @@ def course(request):
 def ToCourse(request):
     return render(request, 'SingleCourse.html')
 
+
 @csrf_exempt
 def get_schedule(request):
     if not request.user.is_authenticated:
@@ -216,6 +220,7 @@ def get_schedule(request):
             ]
             pass
 
+        
         return JsonResponse(ret)
 
 
