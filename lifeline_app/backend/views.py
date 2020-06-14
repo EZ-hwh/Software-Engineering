@@ -534,6 +534,7 @@ def get_courseinfo(request):
         return redirect('/login_page/')
     if request.method == 'GET':
         login_uis(request)
+        print(request.session["course_id"])
         ret = get_courseinfo_feedback(request.session["elearning_session"], request.session["jwfw_session"],
                                       request.session["course_id"])
         print(ret)
@@ -546,6 +547,7 @@ def get_course_detail(request):
         return redirect('/login_page/')
     if request.method == 'GET':
         login_uis(request)
+        print(request.session["course_id"])
         ret = get_course_detail_feedback(request.session["elearning_session"], request.session["jwfw_session"],
                                          request.session["course_id"])
         return JsonResponse(ret)
@@ -557,6 +559,7 @@ def get_course_homework(request):
         return redirect('/login_page/')
     if request.method == 'GET':
         login_uis(request)
+        print(request.session["course_id"])
         ret = get_course_homework_feedback(request.session["elearning_session"], request.session["jwfw_session"],
                                            request.session["course_id"])
         print(ret)

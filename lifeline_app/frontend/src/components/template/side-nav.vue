@@ -28,36 +28,10 @@
     <div>
         <div class="user-box text-center">
             <img
-                    src="../../assets/images/user/user-1.jpg"
+                    src="../../assets/images/button/sun-with-face.png"
                     alt="user-img"
                     class="rounded-circle img-thumbnail avatar-lg"
             >
-            <div class="">
-                <a
-                        href="#"
-                        class="text-dark dropdown-toggle h5 mt-2 mb-1 d-block"
-                >{{user ? user.name : ''}}</a>
-            </div>
-            <p class="text-muted">Admin Head</p>
-            <ul class="list-inline">
-                <li class="list-inline-item">
-                    <a
-                            href="#"
-                            class="text-muted"
-                    >
-                        <i class="mdi mdi-settings"></i>
-                    </a>
-                </li>
-
-                <li class="list-inline-item">
-                    <a
-                            href="#"
-                            class="text-custom"
-                    >
-                        <i class="mdi mdi-power"></i>
-                    </a>
-                </li>
-            </ul>
         </div>
 
         <!--- Sidemenu -->

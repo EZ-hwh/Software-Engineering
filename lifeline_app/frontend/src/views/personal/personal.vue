@@ -312,7 +312,7 @@
                     url: "/elearning_del_register/",
                 })
                     .then((response) => {
-                        if (response.data.flag == true) {
+                        if (response.data.flag === true) {
                             this.elearning_status = response.data.status;
                             this.$Message.success("退出elearning");
                             this.elearning_password = "";
