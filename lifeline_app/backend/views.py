@@ -34,6 +34,7 @@ def login_uis(request):  # 帮绑定了elearning的用户登陆uis
         if not JWFW_LOGIN:
             print("Backend: jwfw login.")
             request.session["jwfw_session"], JWFW_LOGIN = login_jwfw(account.elearning_name,account.elearning_password)
+    print('Login finished')
     #     return True
     # else:
     #     return False
@@ -524,6 +525,7 @@ def del_ddl(request):
 
 @csrf_exempt
 def get_semester(request):
+    print('get_semester started')
     if not request.user.is_authenticated:
         return redirect('/login_page/')
     if request.method == 'GET':
@@ -534,6 +536,7 @@ def get_semester(request):
 
 @csrf_exempt
 def get_courseinfo(request):
+    print('get_courseinfo started')
     if not request.user.is_authenticated:
         return redirect('/login_page/')
     if request.method == 'GET':
@@ -546,6 +549,7 @@ def get_courseinfo(request):
 
 @csrf_exempt
 def get_course_detail(request):
+    print('get_course_detail started')
     if not request.user.is_authenticated:
         return redirect('/login_page/')
     if request.method == 'GET':
