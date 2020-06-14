@@ -158,4 +158,7 @@
 
     // Design variables and utilities from src/TopBarDesign.
     @import '../../assets/css/TopBarDesign';
+    @import "../../assets/css/app.min.css";
+    @import "../../assets/css/bootstrap.min.css";
+    @import "../../assets/css/icons.min.css";
 </style>

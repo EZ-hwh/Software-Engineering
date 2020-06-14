@@ -65,6 +65,13 @@
             return {
                 course:{}
             }
+        },
+        Created() {
+            this.$ajax.get('get_course_homework')
+                .then(response => {
+                    console.log(response.data)
+                    this.course = response.data
+                })
         }
     }
 </script>

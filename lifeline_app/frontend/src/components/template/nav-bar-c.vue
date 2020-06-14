@@ -18,7 +18,7 @@
         },
         data() {
             return {
-                userImg: null,
+                UserImg: null,
                 HomeImg: require("../../assets/images/button/house-building.png"),
                 LessonsImg: require("../../assets/images/button/books.png")
             }
