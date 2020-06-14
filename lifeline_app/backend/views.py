@@ -10,6 +10,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from .data import *
 from .crwaller import *
+from .email import *
 
 # Create your views here.
 
@@ -349,6 +350,7 @@ def getcode(request):
         if Account.objects.filter(email=email).exists():
             ret["flag"] = False
             ret["error_msg"] = "邮箱已注册！"
+            print(ret)
             return JsonResponse(ret)
         try:
             register = Register.objects.get(email=email)
@@ -358,6 +360,7 @@ def getcode(request):
             print("except")
         register.checksum = random.randint(1000, 9999)
         print(register.email, register.checksum)
+        send_my_email(register.email,register.checksum)
         register.save()
         ret["checksum"] = register.checksum
         ret["flag"] = True

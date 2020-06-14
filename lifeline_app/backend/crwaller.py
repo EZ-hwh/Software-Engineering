@@ -224,8 +224,11 @@ def get_course(session):
     for i in raw_course:
         course = {}
         #print(i)
-        temp = i.find("span",class_="name").string.strip()
-        course["name"] = re.sub("[A-Z]+\d+\.\d+|[A-Za-z]+|\d+|[\d|\.]+","",temp).strip()
+        temp = i.find("span",class_="name").string.split()
+        for k in temp:
+            if re.match('.*[\u4e00-\u9fa5]+.*',k):
+                course["name"] = k #re.sub("[A-Z]+\d+\.\d+|[A-Za-z]+|\d+|[\d|\.]+","",temp).strip()
+                break
         if i.find("td",class_="course-list-no-left-border course-list-term-column"):
             course["term"]=i.find("td",class_="course-list-no-left-border course-list-term-column").text
         else:
