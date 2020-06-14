@@ -2,9 +2,8 @@
     <div id="mainpage">
 
         <h2> {{course.name}}</h2>
-        <u></u>>
+        <u></u>
         <div v-html="course.description"></div>
-        >
 
     </div>
 </template>
@@ -14,12 +13,11 @@
         name: "mainpage",
         data() {
             return {
-                course: {}
+                course: null
             }
         },
-
-        Created() {
-            this.$ajax.get('get_courseinfo')
+        created() {
+            this.$ajax.get('mainpage_course')
                 .then(response => {
                     console.log(response.data)
                     this.course = response.data

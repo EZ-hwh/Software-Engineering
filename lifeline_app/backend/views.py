@@ -538,6 +538,7 @@ def get_courseinfo(request):
     if not request.user.is_authenticated:
         return redirect('/login_page/')
     if request.method == 'GET':
+        print("主页")
         login_uis(request)
         print(request.session["course_id"])
         ret = get_courseinfo_feedback(request.session["elearning_session"], request.session["jwfw_session"],
@@ -551,6 +552,7 @@ def get_course_detail(request):
     if not request.user.is_authenticated:
         return redirect('/login_page/')
     if request.method == 'GET':
+        print("文件")
         login_uis(request)
         print(request.session["course_id"])
         ret = get_course_detail_feedback(request.session["elearning_session"], request.session["jwfw_session"],
@@ -563,6 +565,7 @@ def get_course_homework(request):
     if not request.user.is_authenticated:
         return redirect('/login_page/')
     if request.method == 'GET':
+        print("作业")
         login_uis(request)
         print(request.session["course_id"])
         ret = get_course_homework_feedback(request.session["elearning_session"], request.session["jwfw_session"],

@@ -178,8 +178,6 @@
 </script>
 
 <style>
-
-
     .Courses-head {
         background-color: #edffff;
     }

@@ -16,25 +16,6 @@
                           style="letter-spacing:10px;" dominant-baseline="middle" rotate="-90" font-size="30px"
                           @click="go_to_lesson(lesson.id)">{{lesson.name}}
                     </text>
-                    <text class="text text-2" font-family="Montserrat-ExtraBold" :x="getTextX(lesson.index) + 10"
-                          :y="getTextY(lesson.index)- 10"
-                          :transform="'rotate(90, ' + getTextX(lesson.index) + ','+ getTextY(lesson.index)+ ')'"
-                          style="letter-spacing:10px;" dominant-baseline="middle" rotate="-90" font-size="30px"
-                          @click="go_to_lesson(lesson.id)">{{lesson.name}}
-                    </text>
-                    <text class="text text-3" font-family="Montserrat-ExtraBold" :x="getTextX(lesson.index) + 10"
-                          :y="getTextY(lesson.index)- 10"
-                          :transform="'rotate(90, ' + getTextX(lesson.index) + ','+ getTextY(lesson.index)+ ')'"
-                          style="letter-spacing:10px;" dominant-baseline="middle" rotate="-90" font-size="30px"
-                          @click="go_to_lesson(lesson.id)">{{lesson.name}}
-                    </text>
-                    <text class="text text-4" font-family="Montserrat-ExtraBold" :x="getTextX(lesson.index) + 10"
-                          :y="getTextY(lesson.index)- 10"
-                          :transform="'rotate(90, ' + getTextX(lesson.index) + ','+ getTextY(lesson.index)+ ')'"
-                          style="letter-spacing:10px;" dominant-baseline="middle" rotate="-90" font-size="30px"
-                          @click="go_to_lesson(lesson.id)">{{lesson.name}}
-                    </text>
-
                 </g>
                 <!--                <rect fill="#fefffe" fill-opacity="0.8" :x="getTextX(lesson.index) - 10" width="10" :y="getY(lesson.index) + 10" rx="3.0" :height="getHeight(lesson.index) - 20" onclick="window.top.location.href='/course'"></rect>-->
             </g>
@@ -251,7 +232,6 @@
     .text:hover {
         fill: #a09890;
         stroke-dasharray: 90 310;
-        animation: stroke 12s infinite linear;
     }
 
 
@@ -259,30 +239,6 @@
         stroke: #a09890;
         text-shadow: 0 0 1px #a09890;
         /*animation-delay: -3s;*/
-    }
-
-    .text-2 {
-        stroke: #a09890;
-        text-shadow: 0 0 1px #a09890;
-        /*animation-delay: -6s;*/
-    }
-
-    .text-3 {
-        stroke: #a09890;
-        text-shadow: 0 0 1px #a09890;
-        /*animation-delay: -9s;*/
-    }
-
-    .text-4 {
-        stroke: #a09890;
-        text-shadow: 0 0 1px #a09890;
-        /*animation-delay: -12s;*/
-    }
-
-    @keyframes stroke {
-        100% {
-            stroke-dashoffset: -400;
-        }
     }
 
 </style>
