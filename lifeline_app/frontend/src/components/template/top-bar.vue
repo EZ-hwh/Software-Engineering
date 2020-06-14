@@ -47,17 +47,7 @@ export default {
       } else if (nextEl) {
         nextEl.classList.remove("open");
       }
-      //TODO: 这里可以做到homepage的跳转 暂时可以不动 这里response好像要改改...
       window.location.href = "/home"; //转跳到home
-      /*console.log("qitadejiubudong")
-                this.$ajax({
-                    method: 'get',
-                    url: '/home',
-                }).then(response => (console.log(response)))
-                    .catch(function (error) {
-                        console.log(error);
-                    })
-                return false*/
     },
 
     ToLessons(event) {
@@ -73,17 +63,7 @@ export default {
       } else if (nextEl) {
         nextEl.classList.remove("open");
       }
-      //TODO: 这里跳转lessons
-      console.log("从这里应该可以跳转");
       window.location.href = "/lesson"; //转跳到lesson
-      /*this.$ajax({
-                    method: 'get',
-                    url: '/lessons',
-                }).then(response => (console.log(response)))
-                    .catch(function (error) {
-                        console.log(error);
-                    })
-                return false*/
     },
     ToCourse(value) {
       //TODO: 这里跳转singlecourse的界面

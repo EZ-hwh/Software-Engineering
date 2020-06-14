@@ -118,10 +118,8 @@ def login_account(request):
             ret["flag"] = True
             print("登陆成功")
         else:
-            ret["error_msg"] = "用户名和密码错误"
+            ret["error_msg"] = "Wrong name or password"
             print("登陆错误")
-        # else:
-        #    ret["error_msg"] = "验证码错误"
         return HttpResponse(json.dumps(ret))
 
 
@@ -172,12 +170,10 @@ def course(request):
         print(request.session['course_id'])
         ret = {'flag': True}
         return HttpResponse(json.dumps(ret))
-    # if
-    #     print("it work")
-    #     # return render(request,'lessons.html')
-    #     return render(request, 'SingleCourse.html')
 
-
+@csrf_exempt
+def ToCourse(request):
+    return render(request, 'SingleCourse.html')
 
 @csrf_exempt
 def get_schedule(request):
@@ -271,7 +267,7 @@ def add_ddl_elearning(request):
             Todolist.objects.create(account=account, name=ddl["title"], description=ddl["content"], deadline_time=time)
     todolist = account.todolist_set.all()
     print("time!!!!!!!!!!!!!")
-    print(todolist[3].deadline_time)
+    # print(todolist[3].deadline_time)
 
 
 @csrf_exempt
@@ -394,7 +390,7 @@ def getcode(request):
         ret = {}
         if Account.objects.filter(email=email).exists():
             ret["flag"] = False
-            ret["error_msg"] = "邮箱已注册！"
+            ret["error_msg"] = "used email!"
             return JsonResponse(ret)
         try:
             register = Register.objects.get(email=email)
@@ -541,6 +537,7 @@ def get_courseinfo(request):
         return redirect('/login_page/')
     if request.method == 'GET':
         login_uis(request)
+        print(request.session["course_id"])
         ret = get_courseinfo_feedback(request.session["elearning_session"], request.session["jwfw_session"],
                                       request.session["course_id"])
         print(ret)
@@ -554,6 +551,7 @@ def get_course_detail(request):
         return redirect('/login_page/')
     if request.method == 'GET':
         login_uis(request)
+        print(request.session["course_id"])
         ret = get_course_detail_feedback(request.session["elearning_session"], request.session["jwfw_session"],
                                          request.session["course_id"])
         return JsonResponse(ret)
@@ -565,6 +563,7 @@ def get_course_homework(request):
         return redirect('/login_page/')
     if request.method == 'GET':
         login_uis(request)
+        print(request.session["course_id"])
         ret = get_course_homework_feedback(request.session["elearning_session"], request.session["jwfw_session"],
                                            request.session["course_id"])
         print(ret)
