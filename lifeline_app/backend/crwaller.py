@@ -366,12 +366,13 @@ def get_course_homework_feedback(session1,session2,id):
     ret["name"] = name
     ret["done"] = dones
     ret["not_done"] = not_dones
+    #print(ret)
     #print(ret["not_done"])
     return ret
 
 def get_course_detail_feedback(session1,session2,id):
     name,_ = get_course_mainpage(session1,id)
-    url = "https://elearning.fudan.edu.cn/api/v1/courses/"+id+"/folders/root"
+    url = "https://elearning.fudan.edu.cn/api/v1"+id+"/folders/root"
     headers = {
     'User-Agent' : "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36"
     }
@@ -382,7 +383,7 @@ def get_course_detail_feedback(session1,session2,id):
     ret["docs"] = []
     if html == "while(1);[]":
         return ret 
-
+    #print(html)
     html = html.replace("null","None").replace("false","False").replace("true","True")
     files = eval(html[9:])
     print(files)
@@ -469,6 +470,7 @@ if __name__ == "__main__":
 #title, body = get_course_mainpage(session,url)
 #get_document(session,"https://elearning.fudan.edu.cn/api/v1/courses/22474/folders/root")
 #get_homework(session,"https://elearning.fudan.edu.cn/api/v1/courses/22474/assignment_groups?exclude_response_fields%5B%5D=description&exclude_response_fields%5B%5D=rubric&include%5B%5D=assignments&include%5B%5D=discussion_topic&override_assignment_dates=true&per_page=50")
-    course = get_lesson_feedback(session1,session2)
+    #course = get_lesson_feedback(session1,session2)
+    get_course_homework_feedback(session1,session2,"/courses/22337")
     #print(course)
 #get_ddl_feedback(session1,session2)
