@@ -273,6 +273,7 @@ def add_ddl_elearning(request):
     print("time!!!!!!!!!!!!!")
     # print(todolist[3].deadline_time)
 
+flag_todaylist = True
 
 @csrf_exempt
 def get_Todaylist(request):  # Todo 连接数据库
@@ -284,7 +285,10 @@ def get_Todaylist(request):  # Todo 连接数据库
         # print("--------")
         login_uis(request)
         # print("********")
-        add_ddl_elearning(request)
+        global flag_todaylist
+        if flag_todaylist:
+            add_ddl_elearning(request)
+            flag_todaylist = False
         # print("########")
         """
         if DEBUG:
@@ -308,6 +312,8 @@ def get_Todaylist(request):  # Todo 连接数据库
 
         for todo in todolist:
             now = {}
+            if todo.status == 3:
+                continue
             now["name"] = todo.name
             time = todo.deadline_time
             now["time"] = time.strftime("%Y-%m-%d %H:%M")
@@ -327,7 +333,10 @@ def get_Weeklist(request):  # Todo 连接数据库
         return redirect('/login_page/')
     if request.method == 'GET':
         login_uis(request)
-        add_ddl_elearning(request)
+        global flag_todaylist
+        if flag_todaylist:
+            add_ddl_elearning(request)
+            flag_todaylist = False
         ret = []
         # print("kaishiWeek")
         """
@@ -349,6 +358,8 @@ def get_Weeklist(request):  # Todo 连接数据库
 
         for todo in todolist:
             now = {}
+            if todo.status == 3:
+                continue
             now["name"] = todo.name
             time = todo.deadline_time
             now["time"] = time.strftime("%Y-%m-%d %H:%M")
@@ -507,20 +518,18 @@ def add_ddl(request):
 
 @csrf_exempt
 def del_ddl(request):
-    if not request.session.get('login', None):
+    if not request.user.is_authenticated:
         return redirect('/login_page/')
-    if request.method == 'GET':
-        test = True
-        if test:
-            global Data
-            del_id = int(request.GET["id"])
-            # 这里直接遍历了一遍
-            for i in range(len(Data)):
-                if Data[i]["id"] == del_id:
-                    del Data[i]
-                    break
-            ret = {"flag": True}
-            return JsonResponse(ret)
+    if request.method =='GET':
+        print("DDL del working")
+        id = int(request.GET["id"])
+        account = Account.objects.get(user = request.user)
+        todo = Todolist.objects.get(todolist_id = id, account = account)
+        todo.status = 3
+        print("delete ",todo.name)
+        todo.save()
+        ret = {"flag":True}
+        return JsonResponse(ret)
 
 
 @csrf_exempt
