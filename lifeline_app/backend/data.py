@@ -1,15 +1,15 @@
 def get_course_sample_data():
-    ret = {1: {'lesson': [{'name': '并发理论', 'index': 1, 'id': 1},
-                          {'name': '算法设计与分析', 'index': 2, 'id': 2},
-                          {'name': '计算机体系结构', 'index': 3, 'id': 3},
-                          {'name': '软件工程', 'index': 4, 'id': 4}]},
-           2: {'lesson': [{'name': '华语电影评析', 'index': 1, 'id': 1},
-                          {'name': '概率论与数理统计', 'index': 2, 'id': 2},
-                          {'name': '信息安全原理', 'index': 3, 'id': 3},
-                          {'name': '操作系统', 'index': 4, 'id': 4},
-                          {'name': '计算机网络', 'index': 5, 'id': 5},
-                          {'name': '自然语言处理', 'index': 6, 'id': 6},
-                          {'name': '学术英语（科学技术）', 'index': 7, 'id': 7}]},
+    ret = {1: {'lesson': [{'name': '并发理论', 'index': 1},
+                          {'name': '算法设计与分析', 'index': 2},
+                          {'name': '计算机体系结构', 'index': 3},
+                          {'name': '软件工程', 'index': 4}]},
+           2: {'lesson': [{'name': '华语电影评析', 'index': 1},
+                          {'name': '概率论与数理统计', 'index': 2},
+                          {'name': '信息安全原理', 'index': 3},
+                          {'name': '操作系统', 'index': 4},
+                          {'name': '计算机网络', 'index': 5},
+                          {'name': '自然语言处理', 'index': 6},
+                          {'name': '学术英语（科学技术）', 'index': 7}]},
            3: {'lesson': [
                {'name': '代数结构与数理逻辑', 'index': 1},
                {'name': '数据库引论', 'index': 2},
@@ -48,57 +48,11 @@ def get_course_sample_data():
            }
     return ret
 
-
 def get_mainpage_sample_data():
     return {}
 
-
 def get_document_sample_data():
-    return {'name': '并发理论', 'docs': [{'title': 'References', 'expand': True, 'urls': '', 'children': [
-        {'title': 'tm_tutorial_pact2006.zip', 'expand': False,
-         'urls': 'https://elearning.fudan.edu.cn/files/555529/download?download_frd=1', 'children': []}]},
-                                     {'title': 'Sample Code', 'expand': True, 'urls': '', 'children': [
-                                         {'title': 'enwiki-latest-pages-articles.xml.zip', 'expand': False,
-                                          'urls': 'https://elearning.fudan.edu.cn/files/244234/download?download_frd=1',
-                                          'children': []}, {'title': 'pb7con-code.zip', 'expand': False,
-                                                            'urls': 'https://elearning.fudan.edu.cn/files/243583/download?download_frd=1',
-                                                            'children': []}]},
-                                     {'title': 'Concurrency-Theory and Practice.zip', 'expand': False,
-                                      'urls': 'https://elearning.fudan.edu.cn/files/692963/download?download_frd=1',
-                                      'children': []},
-                                     {'title': 'On Concurrency 01 - Concurrency, Issues and the Lock Mechanism.zip',
-                                      'expand': False,
-                                      'urls': 'https://elearning.fudan.edu.cn/files/367949/download?download_frd=1',
-                                      'children': []}, {
-                                         'title': 'On Concurrency 02 - The Computer Science of Concurrency-The Early Years.zip',
-                                         'expand': False,
-                                         'urls': 'https://elearning.fudan.edu.cn/files/430029/download?download_frd=1',
-                                         'children': []}, {
-                                         'title': 'On Concurrency 03 - Functional Programming and the Clojure Approach.zip',
-                                         'expand': False,
-                                         'urls': 'https://elearning.fudan.edu.cn/files/515738/download?download_frd=1',
-                                         'children': []},
-                                     {'title': 'On Concurrency 04 - Unlocking Concurrency.zip', 'expand': False,
-                                      'urls': 'https://elearning.fudan.edu.cn/files/551918/download?download_frd=1',
-                                      'children': []},
-                                     {'title': 'On Concurrency 05 - The Actor Model.zip', 'expand': False,
-                                      'urls': 'https://elearning.fudan.edu.cn/files/651274/download?download_frd=1',
-                                      'children': []},
-                                     {'title': 'On Concurrency 06 - Elements of Interaction.zip', 'expand': False,
-                                      'urls': 'https://elearning.fudan.edu.cn/files/642133/download?download_frd=1',
-                                      'children': []},
-                                     {'title': 'On Concurrency 07 - Communicating Sequential Processes.zip',
-                                      'expand': False,
-                                      'urls': 'https://elearning.fudan.edu.cn/files/678647/download?download_frd=1',
-                                      'children': []},
-                                     {'title': 'On Concurrency 08 - Petri Nets and Colored Petri Net.zip',
-                                      'expand': False,
-                                      'urls': 'https://elearning.fudan.edu.cn/files/764040/download?download_frd=1',
-                                      'children': []},
-                                     {'title': 'On Concurrency 11 - Data Parallelism with OpenCL.html', 'expand': False,
-                                      'urls': 'https://elearning.fudan.edu.cn/files/230497/download?download_frd=1',
-                                      'children': []}]}
-
+    return {'name': '并发理论', 'docs': [{'title': 'References', 'expand': True, 'urls': '', 'children': [{'title': 'tm_tutorial_pact2006.zip', 'expand': False, 'urls': 'https://elearning.fudan.edu.cn/files/555529/download?download_frd=1', 'children': []}]}, {'title': 'Sample Code', 'expand': True, 'urls': '', 'children': [{'title': 'enwiki-latest-pages-articles.xml.zip', 'expand': False, 'urls': 'https://elearning.fudan.edu.cn/files/244234/download?download_frd=1', 'children': []}, {'title': 'pb7con-code.zip', 'expand': False, 'urls': 'https://elearning.fudan.edu.cn/files/243583/download?download_frd=1', 'children': []}]}, {'title': 'Concurrency-Theory and Practice.zip', 'expand': False, 'urls': 'https://elearning.fudan.edu.cn/files/692963/download?download_frd=1', 'children': []}, {'title': 'On Concurrency 01 - Concurrency, Issues and the Lock Mechanism.zip', 'expand': False, 'urls': 'https://elearning.fudan.edu.cn/files/367949/download?download_frd=1', 'children': []}, {'title': 'On Concurrency 02 - The Computer Science of Concurrency-The Early Years.zip', 'expand': False, 'urls': 'https://elearning.fudan.edu.cn/files/430029/download?download_frd=1', 'children': []}, {'title': 'On Concurrency 03 - Functional Programming and the Clojure Approach.zip', 'expand': False, 'urls': 'https://elearning.fudan.edu.cn/files/515738/download?download_frd=1', 'children': []}, {'title': 'On Concurrency 04 - Unlocking Concurrency.zip', 'expand': False, 'urls': 'https://elearning.fudan.edu.cn/files/551918/download?download_frd=1', 'children': []}, {'title': 'On Concurrency 05 - The Actor Model.zip', 'expand': False, 'urls': 'https://elearning.fudan.edu.cn/files/651274/download?download_frd=1', 'children': []}, {'title': 'On Concurrency 06 - Elements of Interaction.zip', 'expand': False, 'urls': 'https://elearning.fudan.edu.cn/files/642133/download?download_frd=1', 'children': []}, {'title': 'On Concurrency 07 - Communicating Sequential Processes.zip', 'expand': False, 'urls': 'https://elearning.fudan.edu.cn/files/678647/download?download_frd=1', 'children': []}, {'title': 'On Concurrency 08 - Petri Nets and Colored Petri Net.zip', 'expand': False, 'urls': 'https://elearning.fudan.edu.cn/files/764040/download?download_frd=1', 'children': []}, {'title': 'On Concurrency 11 - Data Parallelism with OpenCL.html', 'expand': False, 'urls': 'https://elearning.fudan.edu.cn/files/230497/download?download_frd=1', 'children': []}]}
 
 def get_homework_sample_data():
     return {}

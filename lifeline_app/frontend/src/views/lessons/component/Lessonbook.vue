@@ -261,18 +261,10 @@
         /*animation-delay: -3s;*/
     }
 
-    .text-1:hover {
-        animation-delay: -3s;
-    }
-
     .text-2 {
         stroke: #a09890;
         text-shadow: 0 0 1px #a09890;
         /*animation-delay: -6s;*/
-    }
-
-    .text-2:hover {
-        animation-delay: -6s;
     }
 
     .text-3 {
@@ -281,20 +273,11 @@
         /*animation-delay: -9s;*/
     }
 
-    .text-3:hover {
-        animation-delay: -9s;
-    }
-
     .text-4 {
         stroke: #a09890;
         text-shadow: 0 0 1px #a09890;
         /*animation-delay: -12s;*/
     }
-
-    .text-4:hover {
-        animation-delay: -12s;
-    }
-
 
     @keyframes stroke {
         100% {

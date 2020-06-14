@@ -3,6 +3,7 @@ from django.http import Http404, HttpResponse
 from django.http.response import JsonResponse
 from .models import *
 from django.views.decorators.csrf import csrf_exempt
+
 import json
 import random
 import datetime
@@ -15,24 +16,28 @@ from .crwaller import *
 
 DEBUG = True  # 进行调试，用于输出调试
 ACCOUNT_ID_RANGE = 100000000
+ELEARNING_LOGIN = False
+JWFW_LOGIN = False
 
 
+@csrf_exempt
 def login_uis(request):  # 帮绑定了elearning的用户登陆uis
+    global ELEARNING_LOGIN
+    global JWFW_LOGIN
     account = Account.objects.get(user=request.user)
     print("Trying to login uis.")
-    # print(account.elearning_login)
+    # print(ELEARNING_LOGIN, JWFW_LOGIN)
     if account.elearning_login:
-        if not request.session["elearning_login"]:
+        if not ELEARNING_LOGIN:
             print("Backend: elearning login.")
-            request.session["elearning_session"], request.session["elearning_login"] = login_elearning(
-                account.elearning_name, account.elearning_password)
-        if not request.session["jwfw_login"]:
+            request.session["elearning_session"], ELEARNING_LOGIN = login_elearning(account.elearning_name, account.elearning_password)
+        if not JWFW_LOGIN:
             print("Backend: jwfw login.")
-            request.session["jwfw_session"], request.session["jwfw_login"] = login_jwfw(account.elearning_name,
-                                                                                        account.elearning_password)
-        return True
-    else:
-        return False
+            request.session["jwfw_session"], JWFW_LOGIN = login_jwfw(account.elearning_name,account.elearning_password)
+    #     return True
+    # else:
+    #     return False
+    return ELEARNING_LOGIN
 
 
 @csrf_exempt
@@ -45,6 +50,8 @@ def first(request):
 
 @csrf_exempt
 def register_account(request):
+    global ELEARNING_LOGIN
+    global JWFW_LOGIN
     print("Register begin work")
     if request.user.is_authenticated:
         return HttpResponse("Already logged in.")
@@ -56,15 +63,14 @@ def register_account(request):
         email = request.GET.get('email')
         ret = {"flag": False, "error_msg": None}
         same_name_user = User.objects.filter(username=name)
-        print(same_name_user)
         if same_name_user:
             ret["error_msg"] = "same user has been registered"
         else:
             ret["flag"] = True
             user = User.objects.create_user(username=name, password=pwd, email=email)
             login(request, user)
-            request.session["elearning_login"] = False
-            request.session["jwfw_login"] = False
+            ELEARNING_LOGIN = False
+            JWFW_LOGIN = False
             account = Account.objects.create(user=user, nickname=name, email=email)
         return HttpResponse(json.dumps(ret), content_type="application/json")
     '''
@@ -401,7 +407,11 @@ def getcode(request):
 
 @csrf_exempt
 def logout_account(request):
+    global ELEARNING_LOGIN
+    global JWFW_LOGIN
     logout(request)
+    ELEARNING_LOGIN = False
+    JWFW_LOGIN = False
     return render(request, 'index.html')
 
 
@@ -526,35 +536,7 @@ def get_courseinfo(request):
         login_uis(request)
         ret = get_courseinfo_feedback(request.session["elearning_session"], request.session["jwfw_session"],
                                       request.session["course_id"])
-        # ret = {
-        #     'name': 'COMP130011.01 算法设计与分析 Algorithm Design and Analysis',
-        #     'description': '<div class="show-content user_content clearfix enhanced">\n' +
-        #                    '  <h1 class="page-title">COMP30011.01 算法设计与分析   （2020春）</h1>\n' +
-        #                    '  \n' +
-        #                    '    \n' +
-        #                    '  \n' +
-        #                    '  \n' +
-        #                    '    <p><strong>教师</strong>：朱山风&nbsp; （zhusf@fudan.edu.cn)</p>\n' +
-        #                    '<p><strong>助教</strong>：游榕晖(<a href="mailto:19210240010@fudan.edu.cn">18110240018@fudan.edu.cn)</a>、马金辰 (<a href="mailto:19210240085@fudan.edu.cn"></a>16307130043<a href="mailto:19210240085@fudan.edu.cn">@fudan.edu.cn</a>&nbsp;主要负责PJ相关事宜)&nbsp;</p>\n' +
-        #                    '<p><strong>时间</strong>：</p>\n' +
-        #                    '<p class="p1">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 每周四 下午1点30分-4点10分<span class="Apple-converted-space">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span></p>\n' +
-        #                    '<p class="p1">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;周一（双周）下午3点25分-5点05分</p>\n' +
-        #                    '<p class="p1">&nbsp;</p>\n' +
-        #                    '<p><strong>在线课程</strong>：学堂在线&nbsp; 算法设计与分析</p>\n' +
-        #                    '<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<a class="external" href="https://next.xuetangx.com/course/THU08091001409/1515822" target="_blank">https://next.xuetangx.com/course/THU08091001409/1515822</a></p>\n' +
-        #                    '<p>&nbsp; <strong>教材</strong></p>\n' +
-        #                    '<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; J. Kleinberg, E. Tardos. Algorithm Design.&nbsp; &nbsp;算法设计 清华大学出版社 2007</p>\n' +
-        #                    '<p>&nbsp;</p>\n' +
-        #                    '<p><strong>参考书目</strong></p>\n' +
-        #                    '<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;算法导论 （殷建平等编译，机械工业出版社2013年出版）</p>\n' +
-        #                    '<p>&nbsp; <strong style="font-family: sans-serif; font-size: 1rem;">参考课程&nbsp; &nbsp;</strong></p>\n' +
-        #                    '<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 网易公开课&nbsp; &nbsp; 算法导论</p>\n' +
-        #                    '<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a href="http://open.163.com/newview/movie/courseintro?newurl=%2Fspecial%2Fopencourse%2Falgorithms.html" class="external" target="_blank" rel="noreferrer noopener"><span>http://open.163.com/newview/movie/courseintro?newurl=%2Fspecial%2Fopencourse%2Falgorithms.html</span><span aria-hidden="true" class="ui-icon ui-icon-extlink ui-icon-inline" title="链接到外部网站。"></span><span class="screenreader-only">&nbsp;(链接到外部网站。)</span></a></p>\n' +
-        #                    '<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</p>\n' +
-        #                    '  \n' +
-        #                    '</div>'
-        #
-        # }
+        print(ret)
         return JsonResponse(ret)
 
 
@@ -566,41 +548,6 @@ def get_course_detail(request):
         login_uis(request)
         ret = get_course_detail_feedback(request.session["elearning_session"], request.session["jwfw_session"],
                                          request.session["course_id"])
-        # ret = {
-        #     'name': 'COMP130011.01 算法设计与分析 Algorithm Design and Analysis',
-        #     'docs':
-        #         [
-        #             {
-        #                 'title': '课程要求',
-        #                 'expand': True,
-        #                 'children': [
-        #                     {
-        #                         'title': '算法分析与设计第一课.pdf',
-        #                         'urls': 'https://elearning.fudan.edu.cn/files/298742/download?download_frd=1',
-        #                     },
-        #                     {
-        #                         'title': '算法分析与设计第二课.pdf',
-        #                         'urls': "https://elearning.fudan.edu.cn/files/342954/download?download_frd=1",
-        #                     }
-        #                 ]
-        #             },
-        #             {
-        #                 'title': '作业',
-        #                 'expand': True,
-        #                 'children': [
-        #                     {
-        #                         'title': '算法分析与设计习题1',
-        #                         'urls': 'https://elearning.fudan.edu.cn/files/298744/download?download_frd=1',
-        #                     },
-        #                     {
-        #                         'title': '算法分析与设计习题2',
-        #                         'urls': "https://elearning.fudan.edu.cn/files/342955/download?download_frd=1",
-        #                     }
-        #                 ]
-        #             }
-        #
-        #         ]
-        # }
         return JsonResponse(ret)
 
 
@@ -612,42 +559,7 @@ def get_course_homework(request):
         login_uis(request)
         ret = get_course_homework_feedback(request.session["elearning_session"], request.session["jwfw_session"],
                                            request.session["course_id"])
-        # ret = {
-        #     'name': 'COMP130011.01 算法设计与分析 Algorithm Design and Analysis',
-        #     'not_done': [
-        #         {
-        #             'title': '算法设计与分析作业3',
-        #             'description': '<a class="instructure_file_link" title="算法设计与分析习题 3.pdf" href="https://elearning.fudan.edu.cn/files/519713/download?wrap=1">算法设计与分析习题 3.pdf</a>',
-        #             'content': '第三次算法与设计分析作业，具体内容见文档',
-        #             'ddl': '4.14日 13：30前',
-        #             'score': '10'
-        #         }
-        #     ],
-        #     'done': [
-        #         {
-        #             'title': '算法设计与分析作业2',
-        #             'description': '<a class="instructure_file_link" title="算法设计与分析习题 2.pdf" href="https://elearning.fudan.edu.cn/files/519713/download?wrap=1">算法设计与分析习题 2.pdf</a>',
-        #             'content': '第二次算法与设计分析作业，具体内容见文档',
-        #             'ddl': '4.6日 13：30前',
-        #             'score': '10',
-        #             'grade': 'A',
-        #             'comment': 'nice!',
-        #             'finish': True,
-        #             'submission': '<a href="/courses/22322/assignments/8981/submissions/14325?download=480636">\n' + '            下载 17307130254-2.pdf\n' + '          </a>'
-        #         },
-        #         {
-        #             'title': '算法设计与分析作业1',
-        #             'description': '<a class="instructure_file_link" title="算法设计与分析习题 1.pdf" href="https://elearning.fudan.edu.cn/files/519713/download?wrap=1">算法设计与分析习题 1.pdf</a>',
-        #             'content': '第一次算法与设计分析作业，具体内容见文档',
-        #             'ddl': '4.1日 13：30前',
-        #             'score': '10',
-        #             'grade': 'D',
-        #             'comment': 'where is your homework??',
-        #             'finish': False,
-        #             'submission': ''
-        #         }
-        #     ]
-        # }
+        print(ret)
         return JsonResponse(ret)
 
 
@@ -664,14 +576,14 @@ def elearning_register(request):
         session, flag = login_elearning(name, password)
         account = Account.objects.get(user=request.user)
         if flag == False:
-            ret = {"flag": False, "status": False}
+            ret = {"flag": False, "status": account.elearning_login}
             return JsonResponse(ret)
         account.elearning_name = name
         account.elearning_password = password
         account.elearning_login = True
-        print(account)
+        # print(account)
         account.save()
-        ret = {"flag": True, "status": True}
+        ret = {"flag": True, "status": account.elearning_login}
         return JsonResponse(ret)
 
 

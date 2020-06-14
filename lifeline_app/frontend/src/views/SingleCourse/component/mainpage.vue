@@ -18,7 +18,7 @@
             }
         },
 
-        beforeCreate() {
+        Created() {
             this.$ajax.get('get_courseinfo')
                 .then(response => {
                     console.log(response.data)
