@@ -12,8 +12,14 @@ class Account(models.Model):
     email = models.EmailField(null=True) # 邮箱是否能为空？
     gender = models.CharField(max_length=2,null=True) # 键值只有三种取值：M,F,N
     nickname = models.CharField(max_length=50) # 用户自己修改的昵称
-    privilege = models.IntegerField(default=1) # 账户等级，初步打算老师和学生账户,老师是0，学生是1
-    photo = models.ImageField(default="",upload_to="",null=True) # 默认无照片的路径，以及上传图片的路径
+    #privilege = models.IntegerField(default=1) # 账户等级，初步打算老师和学生账户,老师是0，学生是1
+    elearning_name = models.CharField(max_length=15,null=True)
+    elearning_password = models.CharField(max_length=20,null=True)
+    elearning_login = models.BooleanField(default=False)
+    phone = models.CharField(max_length=50, null=True)
+    addr = models.CharField(max_length=50, null=True)
+    description = models.TextField(null=True)
+    picture = models.CharField(max_length=50, default='/static/img/user0.png')
 
 class Course(models.Model):
     course_id = models.AutoField(primary_key=True)
@@ -57,8 +63,8 @@ class Todolist(models.Model):
     description = models.TextField(null=True)
     deadline_time = models.DateTimeField()
     homework = models.ForeignKey(Homework,on_delete=models.CASCADE,null=True)
-    scheduler = models.ForeignKey(Scheduler,on_delete=models.CASCADE)
-    status = models.IntegerField(default=0) # 0代表未完成，1代表已完成，2代表过期
+    scheduler = models.ForeignKey(Scheduler,on_delete=models.CASCADE,null=True)
+    status = models.IntegerField(default=0) # 0代表未完成，1代表已完成，2代表过期, 3代表删除
 
 class Register(models.Model):
     email = models.EmailField(primary_key=True) #验证邮箱

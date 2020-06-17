@@ -1,25 +1,28 @@
 <template>
     <svg xmlns="http://www.w3.org/2000/svg"
-         viewBox= "0 0 1600 600"
+         viewBox="0 0 1600 600"
          class='lesson_book' id="bookIcon">
         <g v-for="lesson in lessons">
-            <g id = book onclick="go_to_lesson(lesson.name)">
-                <g id = cover>
-                    <rect id=cover :fill="getColor(lesson.index)" :x="getX(lesson.index)" :y="getY(lesson.index)" width="80" :height= "getHeight(lesson.index)" rx="5.0" onclick="window.top.location.href='/course'"></rect>
+            <g id=book @click="go_to_lesson(lesson.id)">
+                <g id=cover>
+                    <rect id=cover :fill="getColor(lesson.index)" :x="getX(lesson.index)" :y="getY(lesson.index)"
+                          width="80" :height="getHeight(lesson.index)" rx="5.0"
+                          @click="go_to_lesson(lesson.id)"></rect>
                 </g>
-                <g id = title>
-                    <text class="text text-1" font-family="Montserrat-ExtraBold" :x="getTextX(lesson.index) + 10" :y="getTextY(lesson.index)- 10" :transform ="'rotate(90, ' + getTextX(lesson.index) + ','+ getTextY(lesson.index)+ ')'" style="letter-spacing:10px;" dominant-baseline="middle" rotate="-90" font-size="30px"  onclick="window.top.location.href='/course';" >{{lesson.name}}</text>
-                    <text class="text text-2" font-family="Montserrat-ExtraBold" :x="getTextX(lesson.index) + 10" :y="getTextY(lesson.index)- 10" :transform ="'rotate(90, ' + getTextX(lesson.index) + ','+ getTextY(lesson.index)+ ')'" style="letter-spacing:10px;" dominant-baseline="middle" rotate="-90" font-size="30px"  onclick="window.top.location.href='/course';" >{{lesson.name}}</text>
-                    <text class="text text-3" font-family="Montserrat-ExtraBold" :x="getTextX(lesson.index) + 10" :y="getTextY(lesson.index)- 10" :transform ="'rotate(90, ' + getTextX(lesson.index) + ','+ getTextY(lesson.index)+ ')'" style="letter-spacing:10px;" dominant-baseline="middle" rotate="-90" font-size="30px"  onclick="window.top.location.href='/course';" >{{lesson.name}}</text>
-                    <text class="text text-4" font-family="Montserrat-ExtraBold" :x="getTextX(lesson.index) + 10" :y="getTextY(lesson.index)- 10" :transform ="'rotate(90, ' + getTextX(lesson.index) + ','+ getTextY(lesson.index)+ ')'" style="letter-spacing:10px;" dominant-baseline="middle" rotate="-90" font-size="30px"  onclick="window.top.location.href='/course';" >{{lesson.name}}</text>
-
+                <g id=title>
+                    <text class="text text-1" font-family="Montserrat-ExtraBold" :x="getTextX(lesson.index) + 10"
+                          :y="getTextY(lesson.index)- 10"
+                          :transform="'rotate(90, ' + getTextX(lesson.index) + ','+ getTextY(lesson.index)+ ')'"
+                          style="letter-spacing:10px;" dominant-baseline="middle" rotate="-90" font-size="30px"
+                          @click="go_to_lesson(lesson.id)">{{lesson.name}}
+                    </text>
                 </g>
                 <!--                <rect fill="#fefffe" fill-opacity="0.8" :x="getTextX(lesson.index) - 10" width="10" :y="getY(lesson.index) + 10" rx="3.0" :height="getHeight(lesson.index) - 20" onclick="window.top.location.href='/course'"></rect>-->
             </g>
         </g>
-        <g id = shelve>
-            <rect id="desk" x = 0 y = 540 width= 1400 height= 60 fill="#a09890"></rect>
-<!--            540 -> 480-->
+        <g id=shelve>
+            <rect id="desk" x=0 y=540 width=1400 height=60 fill="#a09890"></rect>
+            <!--            540 -> 480-->
         </g>
     </svg>
 
@@ -30,52 +33,60 @@
         name: "Lessonbook",
         book: '#book',
         props: {
-            lessons:{type:Array},
-            number:{type:Number, default:0},
+            lessons: {type: Array},
+            number: {type: Number, default: 0},
         },
-        data(){
-            return{
-                get_id:0,
-                get_hover:false}
+        data() {
+            return {
+                get_id: 0,
+                get_hover: false
+            }
         },
         methods: {
-            go_to_lesson:function(name){
-                window.location.href = "/course";
-                },
-            getX: function(index){
+            go_to_lesson: function (id) {
+                this.$ajax({
+                    method: 'post',
+                    url: '/course/',
+                    params: {
+                        course_id :id,
+                    }
+                }).then(response => {
+                    if(response.data.flag === true)
+                        window.location.href = "2Course";
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            },
+            getX: function (index) {
                 // console.log(this.number);
                 // console.log(this.index);
-                if(this.number % 2 === 0) {
+                if (this.number % 2 === 0) {
                     return Number(600 - 40 * this.number + 80 * index);
-                }
-                else {
+                } else {
                     return Number(600 - 40 * this.number + 80 * index);
                 }
             },
-
-            getTextX:function(index){
+            getTextX: function (index) {
                 // console.log(this.number);
                 // console.log(this.index);
-                if(this.number % 2 === 0) {
+                if (this.number % 2 === 0) {
+                    return Number(600 - 40 * this.number + 80 * index + 25)
+                } else {
                     return Number(600 - 40 * this.number + 80 * index + 25)
                 }
-                else {
-                    return Number(600 - 40 * this.number  + 80 * index + 25)
-                }
             },
 
 
-            getTextY:function(index){
+            getTextY: function (index) {
                 // console.log(this.number);
                 // console.log(this.index);
-                if(this.number % 2 === 0) {
+                if (this.number % 2 === 0) {
                     if (index <= this.number / 2) {
                         return Number(130 + 15 * this.number - 30 * index)
                     } else {
                         return Number(100 - 15 * this.number + 30 * index)
                     }
-                }
-                else {
+                } else {
                     if (index <= (this.number + 1) / 2) {
                         return Number(145 + 15 * this.number - 30 * index)
                     } else {
@@ -84,18 +95,17 @@
                 }
             },
 
-            getY:function(index){
+            getY: function (index) {
                 // console.log(this.number);
                 // console.log(this.index);
                 var y = 0;
-                if(this.number % 2 === 0) {
+                if (this.number % 2 === 0) {
                     if (index <= this.number / 2) {
-                        y =  Number(70 + 15 * this.number - 30 * index)
+                        y = Number(70 + 15 * this.number - 30 * index)
                     } else {
-                        y  = Number(40 - 15 * this.number + 30 * index)
+                        y = Number(40 - 15 * this.number + 30 * index)
                     }
-                }
-                else {
+                } else {
                     if (index <= (this.number + 1) / 2) {
                         y = Number(85 + 15 * this.number - 30 * index)
                     } else {
@@ -103,62 +113,50 @@
                     }
                 }
 
-                if (index === this.get_id && this.get_hover === true){
+                if (index === this.get_id && this.get_hover === true) {
                     y = y + 40
                 }
 
                 return y
             },
 
-            getColor:function(index){
-                if(index % 10 === 1){
+            getColor: function (index) {
+                if (index % 10 === 1) {
                     return '#8ae9bd'
-                }
-                else if(index  % 10 === 2){
-                    return  '#9cdadf'
-                }
-                else if(index   % 10=== 3){
+                } else if (index % 10 === 2) {
+                    return '#9cdadf'
+                } else if (index % 10 === 3) {
                     return '#947ce8'
-                }
-                else if(index   % 10=== 4){
+                } else if (index % 10 === 4) {
                     return '#ee92d9'
-                }
-                else if(index   % 10=== 5){
-                    return  '#fba383'
-                }
-                else if(index  % 10 === 6){
+                } else if (index % 10 === 5) {
+                    return '#fba383'
+                } else if (index % 10 === 6) {
                     return '#f7dd73'
-                }
-                else if(index  % 10 === 7){
+                } else if (index % 10 === 7) {
                     return '#cef9ad'
-                }
-                else if(index  % 10 === 8){
+                } else if (index % 10 === 8) {
                     return '#dd87e6'
-                }
-                else if(index  % 10=== 9){
+                } else if (index % 10 === 9) {
                     return '#e0cb6e'
-                }
-                else{
+                } else {
                     return '#b3d3ec'
                 }
 
             },
-            getHeight:function(index){
+            getHeight: function (index) {
                 // console.log(this.number);
                 // console.log(this.index);
-                 if(this.number % 2 === 0) {
-                    if(index <= this.number/2) {
-                        return Number(470 - 15 * this.number + 30 * index )
+                if (this.number % 2 === 0) {
+                    if (index <= this.number / 2) {
+                        return Number(470 - 15 * this.number + 30 * index)
+                    } else {
+                        return Number(500 + 15 * this.number - 30 * index)
                     }
-                    else{
-                        return Number(500  + 15 * this.number - 30 * index)
-                    }
-                 }
-                else{
-                    if(this.index <= (this.number + 1)/2){
-                        return Number(455 -  15 * this.number + 30 * index)
-                     }
-                    else{
+                } else {
+                    if (this.index <= (this.number + 1) / 2) {
+                        return Number(455 - 15 * this.number + 30 * index)
+                    } else {
                         return Number(485 + 15 * this.number - 30 * index)
                     }
                 }
@@ -166,19 +164,20 @@
 
         },
 
-        created:function(){
-            console.log(this.lessons +this.number);
+        created: function () {
+            console.log(this.lessons);
+            console.log(this.number);
         },
-        mounted:function () {
-            console.log(this.lessons +this.number);
+        mounted: function () {
+            console.log(this.lessons + this.number);
         }
     }
 </script>
 
 <style scoped>
     /*html {*/
-	/*  overflow: hidden;*/
-	/*}*/
+    /*  overflow: hidden;*/
+    /*}*/
 
     @font-face {
         font-family: 'Montserrat-ExtraBold';
@@ -187,7 +186,7 @@
         font-style: normal;
     }
 
-    #book{
+    #book {
         text-align: center;
         margin: auto;
     }
@@ -195,13 +194,16 @@
     #cover :hover {
         transform: translate(0px, -50px);
     }
+
     #cover :hover:after {
         transform: translateY(-50px);
         transition: all 2s ease-in-out;
     }
-    #title :hover{
+
+    #title :hover {
         transform: translate(0px, 50px) rotate(90deg);
     }
+
     #title :hover:after {
         transform: translateY(-50px) rotate(90deg);
         transition: all 2s ease-in-out;
@@ -226,10 +228,10 @@
         /*stroke-dasharray: 90 310;*/
         /*animation: stroke 12s infinite linear;*/
     }
-    .text:hover{
-        fill:#a09890;
+
+    .text:hover {
+        fill: #a09890;
         stroke-dasharray: 90 310;
-        animation: stroke 12s infinite linear;
     }
 
 
@@ -237,48 +239,6 @@
         stroke: #a09890;
         text-shadow: 0 0 1px #a09890;
         /*animation-delay: -3s;*/
-    }
-     .text-1:hover {
-         animation-delay: -3s;
-     }
-
-    .text-2 {
-        stroke: #a09890;
-        text-shadow: 0 0 1px #a09890;
-        /*animation-delay: -6s;*/
-    }
-
-    .text-2:hover {
-         animation-delay: -6s;
-     }
-
-    .text-3 {
-        stroke: #a09890;
-        text-shadow: 0 0 1px #a09890;
-        /*animation-delay: -9s;*/
-    }
-
-    .text-3:hover {
-         animation-delay: -9s;
-     }
-
-    .text-4 {
-        stroke: #a09890;
-        text-shadow: 0 0 1px #a09890;
-        /*animation-delay: -12s;*/
-    }
-
-    .text-4:hover {
-         animation-delay: -12s;
-     }
-
-
-
-
-    @keyframes stroke {
-        100% {
-            stroke-dashoffset: -400;
-        }
     }
 
 </style>

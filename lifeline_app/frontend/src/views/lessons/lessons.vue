@@ -1,32 +1,35 @@
 <template>
-    <div id = 'lesson_window'>
+    <div id='lesson_window'>
         <Layout>
             <header>
                 <svg width="100%" height="100%">
-                        <text text-anchor="middle" x="15%" y="20%" class="text text-1">
-                            LIFELINE
-                        </text>
-                        <text text-anchor="middle" x="15%" y="20%" class="text text-2">
-                            LIFELINE
-                        </text>
-                        <text text-anchor="middle" x="15%" y="20%" class="text text-3">
-                            LIFELINE
-                        </text>
-                        <text text-anchor="middle" x="15%" y="20%" class="text text-4">
-                            LIFELINE
-                        </text>
+                    <text text-anchor="middle" x="15%" y="20%" class="text text-1">
+                        LIFELINE
+                    </text>
+                    <text text-anchor="middle" x="15%" y="20%" class="text text-2">
+                        LIFELINE
+                    </text>
+                    <text text-anchor="middle" x="15%" y="20%" class="text text-3">
+                        LIFELINE
+                    </text>
+                    <text text-anchor="middle" x="15%" y="20%" class="text text-4">
+                        LIFELINE
+                    </text>
                 </svg>
-<!--                <h1>LifeLine  Lesson</h1>-->
+                <!--                <h1>LifeLine  Lesson</h1>-->
             </header>
-            <div class ='lessons'>
-<!--                <div class="semester" v-if="item.term === page">-->
-                    <Lessonbook :lessons="items[number-page].lesson" :number="items[number-page].lesson.length"></Lessonbook>
-<!--                </div>-->
+            <div class='lessons'>
+                <!--                <div class="semester" v-if="item.term === page">-->
+                <Lessonbook :lessons="items[number-page].lesson"
+                            :number="items[number-page].lesson.length"></Lessonbook>
+                <!--                </div>-->
                 <div class="prev_button" v-if="page > 1">
-                     <CustomButton  source="grinningface" size="large" message="prev" @click.native="go_to_prev"></CustomButton>
+                    <CustomButton source="grinningface" size="large" message="prev"
+                                  @click.native="go_to_prev"></CustomButton>
                 </div>
                 <div class="next_button" v-if="page < number">
-                    <CustomButton  source="grinningface" size="large" message="next" @click.native="go_to_next"></CustomButton>
+                    <CustomButton source="grinningface" size="large" message="next"
+                                  @click.native="go_to_next"></CustomButton>
                 </div>
             </div>
 
@@ -39,6 +42,7 @@
     import Layout from "../../components/template/TopBarLayout/main"
     import Lessonbook from "./component/Lessonbook"
     import CustomButton from "../../../../frontend/src/components/CustomButton";
+
     export default {
         name: "Lessons",
         components: {
@@ -48,29 +52,18 @@
         },
         data() {
             return {
-                number: 2,
-                page:2,
-                items:[
-                    {term : 2, lesson:[{name:'人工智能', index:1},
-                    {name:'模式识别与机器学习', index:2},
-                    {name:'数字信号处理', index:3},
-                    {name:'软件工程', index:4},
-                    {name:'数据挖掘', index:5},
-                    {name:'算法设计',index:6}]
-                    },
-                    {term: 1, lesson:[{name:'数据库', index: 1},
-                        {name: '代数结构', index: 2}]
-                    }
-                ]
+                number: Intl,
+                page: Intl,
+                items: [],
             }
         },
-        methods:{
-            go_to_prev: function(){
+        methods: {
+            go_to_prev: function () {
                 console.log('prev');
                 this.page = this.page - 1;
                 // window.reload();
             },
-            go_to_next:function(){
+            go_to_next: function () {
                 console.log('next');
                 this.page = this.page + 1;
                 // window.reload();
@@ -79,43 +72,27 @@
                 window.location.href = "/home";
                 // 回到课程主页
             },
-            go_to_lesson:function(){
-                window.location.href = "/course";
-                // var params ={
-                //     curriculum: name, //未来最好改成传课程id
-                //     name:this.$parent.name,
-                //     type:'jplesson'
-                // };
-                // this.$router.go(''); //重定向到课程子页面
-            },
-            //
-            lessons:function() {
-                var params = {
-                    name: this.$parent.name,
-                    type: 'lessons'
-                };
-                this.$ajax.get('/get_semester/', params).then(response => {
-                    console.log(response.data.course_table);
-                    console.log(response.data.course_table.length);
-                    // var obj = JSON.parse(JSON.stringify(response));
-                    // console.log(JSON.stringify(obj));
-                    this.data.number = response.data.course_table.length;
-                    this.data.page = response.data.course_table.length;
-                    //TODO：这个部分还有bug 这里console打不出来 但我还不知道咋回事...
-                    for (let i = 0; i < this.number; i++) {
-                        console.log(response.data.course_table[i]);
-                        this.data.items.append(response.data.course_table[i]); //前端接收json加入list
-                    }
-                }).catch(error => {
-                    console.log("something wrong");
-                });
-            }
         },
-        created: function(){
-            this.lessons()
-            console.log(this.page, this.items)
+        created: function () {
+            var params = {
+                name: this.$parent.name,
+                type: 'lessons'
+            };
+            this.$ajax.get('/get_semester/', params).then(response => {
+                console.log(response.data);
+                console.log(Object.keys(response.data).length);
+                this.number = Object.keys(response.data).length;
+                this.page = Object.keys(response.data).length;
+                for (let term in response.data) {
+                    console.log(response.data[term]);
+                    this.items.push(response.data[term]); //前端接收json加入list
+                }
+                console.log(this.items[0]);
+            }).catch(function (error) {
+                console.log(error);
+            });
         },
-        mounted:function () {
+        mounted: function () {
             console.log(this.page)
         }
     }
@@ -129,13 +106,15 @@
         font-weight: normal;
         font-style: normal;
     }
+
     #lesson_window {
         background-color: #e7f7a9;
         background-size: 100% 100%;
         padding: 0 0;
         font-family: Montserrat-ExtraBold, sans-serif;
-        bottom:0
+        bottom: 0
     }
+
     header {
         font-size: 80px;
         text-align: left;
@@ -153,50 +132,57 @@
         font-size: 60px;
         font-family: Montserrat-ExtraBold, sans-serif;
     }
+
     input::placeholder {
         font-size: 45px;
     }
 
-    button{
+    button {
         margin: auto;
         padding: 10% 10% 10% 18%;
         display: flex;
         align-items: center;
         font-size: 60px;
-        position:absolute;
+        position: absolute;
     }
-    .lessons{
+
+    .lessons {
         /*background-size: 100% 100%;*/
         /*top: 20vh;*/
         padding: 0% 0% 0% 0%;
-        height:60vh;
-        width:100%;
+        height: 60vh;
+        width: 100%;
         /*position: absolute;*/
-        background-color:transparent;
+        background-color: transparent;
     }
-    svg{
+
+    svg {
         height: 60vh;
         width: 100vw;
     }
-    .prev_button{
+
+    .prev_button {
         padding: 0 0 0 0;
         bottom: 20%;
         left: 15%;
         position: absolute;
         font-size: 60px;
     }
-    .next_button{
+
+    .next_button {
         padding: 0 0 0 0;
         bottom: 20%;
         right: 15%;
         position: absolute;
         font-size: 60px;
     }
-    p{
+
+    p {
         background-size: 100% 100%;
         height: 100vh;
         width: 100vw;
     }
+
     .text {
         /*font-size: 64px;*/
         font-weight: bold;

@@ -3,7 +3,7 @@
         <h3>未完成作业</h3>
         <p></p>
         <List item-layout="vertical" :border="true">
-        <ListItem v-for="item in course.not_done" :key="item.title">
+        <ListItem v-for="item in this.not_done" :key="item.title">
             <ListItemMeta  :title="item.title"  />
             <div v-html="item.description"></div>
             {{ item.content }}
@@ -31,7 +31,7 @@
         <p></p>
 
     <List item-layout="vertical" :border="true">
-        <ListItem v-for="item in course.done" :key="item.title">
+        <ListItem v-for="item in this.done" :key="item.title">
             <ListItemMeta  :title="item.title"  />
             <div v-html="item.description"></div>
             {{ item.content }}
@@ -63,43 +63,17 @@
         name:'homework',
         data () {
             return {
-                course:{
-                    name: 'COMP130011.01 算法设计与分析 Algorithm Design and Analysis',
-                    not_done:[
-                        {
-                            title: '算法设计与分析作业3',
-                            description: '<a class="instructure_file_link" title="算法设计与分析习题 3.pdf" href="https://elearning.fudan.edu.cn/files/519713/download?wrap=1">算法设计与分析习题 3.pdf</a>',
-                            content: '第三次算法与设计分析作业，具体内容见文档',
-                            ddl:'4.14日 13：30前',
-                            score:'10'
-                        }
-                    ],
-                    done:[
-                        {
-                            title: '算法设计与分析作业2',
-                            description: '<a class="instructure_file_link" title="算法设计与分析习题 2.pdf" href="https://elearning.fudan.edu.cn/files/519713/download?wrap=1">算法设计与分析习题 2.pdf</a>',
-                            content: '第二次算法与设计分析作业，具体内容见文档',
-                            ddl:'4.6日 13：30前',
-                            score:'10',
-                            grade:'A',
-                            comment:'nice!',
-                            finish:true,
-                            submission:'<a href="/courses/22322/assignments/8981/submissions/14325?download=480636">\n' + '            下载 17307130254-2.pdf\n' + '          </a>'
-                        },
-                        {
-                            title: '算法设计与分析作业1',
-                            description: '<a class="instructure_file_link" title="算法设计与分析习题 1.pdf" href="https://elearning.fudan.edu.cn/files/519713/download?wrap=1">算法设计与分析习题 1.pdf</a>',
-                            content: '第一次算法与设计分析作业，具体内容见文档',
-                            ddl:'4.1日 13：30前',
-                            score:'10',
-                            grade:'D',
-                            comment:'where is your homework??',
-                            finish:false,
-                            submission: ''
-                        }
-                    ]
-                }
+                not_done: [],
+                done: []
             }
+        },
+        created() {
+            this.$ajax.get('homework_course')
+                .then(response => {
+                    console.log(response.data);
+                    this.not_done = response.data.not_done;
+                    this.done = response.data.done;
+                })
         }
     }
 </script>

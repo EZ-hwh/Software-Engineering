@@ -153,7 +153,7 @@
                         }, 2000);
                     } else {
                         this.$Notice.error({
-                            title: 'Error!Try again!',
+                            title: 'Used Email!',
                             duration: 2,
                         });
                         console.log(response.data.error_msg);
@@ -194,7 +194,6 @@
             },
             Register: function () {
                 this.$ajax({
-                    // TODO:
                     method: 'post',
                     url: '/register/',
                     params: {
@@ -215,10 +214,17 @@
                             window.location.href = "/login"
                         }, 2000);
                     } else {
-                        this.$Notice.error({
-                            title: 'Error!Try again!',
-                            duration: 2,
-                        });
+                        if (response.data.error_msg === "same user has been registered"){
+                            this.$Notice.error({
+                                title: 'Username already taken!',
+                                duration: 2,
+                            });
+                        }
+                        else {this.$Notice.error({
+                                title: 'Error!Try again!',
+                                duration: 2,
+                            });
+                        }
                         setTimeout(() => {
                             window.location.href = "/register"
                         }, 2000)

@@ -1,4 +1,4 @@
-var calendar1 = function(l) {
+var calendar1 = function(l, courseList) {
   "use strict";
   var e = function() {
     (this.$body = l("body")),
@@ -130,36 +130,21 @@ var calendar1 = function(l) {
       this.enableDrag();
       var e = new Date(),
         t = (e.getDate(), e.getMonth(), e.getFullYear(), new Date(l.now())),
-        n = [
-          {
-            title: "Hey!",
-            start: new Date(l.now() + 158e6),
-            className: "bg-purple",
-          },
-          { title: "See John Deo", start: t, end: t, className: "bg-success" },
-          {
-            title: "Meet John Deo",
-            start: new Date(l.now() + 168e6),
-            className: "bg-info",
-          },
-          {
-            title: "Buy a Theme",
-            start: new Date(l.now() + 338e6),
-            className: "bg-primary",
-          },
-        ],
+        n = courseList,
         a = this;
+      // print(n);
+      console.log(n);
       (a.$calendarObj = a.$calendar.fullCalendar({
-        slotDuration: "00:15:00",
+        slotDuration: "00:20:00",
         minTime: "08:00:00",
-        maxTime: "19:00:00",
-        defaultView: "month",
+        maxTime: "22:00:00",
+        defaultView: "agendaWeek",
         handleWindowResize: !0,
         height: l(window).height() - 200,
         header: {
           left: "prev,next today",
           center: "title",
-          right: "month,agendaWeek,agendaDay",
+          right: "agendaWeek",
         },
         events: n,
         editable: !0,
