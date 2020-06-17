@@ -3,7 +3,7 @@
         <h3>未完成作业</h3>
         <p></p>
         <List item-layout="vertical" :border="true">
-        <ListItem v-for="item in course.not_done" :key="item.title">
+        <ListItem v-for="item in this.not_done" :key="item.title">
             <ListItemMeta  :title="item.title"  />
             <div v-html="item.description"></div>
             {{ item.content }}
@@ -31,7 +31,7 @@
         <p></p>
 
     <List item-layout="vertical" :border="true">
-        <ListItem v-for="item in course.done" :key="item.title">
+        <ListItem v-for="item in this.done" :key="item.title">
             <ListItemMeta  :title="item.title"  />
             <div v-html="item.description"></div>
             {{ item.content }}
@@ -63,14 +63,16 @@
         name:'homework',
         data () {
             return {
-                course:{}
+                not_done: [],
+                done: []
             }
         },
         created() {
             this.$ajax.get('homework_course')
                 .then(response => {
-                    console.log(response.data)
-                    this.course = response.data
+                    console.log(response.data);
+                    this.not_done = response.data.not_done;
+                    this.done = response.data.done;
                 })
         }
     }

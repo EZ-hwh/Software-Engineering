@@ -113,7 +113,7 @@
         </ul>
 
         <!-- LOGO -->
-        <div class="logo-box">
+        <div class="logo-box" style="padding-top: 10px">
             <a
                     href="index.html"
                     class="logo"
@@ -121,14 +121,14 @@
             >
         <span class="logo-lg" style="margin:auto">
           <img
-                  src="../../assets/images/button/black-heart-suit.png"
+                  src="../../assets/images/button/sun-with-face.png"
                   alt=""
                   height="32"
           />
         </span>
                 <span class="logo-sm">
           <img
-                  src="../../assets/images/button/black-heart-suit.png"
+                  src="../../assets/images/button/sun-with-face.png"
                   alt=""
                   height="32"
           />

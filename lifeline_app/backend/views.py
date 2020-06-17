@@ -31,10 +31,11 @@ def login_uis(request):  # 帮绑定了elearning的用户登陆uis
     if account.elearning_login:
         if not ELEARNING_LOGIN:
             print("Backend: elearning login.")
-            request.session["elearning_session"], ELEARNING_LOGIN = login_elearning(account.elearning_name, account.elearning_password)
+            request.session["elearning_session"], ELEARNING_LOGIN = login_elearning(account.elearning_name,
+                                                                                    account.elearning_password)
         if not JWFW_LOGIN:
             print("Backend: jwfw login.")
-            request.session["jwfw_session"], JWFW_LOGIN = login_jwfw(account.elearning_name,account.elearning_password)
+            request.session["jwfw_session"], JWFW_LOGIN = login_jwfw(account.elearning_name, account.elearning_password)
     #     return True
     # else:
     #     return False
@@ -173,6 +174,7 @@ def course(request):
         ret = {'flag': True}
         return HttpResponse(json.dumps(ret))
 
+
 @csrf_exempt
 def ToCourse(request):
     return render(request, 'SingleCourse.html')
@@ -220,7 +222,6 @@ def get_schedule(request):
             ]
             pass
 
-        
         return JsonResponse(ret)
 
 
@@ -273,7 +274,9 @@ def add_ddl_elearning(request):
     print("time!!!!!!!!!!!!!")
     # print(todolist[3].deadline_time)
 
+
 flag_todaylist = True
+
 
 @csrf_exempt
 def get_Todaylist(request):  # Todo 连接数据库
@@ -415,6 +418,7 @@ def getcode(request):
             print("except")
         register.checksum = random.randint(1000, 9999)
         print(register.email, register.checksum)
+        send_my_email(register.email, register.checksum)
         register.save()
         ret["checksum"] = register.checksum
         ret["flag"] = True
@@ -520,15 +524,15 @@ def add_ddl(request):
 def del_ddl(request):
     if not request.user.is_authenticated:
         return redirect('/login_page/')
-    if request.method =='GET':
+    if request.method == 'GET':
         print("DDL del working")
         id = int(request.GET["id"])
-        account = Account.objects.get(user = request.user)
-        todo = Todolist.objects.get(todolist_id = id, account = account)
+        account = Account.objects.get(user=request.user)
+        todo = Todolist.objects.get(todolist_id=id, account=account)
         todo.status = 3
-        print("delete ",todo.name)
+        print("delete ", todo.name)
         todo.save()
-        ret = {"flag":True}
+        ret = {"flag": True}
         return JsonResponse(ret)
 
 
@@ -577,9 +581,9 @@ def get_course_homework(request):
         print("作业")
         login_uis(request)
         print(request.session["course_id"])
-        ret = get_course_homework_feedback(request.session["elearning_session"], request.session["jwfw_session"],
+        ret = get_course_homework_feedback(request.session["elearning_session"],
+                                           request.session["jwfw_session"],
                                            request.session["course_id"])
-        print(ret)
         return JsonResponse(ret)
 
 
@@ -650,6 +654,7 @@ def picture(request):
         ret = {"flag": True}
         return JsonResponse(ret)
 
+
 @csrf_exempt
 def get_idpicture(request):
     if not request.user.is_authenticated:
@@ -660,6 +665,7 @@ def get_idpicture(request):
         print(account.picture)
         ret = {"ImgUrl": account.picture}
         return JsonResponse(ret)
+
 
 @csrf_exempt
 def personal_create(request):

@@ -25,15 +25,7 @@
 
 <template>
 
-    <div>
-        <div class="user-box text-center">
-            <img
-                    src="../../assets/images/button/sun-with-face.png"
-                    alt="user-img"
-                    class="rounded-circle img-thumbnail avatar-lg"
-            >
-        </div>
-
+    <div style="margin-top: 20px">
         <!--- Sidemenu -->
         <div id="sidebar-menu">
             <ul
