@@ -15,7 +15,7 @@
     "glob": "latest",
     "iview": "^3.5.4",
     "jquery": "^3.5.1",
-    "jquery-ui": "^1.12.1",
+    "jquery-ui": "^1.13.2",
     "metismenu": "^3.0.6",
     "moment": "^2.25.3",
     "slimscroll": "^0.9.1",
